@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>신경계운동치료학 - 보행</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+:root{--bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e2a;--bg4:#222736;--border:#2a3048;--accent:#f472b6;--accent2:#38bdf8;--green:#6ee7b7;--red:#f87171;--yellow:#fbbf24;--text:#dce3f0;--text-dim:#7a8aaa;--text-bright:#fff;--tag-bg:#1d2236;--panel-bg:#111420;}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;overflow:hidden}body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.65;display:flex;flex-direction:column}
+.chapter-nav{background:#0a0c10;border-bottom:1px solid #1e2235;padding:0 16px;display:flex;align-items:center;gap:4px;height:44px;flex-shrink:0;overflow-x:auto}
+.chapter-nav-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:#3a4060;letter-spacing:.1em;margin-right:8px;white-space:nowrap;flex-shrink:0}
+.ch-btn{font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 14px;border-radius:5px;border:1px solid #252840;background:transparent;color:#5a6888;cursor:pointer;transition:all .18s;white-space:nowrap;flex-shrink:0}
+.ch-btn:hover{background:#13161e;color:#9ab;border-color:#3a3f60}
+.ch-btn.active{background:var(--ch-accent,#f472b6);color:#0a0c10;border-color:transparent;font-weight:600}
+.chapter-section{display:none;flex:1;flex-direction:column;min-height:0}.chapter-section.active{display:flex}
+.ch-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 22px 10px;display:flex;align-items:baseline;gap:12px;flex-shrink:0;flex-wrap:wrap}
+.ch-badge{font-family:'JetBrains Mono',monospace;font-size:11px;padding:2px 9px;border-radius:4px;letter-spacing:.06em;color:var(--ch-accent,#f472b6);background:color-mix(in srgb,var(--ch-accent,#f472b6) 12%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#f472b6) 30%,transparent)}
+.ch-header h1{font-size:15px;font-weight:700;color:var(--text-bright)}.ch-header p{font-size:11px;color:var(--text-dim);margin-left:auto}
+.wrapper{display:flex;flex:1;min-height:0;overflow:hidden}
+.sidebar{width:210px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-tabs{flex:1;overflow-y:auto;padding:8px 0}
+.tab-group-label{font-size:9px;letter-spacing:.1em;color:var(--text-dim);text-transform:uppercase;padding:10px 16px 4px}
+.tab-btn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 16px;background:none;border:none;color:var(--text-dim);font-size:12.5px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;text-align:left;transition:all .15s;border-left:2px solid transparent}
+.tab-btn:hover{background:var(--bg3);color:var(--text)}.tab-btn.active{background:var(--bg3);color:var(--ch-accent,#f472b6);border-left-color:var(--ch-accent,#f472b6);font-weight:500}
+.tab-icon{font-size:14px;flex-shrink:0}.carousel-toggle-btn{border-left-color:transparent!important}.carousel-toggle-btn.active{background:var(--bg3)!important;color:var(--ch-accent,#f472b6)!important;border-left-color:var(--ch-accent,#f472b6)!important;font-weight:500}
+.main-wrap{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}.cards-area{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}.cards-area.carousel-on{flex:none;max-height:45%;overflow-y:auto}
+.carousel-area{display:none;flex-direction:column;min-height:0;border-top:1px solid var(--border);background:var(--bg2)}.carousel-area.open{display:flex;flex:1}.carousel-main{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;padding:8px;cursor:zoom-in}.carousel-main img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;display:block}.carousel-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);border:1px solid var(--border);color:var(--text);font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s;z-index:2}.carousel-nav:hover{background:color-mix(in srgb,var(--ch-accent,#f472b6) 35%,transparent)}.carousel-nav.prev{left:8px}.carousel-nav.next{right:8px}.carousel-thumbs{flex-shrink:0;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;border-top:1px solid var(--border);background:#0d0f14}.carousel-thumb{width:64px;height:48px;object-fit:cover;border-radius:4px;border:2px solid transparent;cursor:pointer;flex-shrink:0;opacity:.65;transition:all .18s}.carousel-thumb.active{border-color:var(--ch-accent,#f472b6);opacity:1}.carousel-label{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);color:var(--text);font-size:11px;padding:3px 10px;border-radius:10px;white-space:nowrap;pointer-events:none}
+.lightbox{display:none;position:fixed;top:44px;left:210px;right:0;bottom:0;background:rgba(0,0,0,.88);z-index:100;align-items:center;justify-content:center;flex-direction:column;cursor:zoom-out;transition:right .2s}.lightbox.open{display:flex}.lightbox img{max-width:90%;max-height:85%;object-fit:contain;border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.8)}.lightbox-label{color:var(--text);font-size:12px;margin-top:10px;opacity:.8}.lightbox-close{position:absolute;top:12px;right:16px;background:none;border:1px solid var(--border);color:var(--text-dim);font-size:13px;padding:4px 10px;border-radius:5px;cursor:pointer}.lightbox-close:hover{color:var(--ch-accent,#f472b6);border-color:var(--ch-accent,#f472b6)}
+.detail-panel{width:370px;flex-shrink:0;background:var(--panel-bg);border-left:1px solid var(--border);overflow-y:auto;padding:18px;display:none}.detail-panel.open{display:block}.detail-panel h2{font-size:14px;color:var(--ch-accent,#f472b6);margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;transition:border-color .2s,background .2s;cursor:pointer}.card:hover{border-color:var(--ch-accent,#f472b6);background:var(--bg3)}.card-body{flex:1}.card-title{font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:4px}.card-sub{font-size:11.5px;color:var(--text-dim);line-height:1.55}.expand-btn{background:color-mix(in srgb,var(--ch-accent,#f472b6) 12%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#f472b6) 25%,transparent);color:var(--ch-accent,#f472b6);border-radius:5px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;flex-shrink:0;transition:background .18s}.expand-btn:hover{background:color-mix(in srgb,var(--ch-accent,#f472b6) 28%,transparent)}
+.section-title{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px}.tab-content{display:none}.tab-content.active{display:flex;flex-direction:column;gap:12px}
+.detail-section{margin-bottom:16px}.detail-section h3{font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}
+.detail-item{background:var(--bg3);border-radius:6px;padding:9px 12px;margin-bottom:6px;font-size:12px;line-height:1.6;border-left:3px solid var(--border)}.detail-item.accent{border-left-color:var(--ch-accent,#f472b6)}.detail-item.blue{border-left-color:var(--accent2)}.detail-item.green{border-left-color:var(--green)}.detail-item.red{border-left-color:var(--red)}.detail-item.yellow{border-left-color:var(--yellow)}.detail-item b{color:var(--text-bright)}
+.tag{display:inline-block;background:var(--tag-bg);border:1px solid var(--border);color:var(--ch-accent,#f472b6);font-size:10px;font-family:'JetBrains Mono',monospace;padding:1px 7px;border-radius:3px;margin:2px 2px 2px 0}.tag.blue{color:var(--accent2);border-color:rgba(56,189,248,.3)}.tag.green{color:var(--green);border-color:rgba(110,231,183,.3)}.tag.red{color:var(--red);border-color:rgba(248,113,113,.3)}.tag.yellow{color:var(--yellow);border-color:rgba(251,191,36,.3)}
+.detail-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:6px}.detail-table th{background:var(--bg4);color:var(--ch-accent,#f472b6);padding:6px 8px;text-align:left;font-weight:600;border-bottom:1px solid var(--border)}.detail-table td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top}.detail-table tr:last-child td{border-bottom:none}.detail-table tr:hover td{background:var(--bg3)}
+.tip-box{background:color-mix(in srgb,var(--ch-accent,#f472b6) 8%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#f472b6) 25%,transparent);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}.tip-box b{color:var(--ch-accent,#f472b6)}
+.warn-box{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}.warn-box b{color:var(--red)}
+.step-flow{display:flex;flex-direction:column;gap:4px;margin:7px 0}.step-item{background:var(--bg4);border-radius:5px;padding:6px 11px;font-size:12px;border-left:3px solid var(--ch-accent,#f472b6);position:relative}.step-item::after{content:'↓';position:absolute;bottom:-13px;left:13px;color:var(--text-dim);font-size:10px}.step-item:last-child::after{display:none}
+.timeline{display:flex;flex-direction:column}.tl-item{display:flex;gap:12px;padding:6px 0 6px 14px;border-left:2px solid color-mix(in srgb,var(--ch-accent,#f472b6) 30%,transparent);position:relative}.tl-item::before{content:'';position:absolute;left:-5px;top:12px;width:8px;height:8px;border-radius:50%;background:var(--ch-accent,#f472b6);opacity:.7}.tl-label{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--ch-accent,#f472b6);min-width:90px;flex-shrink:0}.tl-body{font-size:12px;color:var(--text-dim)}
+.close-btn{display:flex;align-items:center;gap:5px;background:none;border:1px solid var(--border);color:var(--text-dim);font-size:11px;font-family:'Noto Sans KR',sans-serif;padding:4px 10px;border-radius:5px;cursor:pointer;margin-bottom:12px;transition:all .18s}.close-btn:hover{border-color:var(--ch-accent,#f472b6);color:var(--ch-accent,#f472b6)}
+@media(max-width:768px){html,body{height:auto;overflow:auto}.wrapper{flex-direction:column;overflow:visible}.chapter-section{min-height:0}.main-wrap{overflow:visible}.cards-area{overflow:visible}.cards-area.carousel-on{max-height:none;overflow:visible}.sidebar{width:100%;height:auto;flex-direction:column;border-right:none;border-bottom:1px solid var(--border)}.sidebar-tabs{display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:0}.tab-group-label{display:none}.tab-btn{flex-direction:column;gap:2px;padding:8px 10px;font-size:10px;white-space:nowrap;border-left:none;border-bottom:2px solid transparent;min-width:fit-content}.tab-btn.active{border-left:none;border-bottom-color:var(--ch-accent,#f472b6)}.carousel-area.open{height:360px;flex:none}.carousel-main{height:260px}.detail-panel{width:100%;border-left:none;border-top:1px solid var(--border)}.lightbox{left:0;top:44px}.ch-header p{display:none}}
+</style>
+</head>
+<body>
+<div class="chapter-nav">
+  <span class="chapter-nav-label">신경계운동치료학</span>
+  <button class="ch-btn active" onclick="switchChapter('ch1')" data-ch="ch1" style="--ch-accent:#f472b6">보행 (Gait)</button>
+</div>
+
+<!-- 보행 -->
+<div class="chapter-section active" id="ch1" style="--ch-accent:#f472b6;--accent2:#38bdf8">
+  <div class="ch-header">
+    <span class="ch-badge">GAIT</span>
+    <h1>보행 (Gait)</h1>
+    <p>신경계운동치료학 · 신구대학교 · 2026</p>
+  </div>
+  <div style="padding:12px 22px 0;">
+    <img src="https://placehold.co/1280x720/111827/9ca3af?text=Slide+Image+Placeholder" alt="슬라이드 이미지 플레이스홀더" style="display:block;width:100%;max-height:280px;object-fit:contain;border:1px dashed var(--border);border-radius:8px;background:var(--bg2);">
+  </div>
+  <div class="wrapper">
+    <nav class="sidebar">
+      <div class="sidebar-tabs">
+        <div class="tab-group-label">보행 이론</div>
+        <button class="tab-btn active" onclick="switchTab('ch1','neural',this)"><span class="tab-icon">🧠</span>보행의 신경조절</button>
+        <button class="tab-btn" onclick="switchTab('ch1','overview',this)"><span class="tab-icon">📐</span>보행주기 개요·변수</button>
+        <div class="tab-group-label">보행 분석</div>
+        <button class="tab-btn" onclick="switchTab('ch1','stance',this)"><span class="tab-icon">🦶</span>입각기 단계별 분석</button>
+        <button class="tab-btn" onclick="switchTab('ch1','swing',this)"><span class="tab-icon">🏃</span>유각기 단계별 분석</button>
+        <button class="tab-btn" onclick="switchTab('ch1','kinematics',this)"><span class="tab-icon">📊</span>운동학·근육 타이밍</button>
+        <div class="tab-group-label" style="margin-top:6px;border-top:1px solid var(--border);padding-top:10px;">자료</div>
+        <button class="tab-btn carousel-toggle-btn" id="ch1-carousel-toggle-btn" onclick="toggleCarousel('ch1')"><span class="tab-icon">🖼️</span>슬라이드 이미지</button>
+      </div>
+    </nav>
+    <div class="main-wrap">
+      <div class="cards-area" id="ch1-cards-area">
+
+        <!-- 신경조절 탭 -->
+        <div class="tab-content active" id="ch1-tab-neural">
+          <div class="section-title">보행의 신경조절 (Neural Control of Gait)</div>
+          <div class="card" onclick="openDetail('ch1','neural_overview')"><div class="card-body"><div class="card-title">보행 신경조절 개요</div><div class="card-sub">자세조절 + 사지조절 · 예측적 자세조정 · 정밀한 사지 제어</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','cerebellum')"><div class="card-body"><div class="card-title">소뇌 (Cerebellum)의 역할</div><div class="card-sub">보행 주기 조절 · 배측·복측 척수소뇌로 · 고충실도 피드백</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','hypothalamus_areas')"><div class="card-body"><div class="card-title">시상하부 보행 조절 영역</div><div class="card-sub">Lateral hypothalamus · Zona incerta · Periventricular zone</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','mla')"><div class="card-body"><div class="card-title">Midbrain Locomotor Area (MLA)</div><div class="card-sub">중뇌 보행영역 · 하행 조절계 7가지 경로</div></div><button class="expand-btn">↗</button></div>
+        </div>
+
+        <!-- 보행주기 개요 탭 -->
+        <div class="tab-content" id="ch1-tab-overview">
+          <div class="section-title">보행주기 개요 · 공간·시간적 변수</div>
+          <div class="card" onclick="openDetail('ch1','gait_def')"><div class="card-body"><div class="card-title">보행 정의 · 정상 보행 속도</div><div class="card-sub">1.33 m/sec (80 m/min) · 편안한 속도 기준</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','gait_cycle')"><div class="card-body"><div class="card-title">보행주기 8단계 구성</div><div class="card-sub">IC → LR → MSt → TSt → PSw → ISw → MSw → TSw</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','determinants')"><div class="card-body"><div class="card-title">보행의 6 Determinants</div><div class="card-sub">에너지 효율 극대화를 위한 6가지 메커니즘</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','spatial_params')"><div class="card-body"><div class="card-title">공간적 변수 (Spatial Parameters)</div><div class="card-sub">보폭 · 활보장 · 보행 기저 · 발가락 외전각</div></div><button class="expand-btn">↗</button></div>
+        </div>
+
+        <!-- 입각기 탭 -->
+        <div class="tab-content" id="ch1-tab-stance">
+          <div class="section-title">입각기 (Stance Phase, 60%)</div>
+          <div class="card" onclick="openDetail('ch1','ic')"><div class="card-body"><div class="card-title">IC — Initial Contact (0~2%)</div><div class="card-sub">발뒤꿈치 착지 · Heel Rocker · 전신 충격 흡수 시작</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','lr')"><div class="card-body"><div class="card-title">LR — Loading Response (0~10%)</div><div class="card-sub">초기 이중 지지기 · 충격 흡수 · 체중 이동</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','mst')"><div class="card-body"><div class="card-title">MSt — Mid Stance (10~30%)</div><div class="card-sub">단일 지지기 · Ankle Rocker · 몸무게 중심 전진</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','tst')"><div class="card-body"><div class="card-title">TSt — Terminal Stance (30~50%)</div><div class="card-sub">Forefoot Rocker · Heel Push off · 추진력 생성</div></div><button class="expand-btn">↗</button></div>
+        </div>
+
+        <!-- 유각기 탭 -->
+        <div class="tab-content" id="ch1-tab-swing">
+          <div class="section-title">유각기 (Swing Phase, 40%)</div>
+          <div class="card" onclick="openDetail('ch1','psw')"><div class="card-body"><div class="card-title">PSw — Pre-Swing (50~60%)</div><div class="card-sub">2차 이중 지지기 · 발가락 이지기 · 유각기 준비</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','isw')"><div class="card-body"><div class="card-title">ISw — Initial Swing (60~73%)</div><div class="card-sub">발 떼기 · 하지 전진 가속 · 지면 이격 확보</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','msw')"><div class="card-body"><div class="card-title">MSw — Mid Swing (73~87%)</div><div class="card-sub">하지 최대 전진 · 무릎 신전 시작</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','tsw')"><div class="card-body"><div class="card-title">TSw — Terminal Swing (87~100%)</div><div class="card-sub">IC 준비 · 무릎 완전 신전 · 발목 발등굽힘 유지</div></div><button class="expand-btn">↗</button></div>
+        </div>
+
+        <!-- 운동학 탭 -->
+        <div class="tab-content" id="ch1-tab-kinematics">
+          <div class="section-title">운동학 · 근육 타이밍</div>
+          <div class="card" onclick="openDetail('ch1','kinematics_sagittal')"><div class="card-body"><div class="card-title">시상면 운동학 (Sagittal Plane)</div><div class="card-sub">고관절·슬관절·족관절 굴신 패턴</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','kinematics_frontal')"><div class="card-body"><div class="card-title">전두면 운동학 — 골반·고관절 (Frontal Plane)</div><div class="card-sub">골반 경사 · 고관절 내외전</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','kinematics_horizontal')"><div class="card-body"><div class="card-title">수평면·발목밑관절 운동학</div><div class="card-sub">골반 회전 · 발목밑관절 내외번 패턴</div></div><button class="expand-btn">↗</button></div>
+          <div class="card" onclick="openDetail('ch1','muscle_timing')"><div class="card-body"><div class="card-title">근육 타이밍 (Muscle Timing)</div><div class="card-sub">입각기·유각기 주요 근육 활성 시점</div></div><button class="expand-btn">↗</button></div>
+        </div>
+
+      </div>
+      <div class="carousel-area" id="ch1-carousel-area"><div class="carousel-main" id="ch1-carousel-main" onclick="openLightbox('ch1')"><button class="carousel-nav prev" onclick="event.stopPropagation();carouselMove('ch1',-1)">‹</button><img id="ch1-carousel-img" src="" alt=""><div class="carousel-label" id="ch1-carousel-label"></div><button class="carousel-nav next" onclick="event.stopPropagation();carouselMove('ch1',1)">›</button></div><div class="carousel-thumbs" id="ch1-carousel-thumbs"></div></div>
+    </div>
+    <aside class="detail-panel" id="ch1-detail-panel"><button class="close-btn" onclick="closeDetail('ch1')">✕ 닫기</button><div id="ch1-detail-content"></div></aside>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()"><button class="lightbox-close" onclick="closeLightbox()">✕ 닫기</button><img id="lightbox-img" src="" alt=""><div class="lightbox-label" id="lightbox-label"></div></div>
+
+<script>
+const SLIDES_DATA={ch1:[]};const carouselState={};
+function initCarousel(c){const s=SLIDES_DATA[c]||[];if(!s.length)return;carouselState[c]={curIdx:0};const t=document.getElementById(c+'-carousel-thumbs');t.innerHTML='';s.forEach((sl,i)=>{const img=document.createElement('img');img.className='carousel-thumb'+(i===0?' active':'');img.src=sl.src;img.alt=sl.label;img.onclick=()=>goTo(c,i);t.appendChild(img);});goTo(c,0);}
+function goTo(c,i){const s=SLIDES_DATA[c]||[];if(!s.length)return;const n=s.length;i=((i%n)+n)%n;carouselState[c].curIdx=i;document.getElementById(c+'-carousel-img').src=s[i].src;document.getElementById(c+'-carousel-label').textContent=s[i].label;document.querySelectorAll('#'+c+'-carousel-thumbs .carousel-thumb').forEach((t,j)=>{t.classList.toggle('active',j===i);});const th=document.getElementById(c+'-carousel-thumbs').children[i];if(th)th.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+function carouselMove(c,d){const s=carouselState[c];if(!s)return;goTo(c,s.curIdx+d);}
+function toggleCarousel(c){const a=document.getElementById(c+'-carousel-area');const ca=document.getElementById(c+'-cards-area');const b=document.getElementById(c+'-carousel-toggle-btn');const s=SLIDES_DATA[c]||[];const o=a.classList.contains('open');if(o){a.classList.remove('open');ca.classList.remove('carousel-on');b.classList.remove('active');}else{if(!s.length){alert('등록된 슬라이드 이미지가 없습니다.');return;}a.classList.add('open');ca.classList.add('carousel-on');b.classList.add('active');if(!carouselState[c])initCarousel(c);}}
+let _lbChid=null;function openLightbox(c){const s=carouselState[c];if(!s)return;_lbChid=c;const sl=(SLIDES_DATA[c]||[])[s.curIdx];if(!sl)return;document.getElementById('lightbox-img').src=sl.src;document.getElementById('lightbox-label').textContent=sl.label;const po=document.getElementById(c+'-detail-panel').classList.contains('open');const lb=document.getElementById('lightbox');lb.style.right=po?'370px':'0px';lb.classList.add('open');}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open');_lbChid=null;}
+document.addEventListener('keydown',e=>{const ac=document.querySelector('.chapter-section.active')?.id;if(!ac)return;const a=document.getElementById(ac+'-carousel-area');if(!a?.classList.contains('open'))return;if(e.key==='ArrowLeft')carouselMove(ac,-1);if(e.key==='ArrowRight')carouselMove(ac,1);if(e.key==='Escape')closeLightbox();});
+function switchChapter(c){document.querySelectorAll('.chapter-section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.ch-btn').forEach(b=>b.classList.remove('active'));document.getElementById(c).classList.add('active');document.querySelector(`.ch-btn[data-ch="${c}"]`).classList.add('active');document.querySelectorAll('.detail-panel').forEach(p=>p.classList.remove('open'));}
+function switchTab(c,t,b){const ch=document.getElementById(c);ch.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));ch.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));const el=document.getElementById(c+'-tab-'+t);if(el)el.classList.add('active');b.classList.add('active');closeDetail(c);}
+function openDetail(c,k){const content=(allDetailData[c]||{})[k]||'<p style="color:var(--text-dim)">내용 준비 중</p>';document.getElementById(c+'-detail-content').innerHTML=content;document.getElementById(c+'-detail-panel').classList.add('open');}
+function closeDetail(c){const p=document.getElementById(c+'-detail-panel');if(p)p.classList.remove('open');}
+
+const allDetailData={};
+allDetailData['ch1']={
+
+neural_overview:`<h2>보행 신경조절 개요</h2>
+<div class="detail-section"><h3>두 가지 핵심 과제</h3>
+<div class="detail-item accent"><b>예측적 자세조정 (Anticipatory Postural Adjustment):</b> 사지 움직임 전에 미리 자세 안정성 확보</div>
+<div class="detail-item blue"><b>정밀한 사지 제어 (Precise Limb Control):</b> 목표 지향적 발 디딤 · 장애물 회피</div>
+</div>
+<div class="detail-section"><h3>참고 문헌</h3>
+<div class="detail-item">Takakusaki, K. (2017). Functional neuroanatomy for posture and gait control. <i>Journal of Movement Disorders</i>, 10(1), 1.</div>
+</div>`,
+
+cerebellum:`<h2>소뇌 (Cerebellum)의 역할</h2>
+<div class="detail-section"><h3>보행 주기 조절</h3>
+<div class="detail-item accent">보행 시 걸음 주기(step cycle) 2가지 척수소뇌로로 피드백 수신</div>
+</div>
+<div class="detail-section"><h3>척수소뇌로 2가지</h3>
+<div class="detail-item accent"><b>① 배측 척수소뇌로 (Dorsal Spinocerebellar Tract, DSCT):</b><br>
+근방추·골지힘줄기관에서 고충실도(high-fidelity) 정보 전달<br>
+→ 단일 근육 수준의 정밀한 proprioception 피드백</div>
+<div class="detail-item blue"><b>② 복측 척수소뇌로 (Ventral Spinocerebellar Tract, VSCT):</b><br>
+척수 내 중간뉴런 네트워크의 활동 상태 전달<br>
+→ CPG(중추패턴발생기) 출력의 internal feedback</div>
+</div>
+<div class="tip-box"><b>핵심:</b> DSCT = 실제 말초 감각 / VSCT = 척수 내 운동 명령 사본 (efference copy)</div>`,
+
+hypothalamus_areas:`<h2>시상하부 보행 조절 영역</h2>
+<div class="detail-section">
+<table class="detail-table">
+<tr><th>영역</th><th>기능</th><th>예시</th></tr>
+<tr><td><b>Lateral Hypothalamus</b></td><td>보행 시작·동기부여 관련 조절</td><td>목표 지향적 보행 시작</td></tr>
+<tr><td><b>Zona Incerta</b></td><td>감각 정보 게이팅 (gating) — 불필요한 감각 차단, 필요한 감각만 전달</td><td>관광객 보행 (tourist walking), 익숙한 보행 시 자동화</td></tr>
+<tr><td><b>Periventricular Zone</b></td><td>감정·공포 관련 보행 조절</td><td>"위험!" 반응 · 파킨슨병 환자의 보행동결(freezing)</td></tr>
+</table>
+</div>
+<div class="warn-box"><b>임상 연관:</b> Periventricular zone 기능 이상 → 파킨슨병 보행동결 (Freezing of Gait, FOG)</div>`,
+
+mla:`<h2>Midbrain Locomotor Area (MLA)</h2>
+<div class="detail-section"><h3>하행 조절계 7가지 경로</h3>
+<div class="detail-item accent"><b>① Midbrain Locomotor Area (MLA)</b> — 중뇌 보행 조절 중추</div>
+<div class="detail-item blue"><b>② Cortico-reticulo-spinal system</b> — SMA/PM → 교뇌연수 망상체 → 척수<br>
+<small>SMA/PM이 척수 외에도 교뇌연수 망상체로 밀도 높은 투사를 보냄</small></div>
+<div class="detail-item blue"><b>③ Vestibulo-spinal system</b> — 전정계 → 균형·직립 조절</div>
+<div class="detail-item blue"><b>④ Cortico-spinal system</b> — 피질척수로 · 정밀한 수의운동</div>
+<div class="detail-item blue"><b>⑤ Cortico-rubro-spinal system</b> — 적핵경유 · 상지 원위부 조절</div>
+<div class="detail-item green"><b>⑥ Cerebellar influences</b> — 소뇌 피드백 조율</div>
+<div class="detail-item green"><b>⑦ Peripheral input</b> — 말초 감각 (proprioception, cutaneous)</div>
+</div>
+<div class="tip-box"><b>SMA/PM 역할:</b> 보행 중 자세 선행 조절에 핵심 — 단순 수의운동 이상의 역할</div>`,
+
+gait_def:`<h2>보행 정의 · 정상 보행 속도</h2>
+<div class="detail-section"><h3>보행 정의</h3>
+<div class="detail-item accent"><b>보행(Gait):</b> 목표물 향해 앞으로 나아가는 반복적 움직임 패턴</div>
+<div class="detail-item blue"><b>2가지 조건:</b> ① 목표물을 향해 전진 ② 균형 유지</div>
+</div>
+<div class="detail-section"><h3>정상 보행 속도</h3>
+<div class="detail-item accent"><b>편안한 속도 (Comfortable Speed):</b> 1.33 m/sec = 80 m/min</div>
+<div class="detail-item blue">보행 속도 = 보폭 빈도(cadence) × 활보장(stride length)</div>
+</div>
+<div class="detail-section"><h3>보행 주기 시간 구성</h3>
+<div class="detail-item accent"><b>입각기 (Stance Phase):</b> 약 60% — 발이 지면에 있는 구간</div>
+<div class="detail-item blue"><b>유각기 (Swing Phase):</b> 약 40% — 발이 지면에서 떨어진 구간</div>
+<div class="detail-item green"><b>이중 지지기 (Double Limb Stance):</b> 각 약 10% × 2 = 약 20%</div>
+</div>`,
+
+gait_cycle:`<h2>보행주기 8단계</h2>
+<div class="detail-section">
+<table class="detail-table">
+<tr><th>단계</th><th>약어</th><th>비율</th><th>구분</th></tr>
+<tr><td>Initial Contact</td><td>IC</td><td>0~2%</td><td>입각기</td></tr>
+<tr><td>Loading Response</td><td>LR</td><td>0~10%</td><td>입각기</td></tr>
+<tr><td>Mid Stance</td><td>MSt</td><td>10~30%</td><td>입각기</td></tr>
+<tr><td>Terminal Stance</td><td>TSt</td><td>30~50%</td><td>입각기</td></tr>
+<tr><td>Pre-Swing</td><td>PSw</td><td>50~60%</td><td>입각기 말/이중지지</td></tr>
+<tr><td>Initial Swing</td><td>ISw</td><td>60~73%</td><td>유각기</td></tr>
+<tr><td>Mid Swing</td><td>MSw</td><td>73~87%</td><td>유각기</td></tr>
+<tr><td>Terminal Swing</td><td>TSw</td><td>87~100%</td><td>유각기</td></tr>
+</table>
+</div>
+<div class="tip-box"><b>Rocker 3가지:</b> Heel Rocker (IC) → Ankle Rocker (MSt) → Forefoot Rocker (TSt)</div>`,
+
+determinants:`<h2>보행의 6 Determinants</h2>
+<div class="detail-section"><h3>에너지 효율화를 위한 6가지 메커니즘</h3>
+<div class="detail-item accent"><b>1. 골반 회전 (Pelvic Rotation):</b> 활보장 증가·중심 하강 감소</div>
+<div class="detail-item blue"><b>2. 골반 경사 (Pelvic Tilt):</b> 유각기 쪽 골반 하강 → 중심 하강 감소</div>
+<div class="detail-item blue"><b>3. 무릎 굴곡 (Knee Flexion):</b> 입각기 중기 무릎 약 15° 굴곡 → 중심 하강 완충</div>
+<div class="detail-item blue"><b>4. 발목 기전 (Foot/Ankle Mechanism):</b> Rocker 시스템으로 중심 경로 유연화</div>
+<div class="detail-item green"><b>5. 무릎 기전 (Knee Mechanism):</b> 발목과 연계한 무릎 운동</div>
+<div class="detail-item green"><b>6. 수평면 이동 (Lateral Displacement):</b> 골반 측방 이동 최소화 → 에너지 절약</div>
+</div>
+<div class="tip-box"><b>목표:</b> 중심(COM)의 상하·좌우 진동 최소화 → 산소 소모 절감</div>`,
+
+spatial_params:`<h2>공간적 변수 (Spatial Parameters)</h2>
+<div class="detail-section">
+<table class="detail-table">
+<tr><th>변수</th><th>정의</th><th>정상값</th></tr>
+<tr><td><b>보폭 (Step Length)</b></td><td>한 발 착지 → 반대 발 착지까지 거리</td><td>좌우 차이 ≤5 cm</td></tr>
+<tr><td><b>활보장 (Stride Length)</b></td><td>같은 발 착지 → 다음 착지까지 거리</td><td>약 1.4 m</td></tr>
+<tr><td><b>보행 기저 (Step Width)</b></td><td>양 발뒤꿈치 중심 간 측방 거리</td><td>약 4 cm</td></tr>
+<tr><td><b>발가락 외전각 (Toe-out angle)</b></td><td>진행 방향 대비 발 외회전 각도</td><td>약 7°</td></tr>
+</table>
+</div>
+<div class="tip-box"><b>임상 적용:</b> 보폭 비대칭 >5 cm → 신경학적 이상 의심. 보행 기저 증가 → 균형 저하 보상.</div>`,
+
+ic:`<h2>IC — Initial Contact (0~2%)</h2>
+<div class="detail-section"><h3>정의 · 특징</h3>
+<div class="detail-item accent"><b>정의:</b> 발뒤꿈치가 지면에 처음 닿는 순간 (Heel Strike)</div>
+<div class="detail-item blue"><b>Heel Rocker 시작:</b> 발뒤꿈치 → 발가락 방향으로 발 구르기 시작</div>
+</div>
+<div class="detail-section"><h3>관절 위치</h3>
+<div class="detail-item blue"><b>고관절:</b> 굴곡 약 30° · <b>슬관절:</b> 완전 신전 · <b>족관절:</b> 발등굽힘 0° (중립)</div>
+</div>
+<div class="detail-section"><h3>활성 근육</h3>
+<div class="detail-item green"><span class="tag">앞정강근 (Tibialis Ant.)</span> 발등굽힘 유지 · 발 제어된 착지</div>
+<div class="detail-item green"><span class="tag">넙다리네갈래근 (Quadriceps)</span> 슬관절 잠금 유지</div>
+<div class="detail-item green"><span class="tag">큰볼기근 (Gluteus Max.)</span> 고관절 신전 준비</div>
+<div class="detail-item green"><span class="tag">넙다리두갈래근 (Biceps Femoris)</span> 슬관절 안정화</div>
+</div>`,
+
+lr:`<h2>LR — Loading Response (0~10%)</h2>
+<div class="detail-section"><h3>정의 · 특징</h3>
+<div class="detail-item accent"><b>정의:</b> 발뒤꿈치 착지 후 발 전체가 지면에 닿는 충격 흡수 구간</div>
+<div class="detail-item blue"><b>Initial Double Limb Stance:</b> 양 발이 동시에 지면에 있는 첫 번째 이중 지지기</div>
+<div class="detail-item blue">반대쪽 발은 유각기 초기(ISw)에 해당</div>
+</div>
+<div class="detail-section"><h3>기능</h3>
+<div class="detail-item blue">충격 흡수 (Shock Absorption) — 체중의 약 120% GRF 발생</div>
+<div class="detail-item blue">체중 전방 이동 시작</div>
+<div class="detail-item blue">슬관절 굴곡 약 15° → 충격 완충</div>
+</div>
+<div class="detail-section"><h3>활성 근육</h3>
+<div class="detail-item green"><span class="tag">큰볼기근</span> 고관절 신전 · 체간 안정</div>
+<div class="detail-item green"><span class="tag">넙다리네갈래근</span> 슬관절 굴곡 제어 (eccentric)</div>
+<div class="detail-item green"><span class="tag">앞정강근</span> 발바닥굽힘 제어 (eccentric) — 발 제어된 착지</div>
+<div class="detail-item green"><span class="tag">넙다리두갈래근</span> 슬관절 안정화</div>
+</div>`,
+
+mst:`<h2>MSt — Mid Stance (10~30%)</h2>
+<div class="detail-section"><h3>정의 · 특징</h3>
+<div class="detail-item accent"><b>정의:</b> 단일 지지기 — 한쪽 발만 지면에 있는 구간</div>
+<div class="detail-item blue"><b>반대쪽 발:</b> MSw~TSw 유각기 중기~말기 해당</div>
+<div class="detail-item blue"><b>Ankle Rocker:</b> 발목을 축으로 체중이 앞으로 이동</div>
+</div>
+<div class="detail-section"><h3>기능</h3>
+<div class="detail-item blue">몸 중심(COM) 최고점 통과</div>
+<div class="detail-item blue">지지 발 위로 체중 전진</div>
+<div class="detail-item blue">반대쪽 하지 전진 위한 안정성 제공</div>
+</div>
+<div class="detail-section"><h3>활성 근육</h3>
+<div class="detail-item green"><span class="tag">넙다리네갈래근</span> 슬관절 안정화 (주로 초반)</div>
+<div class="detail-item green"><span class="tag">장딴지근·가자미근 (Gastrocnemius/Soleus)</span> 발바닥굽힘 제어 — 전진 속도 조절</div>
+</div>`,
+
+tst:`<h2>TSt — Terminal Stance (30~50%)</h2>
+<div class="detail-section"><h3>정의 · 특징</h3>
+<div class="detail-item accent"><b>정의:</b> 발뒤꿈치 들리기(Heel Rise) 시작 → 반대 발 IC까지</div>
+<div class="detail-item blue"><b>Forefoot Rocker:</b> 발앞꿈치를 축으로 체중 전진 · 추진력 생성</div>
+<div class="detail-item blue">반대쪽 발: IC에 해당 (이중 지지기 진입)</div>
+</div>
+<div class="detail-section"><h3>기능</h3>
+<div class="detail-item blue">추진력(Propulsion) 생성 — 보행 에너지의 주요 원천</div>
+<div class="detail-item blue">체중이 발앞꿈치로 이동 → 발뒤꿈치 지면 이탈</div>
+</div>
+<div class="detail-section"><h3>활성 근육</h3>
+<div class="detail-item green"><span class="tag">장딴지근 (Gastrocnemius)</span> <span class="tag">가자미근 (Soleus)</span> 강한 발바닥굽힘 → Heel Push off</div>
+</div>
+<div class="tip-box"><b>임상 의미:</b> 장딴지근 약화 → TSt 단축 → 추진력 감소 → 보행 속도 저하</div>`,
+
+psw:`<h2>PSw — Pre-Swing (50~60%)</h2>
+<div class="detail-section"><h3>정의 · 특징</h3>
+<div class="detail-item accent"><b>정의:</b> 두 번째 이중 지지기 시작 → 발가락 이지기(Toe Off)까지</div>
+<div class="detail-item blue">반대쪽 발 LR에 해당 (반대 발이 체중 받기 시작)</div>
+</div>
+<div class="detail-section"><h3>기능</h3>
+<div class="detail-item blue">유각기 가속을 위한 에너지 축적</div>
+<div class="detail-item blue">무릎 굴곡 시작 (~40°) — 지면 이격 준비</div>
+<div class="detail-item blue">고관절 최대 신전에서 굴곡으로 전환</div>
+</div>`,
+
+isw:`<h2>ISw — Initial Swing (60~73%)</h2>
+<div class="detail-section"><h3>정의 · 특징</h3>
+<div class="detail-item accent"><b>정의:</b> 발가락 이지기(Toe Off) → 양 발이 나란해질 때까지</div>
+</div>
+<div class="detail-section"><h3>기능</h3>
+<div class="detail-item blue">하지 전방 가속 시작</div>
+<div class="detail-item blue">무릎 최대 굴곡 (~60°) → 지면 이격(foot clearance) 확보</div>
+<div class="detail-item blue">고관절 굴곡 가속</div>
+</div>
+<div class="detail-section"><h3>활성 근육</h3>
+<div class="detail-item green"><span class="tag">엉덩허리근 (Iliopsoas)</span> 고관절 굴곡 가속</div>
+<div class="detail-item green"><span class="tag">앞정강근</span> 발등굽힘 — 지면 이격</div>
+</div>`,
+
+msw:`<h2>MSw — Mid Swing (73~87%)</h2>
+<div class="detail-section"><h3>정의 · 특징</h3>
+<div class="detail-item accent"><b>정의:</b> 양 발이 나란한 시점 → 유각 하지가 지지 하지를 앞서는 시점</div>
+</div>
+<div class="detail-section"><h3>기능</h3>
+<div class="detail-item blue">하지 관성으로 전진 지속 (근육 활동 최소)</div>
+<div class="detail-item blue">무릎 굴곡에서 신전으로 전환</div>
+<div class="detail-item blue">발등굽힘 유지로 지면 이격 유지</div>
+</div>`,
+
+tsw:`<h2>TSw — Terminal Swing (87~100%)</h2>
+<div class="detail-section"><h3>정의 · 특징</h3>
+<div class="detail-item accent"><b>정의:</b> 유각 하지가 최대 전진 → 다음 IC까지</div>
+</div>
+<div class="detail-section"><h3>기능</h3>
+<div class="detail-item blue">무릎 완전 신전 — IC 준비</div>
+<div class="detail-item blue">발목 발등굽힘 유지 (~0°)</div>
+<div class="detail-item blue">하지 전진 속도 감속 (다음 IC 충격 최소화)</div>
+</div>
+<div class="detail-section"><h3>활성 근육</h3>
+<div class="detail-item green"><span class="tag">넙다리뒤근육 (Hamstrings)</span> 슬관절 과신전 방지 · 감속</div>
+<div class="detail-item green"><span class="tag">앞정강근</span> 발등굽힘 유지</div>
+</div>`,
+
+kinematics_sagittal:`<h2>시상면 운동학 (Sagittal Plane)</h2>
+<div class="detail-section"><h3>고관절 (Hip Joint)</h3>
+<div class="detail-item accent"><b>IC:</b> 굴곡 30° → <b>TSt:</b> 신전 10° → <b>PSw:</b> 다시 굴곡 전환</div>
+</div>
+<div class="detail-section"><h3>슬관절 (Knee Joint)</h3>
+<div class="detail-item blue"><b>IC:</b> 완전 신전 0° → <b>LR:</b> 굴곡 15° (충격 흡수) → <b>MSt:</b> 다시 신전 → <b>ISw:</b> 최대 굴곡 60°</div>
+</div>
+<div class="detail-section"><h3>족관절 (Ankle Joint)</h3>
+<div class="detail-item blue"><b>IC:</b> 중립 0° → <b>LR:</b> 발바닥굽힘 10° (Heel Rocker) → <b>MSt:</b> 발등굽힘 10° (Ankle Rocker) → <b>TSt:</b> 발바닥굽힘 20° (Forefoot Rocker)</div>
+</div>
+<div class="tip-box"><b>족관절 3개 Rocker:</b> 보행의 에너지 효율화 핵심 — Heel→Ankle→Forefoot Rocker 연속</div>`,
+
+kinematics_frontal:`<h2>전두면 운동학 — 골반·고관절</h2>
+<div class="detail-section"><h3>골반 경사 (Pelvic Tilt)</h3>
+<div class="detail-item accent"><b>유각기 쪽 골반:</b> 약 5° 하강 (Trendelenburg 패턴) → 중심 하강 최소화</div>
+<div class="detail-item blue"><b>입각기 측 중둔근:</b> 반대 골반 하강 제어 — 중둔근 약화 시 Trendelenburg 보행 증가</div>
+</div>
+<div class="detail-section"><h3>고관절 내외전</h3>
+<div class="detail-item blue"><b>입각기:</b> 고관절 내전 5° → 무릎 관절 안쪽으로 body weight 이동</div>
+</div>
+<div class="warn-box"><b>임상:</b> 중둔근 약화 → 골반 과도한 측방 하강 → Trendelenburg gait → 보행 속도·효율 저하</div>`,
+
+kinematics_horizontal:`<h2>수평면·발목밑관절 운동학</h2>
+<div class="detail-section"><h3>골반 수평면 회전 (Horizontal Plane)</h3>
+<div class="detail-item accent"><b>전진 보행 시:</b> 골반 전방 회전 약 4° → 활보장 증가 보조</div>
+<div class="detail-item blue">체간·골반 반대 방향 회전 → 균형·에너지 효율</div>
+</div>
+<div class="detail-section"><h3>발목밑관절 (Subtalar Joint) 운동학</h3>
+<div class="detail-item accent"><b>IC~LR:</b> 뒤발굽 외번(eversion) → 발 유연성 확보 · 충격 흡수</div>
+<div class="detail-item blue"><b>TSt:</b> 뒤발굽 내번(inversion) → 발 강성 증가 → Lever arm 형성 → 추진력 전달</div>
+</div>
+<div class="tip-box"><b>발목밑관절 역할:</b> LR = 충격흡수용 유연성 → TSt = 추진용 강성. 이 전환이 정상 보행의 핵심.</div>`,
+
+muscle_timing:`<h2>근육 타이밍 (Muscle Timing)</h2>
+<div class="detail-section"><h3>보행 단계별 주요 근육</h3>
+<table class="detail-table">
+<tr><th>단계</th><th>주요 근육</th><th>기능</th></tr>
+<tr><td><b>IC (0~2%)</b></td><td>앞정강근, 넙다리네갈래근, 큰볼기근, 넙다리두갈래근</td><td>발 제어된 착지, 슬관절 안정화</td></tr>
+<tr><td><b>LR (0~10%)</b></td><td>큰볼기근, 넙다리네갈래근, 넙다리두갈래근, 앞정강근</td><td>충격흡수, 체중 전방이동</td></tr>
+<tr><td><b>MSt (10~30%)</b></td><td>넙다리네갈래근, 장딴지근·가자미근</td><td>슬관절 안정, 전진속도 조절</td></tr>
+<tr><td><b>TSt (30~50%)</b></td><td>장딴지근, 가자미근</td><td>추진력 생성 (Heel Push off)</td></tr>
+<tr><td><b>ISw (60~73%)</b></td><td>엉덩허리근, 앞정강근</td><td>고관절 굴곡, 지면 이격</td></tr>
+<tr><td><b>TSw (87~100%)</b></td><td>넙다리뒤근육, 앞정강근</td><td>감속, 발등굽힘 유지</td></tr>
+</table>
+</div>
+<div class="tip-box"><b>핵심 근육 쌍:</b> 앞정강근 (IC·유각기) vs 장딴지근·가자미근 (TSt) — 보행 제어의 양대 축</div>
+<div class="detail-section" style="margin-top:12px"><h3>근육 기능 분류</h3>
+<div class="detail-item accent"><b>충격흡수 (Shock Absorption):</b> 큰볼기근 + 넙다리네갈래근 + 앞정강근 (IC~LR, eccentric)</div>
+<div class="detail-item blue"><b>추진 (Propulsion):</b> 장딴지근 + 가자미근 (TSt, concentric)</div>
+<div class="detail-item green"><b>지면 이격 (Foot Clearance):</b> 앞정강근 + 엉덩허리근 (ISw~MSw)</div>
+</div>`
+
+};
+</script>
+</body>
+</html>

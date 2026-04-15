@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>신경계운동치료학 - 기능적 움직임 재교육</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+:root{--bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e2a;--bg4:#222736;--border:#2a3048;--accent:#34d399;--accent2:#a78bfa;--green:#6ee7b7;--red:#f87171;--yellow:#fbbf24;--text:#dce3f0;--text-dim:#7a8aaa;--text-bright:#fff;--tag-bg:#1d2236;--panel-bg:#111420;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.65;display:flex;flex-direction:column}
+.chapter-nav{background:#0a0c10;border-bottom:1px solid #1e2235;padding:0 16px;display:flex;align-items:center;gap:4px;height:44px;flex-shrink:0;overflow-x:auto}
+.chapter-nav-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:#3a4060;letter-spacing:.1em;margin-right:8px;white-space:nowrap;flex-shrink:0}
+.ch-btn{font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 14px;border-radius:5px;border:1px solid #252840;background:transparent;color:#5a6888;cursor:pointer;transition:all .18s;white-space:nowrap;flex-shrink:0}
+.ch-btn:hover{background:#13161e;color:#9ab;border-color:#3a3f60}
+.ch-btn.active{background:var(--ch-accent,#34d399);color:#0a0c10;border-color:transparent;font-weight:600}
+.chapter-section{display:none;flex:1;flex-direction:column;min-height:0}
+.chapter-section.active{display:flex}
+.ch-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 22px 10px;display:flex;align-items:baseline;gap:12px;flex-shrink:0;flex-wrap:wrap}
+.ch-badge{font-family:'JetBrains Mono',monospace;font-size:11px;padding:2px 9px;border-radius:4px;letter-spacing:.06em;color:var(--ch-accent,#34d399);background:color-mix(in srgb,var(--ch-accent,#34d399) 12%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#34d399) 30%,transparent)}
+.ch-header h1{font-size:15px;font-weight:700;color:var(--text-bright)}
+.ch-header p{font-size:11px;color:var(--text-dim);margin-left:auto}
+.wrapper{display:flex;flex:1;min-height:0;overflow:hidden}
+.sidebar{width:210px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-tabs{flex:1;overflow-y:auto;padding:8px 0}
+.tab-group-label{font-size:9px;letter-spacing:.1em;color:var(--text-dim);text-transform:uppercase;padding:10px 16px 4px}
+.tab-btn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 16px;background:none;border:none;color:var(--text-dim);font-size:12.5px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;text-align:left;transition:all .15s;border-left:2px solid transparent}
+.tab-btn:hover{background:var(--bg3);color:var(--text)}
+.tab-btn.active{background:var(--bg3);color:var(--ch-accent,#34d399);border-left-color:var(--ch-accent,#34d399);font-weight:500}
+.tab-icon{font-size:14px;flex-shrink:0}
+.carousel-toggle-btn{border-left-color:transparent!important}
+.carousel-toggle-btn.active{background:var(--bg3)!important;color:var(--ch-accent,#34d399)!important;border-left-color:var(--ch-accent,#34d399)!important;font-weight:500}
+.main-wrap{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+.cards-area{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}
+.cards-area.carousel-on{flex:none;max-height:45%;overflow-y:auto}
+.carousel-area{display:none;flex-direction:column;min-height:0;border-top:1px solid var(--border);background:var(--bg2)}
+.carousel-area.open{display:flex;flex:1}
+.carousel-main{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;padding:8px;cursor:zoom-in}
+.carousel-main img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;display:block}
+.carousel-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);border:1px solid var(--border);color:var(--text);font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s;z-index:2}
+.carousel-nav:hover{background:color-mix(in srgb,var(--ch-accent,#34d399) 35%,transparent)}
+.carousel-nav.prev{left:8px}
+.carousel-nav.next{right:8px}
+.carousel-thumbs{flex-shrink:0;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;border-top:1px solid var(--border);background:#0d0f14}
+.carousel-thumb{width:64px;height:48px;object-fit:cover;border-radius:4px;border:2px solid transparent;cursor:pointer;flex-shrink:0;opacity:.65;transition:all .18s}
+.carousel-thumb.active{border-color:var(--ch-accent,#34d399);opacity:1}
+.carousel-label{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);color:var(--text);font-size:11px;padding:3px 10px;border-radius:10px;white-space:nowrap;pointer-events:none}
+.lightbox{display:none;position:fixed;top:44px;left:210px;right:0;bottom:0;background:rgba(0,0,0,.88);z-index:100;align-items:center;justify-content:center;flex-direction:column;cursor:zoom-out;transition:right .2s}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90%;max-height:85%;object-fit:contain;border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.8)}
+.lightbox-label{color:var(--text);font-size:12px;margin-top:10px;opacity:.8}
+.lightbox-close{position:absolute;top:12px;right:16px;background:none;border:1px solid var(--border);color:var(--text-dim);font-size:13px;padding:4px 10px;border-radius:5px;cursor:pointer}
+.lightbox-close:hover{color:var(--ch-accent,#34d399);border-color:var(--ch-accent,#34d399)}
+.detail-panel{width:370px;flex-shrink:0;background:var(--panel-bg);border-left:1px solid var(--border);overflow-y:auto;padding:18px;display:none}
+.detail-panel.open{display:block}
+.detail-panel h2{font-size:14px;color:var(--ch-accent,#34d399);margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;transition:border-color .2s,background .2s;cursor:pointer}
+.card:hover{border-color:var(--ch-accent,#34d399);background:var(--bg3)}
+.card-body{flex:1}
+.card-title{font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:4px}
+.card-sub{font-size:11.5px;color:var(--text-dim);line-height:1.55}
+.expand-btn{background:color-mix(in srgb,var(--ch-accent,#34d399) 12%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#34d399) 25%,transparent);color:var(--ch-accent,#34d399);border-radius:5px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;flex-shrink:0;transition:background .18s}
+.expand-btn:hover{background:color-mix(in srgb,var(--ch-accent,#34d399) 28%,transparent)}
+.section-title{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px}
+.tab-content{display:none}
+.tab-content.active{display:flex;flex-direction:column;gap:12px}
+.detail-section{margin-bottom:16px}
+.detail-section h3{font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}
+.detail-item{background:var(--bg3);border-radius:6px;padding:9px 12px;margin-bottom:6px;font-size:12px;line-height:1.6;border-left:3px solid var(--border)}
+.detail-item.accent{border-left-color:var(--ch-accent,#34d399)}
+.detail-item.blue{border-left-color:var(--accent2)}
+.detail-item.green{border-left-color:var(--green)}
+.detail-item.red{border-left-color:var(--red)}
+.detail-item.yellow{border-left-color:var(--yellow)}
+.detail-item b{color:var(--text-bright)}
+.tag{display:inline-block;background:var(--tag-bg);border:1px solid var(--border);color:var(--ch-accent,#34d399);font-size:10px;font-family:'JetBrains Mono',monospace;padding:1px 7px;border-radius:3px;margin:2px 2px 2px 0}
+.tag.blue{color:var(--accent2);border-color:rgba(167,139,250,.3)}
+.tag.green{color:var(--green);border-color:rgba(110,231,183,.3)}
+.tag.red{color:var(--red);border-color:rgba(248,113,113,.3)}
+.tag.yellow{color:var(--yellow);border-color:rgba(251,191,36,.3)}
+.detail-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:6px}
+.detail-table th{background:var(--bg4);color:var(--ch-accent,#34d399);padding:6px 8px;text-align:left;font-weight:600;border-bottom:1px solid var(--border)}
+.detail-table td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.detail-table tr:last-child td{border-bottom:none}
+.detail-table tr:hover td{background:var(--bg3)}
+.tip-box{background:color-mix(in srgb,var(--ch-accent,#34d399) 8%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#34d399) 25%,transparent);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}
+.tip-box b{color:var(--ch-accent,#34d399)}
+.warn-box{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}
+.warn-box b{color:var(--red)}
+.step-flow{display:flex;flex-direction:column;gap:4px;margin:7px 0}
+.step-item{background:var(--bg4);border-radius:5px;padding:6px 11px;font-size:12px;border-left:3px solid var(--ch-accent,#34d399);position:relative}
+.step-item::after{content:'↓';position:absolute;bottom:-13px;left:13px;color:var(--text-dim);font-size:10px}
+.step-item:last-child::after{display:none}
+.timeline{display:flex;flex-direction:column}
+.tl-item{display:flex;gap:12px;padding:6px 0 6px 14px;border-left:2px solid color-mix(in srgb,var(--ch-accent,#34d399) 30%,transparent);position:relative}
+.tl-item::before{content:'';position:absolute;left:-5px;top:12px;width:8px;height:8px;border-radius:50%;background:var(--ch-accent,#34d399);opacity:.7}
+.tl-label{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--ch-accent,#34d399);min-width:90px;flex-shrink:0}
+.tl-body{font-size:12px;color:var(--text-dim)}
+.close-btn{display:flex;align-items:center;gap:5px;background:none;border:1px solid var(--border);color:var(--text-dim);font-size:11px;font-family:'Noto Sans KR',sans-serif;padding:4px 10px;border-radius:5px;cursor:pointer;margin-bottom:12px;transition:all .18s}
+.close-btn:hover{border-color:var(--ch-accent,#34d399);color:var(--ch-accent,#34d399)}
+@media(max-width:768px){html,body{height:auto;overflow:auto}.wrapper{flex-direction:column;overflow:visible}.chapter-section{min-height:0}.main-wrap{overflow:visible}.cards-area{overflow:visible}.cards-area.carousel-on{max-height:none;overflow:visible}.sidebar{width:100%;height:auto;flex-direction:column;border-right:none;border-bottom:1px solid var(--border)}.sidebar-tabs{display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:0}.tab-group-label{display:none}.tab-btn{flex-direction:column;gap:2px;padding:8px 10px;font-size:10px;white-space:nowrap;border-left:none;border-bottom:2px solid transparent;min-width:fit-content}.tab-btn.active{border-left:none;border-bottom-color:var(--ch-accent,#34d399)}.carousel-area.open{height:360px;flex:none}.carousel-main{height:260px}.detail-panel{width:100%;border-left:none;border-top:1px solid var(--border)}.lightbox{left:0;top:44px}.ch-header p{display:none}}
+</style>
+</head>
+<body>
+
+<div class="chapter-nav">
+  <span class="chapter-nav-label">신경계운동치료학</span>
+  <button class="ch-btn active" onclick="switchChapter('ch1')" data-ch="ch1" style="--ch-accent:#34d399">기능적 움직임 재교육</button>
+</div>
+
+<div class="chapter-section active" id="ch1" style="--ch-accent:#34d399;--accent2:#a78bfa">
+  <div class="ch-header">
+    <span class="ch-badge">FMR</span>
+    <h1>Functional Movement Re-education</h1>
+    <p>신경계운동치료학 · 신구대학교 · 2026</p>
+  </div>
+  <div style="padding:12px 22px 0;">
+    <img src="https://placehold.co/1280x720/111827/9ca3af?text=Slide+Image+Placeholder" alt="슬라이드 이미지 플레이스홀더" style="display:block;width:100%;max-height:280px;object-fit:contain;border:1px dashed var(--border);border-radius:8px;background:var(--bg2);">
+  </div>
+  <div class="wrapper">
+
+    <nav class="sidebar">
+      <div class="sidebar-tabs">
+        <div class="tab-group-label">FMR 개요</div>
+        <button class="tab-btn active" onclick="switchTab('ch1','overview',this)"><span class="tab-icon">📖</span>개념 · 원칙</button>
+        <button class="tab-btn" onclick="switchTab('ch1','movement',this)"><span class="tab-icon">🔄</span>움직임 분석</button>
+        <div class="tab-group-label">앉기→서기 (STS)</div>
+        <button class="tab-btn" onclick="switchTab('ch1','sts',this)"><span class="tab-icon">🪑</span>STS 3단계</button>
+        <button class="tab-btn" onclick="switchTab('ch1','sts_problems',this)"><span class="tab-icon">⚠️</span>STS 문제 유형</button>
+        <div class="tab-group-label" style="margin-top:6px;border-top:1px solid var(--border);padding-top:10px;">자료</div>
+        <button class="tab-btn carousel-toggle-btn" id="ch1-carousel-toggle-btn" onclick="toggleCarousel('ch1')">
+          <span class="tab-icon">🖼️</span>슬라이드 이미지
+        </button>
+      </div>
+    </nav>
+
+    <div class="main-wrap">
+      <div class="cards-area" id="ch1-cards-area">
+
+        <div class="tab-content active" id="ch1-tab-overview">
+          <div class="section-title">FMR 핵심 원칙</div>
+          <div class="card" onclick="openDetail('ch1','fmr_concept')">
+            <div class="card-body">
+              <div class="card-title">FMR 개념 · 배경</div>
+              <div class="card-sub">Ryerson & Levit · 뇌신경병변 → 운동조절 변화 → 보상</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','movement_quality')">
+            <div class="card-body">
+              <div class="card-title">움직임 질 3요소</div>
+              <div class="card-sub">일치성 (Concordance) · 효율성 (Efficiency) · 안전성 (Safety)</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','treatment_int')">
+            <div class="card-body">
+              <div class="card-title">치료 중재 4요소</div>
+              <div class="card-sub">준비 → 활성화 → 기능적 과제 → 적응</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','handling')">
+            <div class="card-body">
+              <div class="card-title">핸들링 기법</div>
+              <div class="card-sub">Facilitation · Placing · Hand On/Off 기법</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <div class="tab-content" id="ch1-tab-movement">
+          <div class="section-title">Movement Analysis — 움직임 분석</div>
+          <div class="card" onclick="openDetail('ch1','bobath_movement')">
+            <div class="card-body">
+              <div class="card-title">보바스 움직임 분석틀</div>
+              <div class="card-sub">Movement Components · Movement Sequences · 4단계</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','rolling')">
+            <div class="card-body">
+              <div class="card-title">구르기 (Rolling)</div>
+              <div class="card-sub">기능적 회전 · 몸통-골반 협응</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','bridging')">
+            <div class="card-body">
+              <div class="card-title">브리징 (Bridging)</div>
+              <div class="card-sub">고관절 선택적 신전 + 복근 활성화</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <div class="tab-content" id="ch1-tab-sts">
+          <div class="section-title">Sit-to-Stand — 3단계 분석</div>
+          <div class="card" onclick="openDetail('ch1','sts_phases')">
+            <div class="card-body">
+              <div class="card-title">STS 3단계 개요</div>
+              <div class="card-sub">Weight Shift → Transition → Lift (Extension)</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','sts_lower')">
+            <div class="card-body">
+              <div class="card-title">하부 몸통 시작 패턴</div>
+              <div class="card-sub">요추-골반 시작 · 고관절 굴곡 · 체중이동</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','sts_upper')">
+            <div class="card-body">
+              <div class="card-title">상부 몸통 시작 패턴</div>
+              <div class="card-sub">흉추 굴곡 시작 · COG 이동 · 완성 단계</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <div class="tab-content" id="ch1-tab-sts_problems">
+          <div class="section-title">STS 문제 유형 8가지</div>
+          <div class="card" onclick="openDetail('ch1','prob1')">
+            <div class="card-body">
+              <div class="card-title">① 몸통 조절 소실</div>
+              <div class="card-sub">하부-상부 정렬 불량 · 골반-고관절 약화</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','prob2')">
+            <div class="card-body">
+              <div class="card-title">② 체중이동 문제</div>
+              <div class="card-sub">전방 체중이동 불충분 · 비침범측 의존</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','prob3')">
+            <div class="card-body">
+              <div class="card-title">③ 하지 활성화 문제</div>
+              <div class="card-sub">비침범 다리 보상 · 침범 발 미지지</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','prob45')">
+            <div class="card-body">
+              <div class="card-title">④⑤ 무릎·발목 문제</div>
+              <div class="card-sub">조기 무릎 신전 · 발목 배굴 제한</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','prob678')">
+            <div class="card-body">
+              <div class="card-title">⑥⑦⑧ 근육 단축·균형·상지</div>
+              <div class="card-sub">근육 단축 → 정렬 불량 · 몸통 조절 부족 · 상지 경직</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="carousel-area" id="ch1-carousel-area">
+        <div class="carousel-main" id="ch1-carousel-main" onclick="openLightbox('ch1')">
+          <button class="carousel-nav prev" onclick="event.stopPropagation();carouselMove('ch1',-1)">‹</button>
+          <img id="ch1-carousel-img" src="" alt="">
+          <div class="carousel-label" id="ch1-carousel-label"></div>
+          <button class="carousel-nav next" onclick="event.stopPropagation();carouselMove('ch1',1)">›</button>
+        </div>
+        <div class="carousel-thumbs" id="ch1-carousel-thumbs"></div>
+      </div>
+    </div>
+
+    <aside class="detail-panel" id="ch1-detail-panel">
+      <button class="close-btn" onclick="closeDetail('ch1')">✕ 닫기</button>
+      <div id="ch1-detail-content"></div>
+    </aside>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ 닫기</button>
+  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox-label" id="lightbox-label"></div>
+</div>
+
+<script>
+const SLIDES_DATA = { ch1: [] };
+const carouselState = {};
+function initCarousel(chid){const slides=SLIDES_DATA[chid]||[];if(!slides.length)return;carouselState[chid]={curIdx:0};const thumbsEl=document.getElementById(chid+'-carousel-thumbs');thumbsEl.innerHTML='';slides.forEach((s,i)=>{const img=document.createElement('img');img.className='carousel-thumb'+(i===0?' active':'');img.src=s.src;img.alt=s.label;img.onclick=()=>goTo(chid,i);thumbsEl.appendChild(img);});goTo(chid,0);}
+function goTo(chid,i){const slides=SLIDES_DATA[chid]||[];if(!slides.length)return;const n=slides.length;i=((i%n)+n)%n;carouselState[chid].curIdx=i;document.getElementById(chid+'-carousel-img').src=slides[i].src;document.getElementById(chid+'-carousel-label').textContent=slides[i].label;document.querySelectorAll('#'+chid+'-carousel-thumbs .carousel-thumb').forEach((t,j)=>{t.classList.toggle('active',j===i);});const thumbsEl=document.getElementById(chid+'-carousel-thumbs');const th=thumbsEl.children[i];if(th)th.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+function carouselMove(chid,dir){const st=carouselState[chid];if(!st)return;goTo(chid,st.curIdx+dir);}
+function toggleCarousel(chid){const area=document.getElementById(chid+'-carousel-area');const cardsArea=document.getElementById(chid+'-cards-area');const btn=document.getElementById(chid+'-carousel-toggle-btn');const slides=SLIDES_DATA[chid]||[];const isOpen=area.classList.contains('open');if(isOpen){area.classList.remove('open');cardsArea.classList.remove('carousel-on');btn.classList.remove('active');}else{if(!slides.length){alert('등록된 슬라이드 이미지가 없습니다.');return;}area.classList.add('open');cardsArea.classList.add('carousel-on');btn.classList.add('active');if(!carouselState[chid])initCarousel(chid);}}
+let _lbChid=null;
+function openLightbox(chid){const st=carouselState[chid];if(!st)return;_lbChid=chid;const s=(SLIDES_DATA[chid]||[])[st.curIdx];if(!s)return;document.getElementById('lightbox-img').src=s.src;document.getElementById('lightbox-label').textContent=s.label;const panelOpen=document.getElementById(chid+'-detail-panel').classList.contains('open');const lb=document.getElementById('lightbox');lb.style.right=panelOpen?'370px':'0px';lb.classList.add('open');}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open');_lbChid=null;}
+document.addEventListener('keydown',e=>{const activeChid=document.querySelector('.chapter-section.active')?.id;if(!activeChid)return;const area=document.getElementById(activeChid+'-carousel-area');if(!area?.classList.contains('open'))return;if(e.key==='ArrowLeft')carouselMove(activeChid,-1);if(e.key==='ArrowRight')carouselMove(activeChid,1);if(e.key==='Escape')closeLightbox();});
+function switchChapter(chid){document.querySelectorAll('.chapter-section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.ch-btn').forEach(b=>b.classList.remove('active'));document.getElementById(chid).classList.add('active');document.querySelector(`.ch-btn[data-ch="${chid}"]`).classList.add('active');document.querySelectorAll('.detail-panel').forEach(p=>p.classList.remove('open'));}
+function switchTab(chid,tabId,btn){const ch=document.getElementById(chid);ch.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));ch.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));const el=document.getElementById(chid+'-tab-'+tabId);if(el)el.classList.add('active');btn.classList.add('active');closeDetail(chid);}
+function openDetail(chid,key){const content=(allDetailData[chid]||{})[key]||'<p style="color:var(--text-dim)">내용 준비 중</p>';document.getElementById(chid+'-detail-content').innerHTML=content;document.getElementById(chid+'-detail-panel').classList.add('open');}
+function closeDetail(chid){const p=document.getElementById(chid+'-detail-panel');if(p)p.classList.remove('open');}
+
+const allDetailData={};
+allDetailData['ch1']={
+
+fmr_concept:`<h2>FMR 개념 · 배경</h2>
+<div class="detail-section">
+  <h3>정의</h3>
+  <div class="detail-item accent"><b>FMR:</b> 뇌신경계 병변 후 기능적 움직임 회복을 위한 현대적 치료 모델</div>
+  <div class="detail-item accent"><b>저자:</b> Susan Ryerson, Kathryn Levit (2011)</div>
+</div>
+<div class="detail-section">
+  <h3>신경병변 → 운동 변화 경로</h3>
+  <div class="step-flow">
+    <div class="step-item">뇌신경 병변 (Neurologic lesion)</div>
+    <div class="step-item">운동조절계 변화 (Alteration of control system)</div>
+    <div class="step-item">실행계 변화 (Alteration of Execution System)</div>
+    <div class="step-item">수행 양상 변화 → 보상전략 출현</div>
+  </div>
+</div>
+<div class="tip-box">💡 <b>보상(Compensation):</b> 단기적 기능 유지에 도움이나 장기적으로 이차 근골격 손상 유발 가능</div>`,
+
+movement_quality:`<h2>움직임 질 3요소</h2>
+<div class="detail-section">
+  <h3>3가지 기준</h3>
+  <div class="detail-item accent"><b>일치성 (Concordance):</b> 의도된 움직임과 실제 수행 움직임의 일치 정도</div>
+  <div class="detail-item blue"><b>효율성 (Efficiency):</b> 최소 에너지(ATP) 소비로 과제 수행</div>
+  <div class="detail-item green"><b>안전성 (Safety):</b> 이차적 근골격 손상 없이 수행 가능</div>
+</div>
+<div class="tip-box">💡 치료 목표: 세 가지 모두 충족하는 움직임 패턴 회복</div>`,
+
+treatment_int:`<h2>치료 중재 4요소</h2>
+<div class="detail-section">
+  <h3>Maximize Functional Outcome</h3>
+  <div class="step-flow">
+    <div class="step-item">① 준비 (Preparation) — 근육 동원, 정렬 준비</div>
+    <div class="step-item">② 활성화 (Activation) — 특정 근육·패턴 활성화</div>
+    <div class="step-item">③ 기능적 과제 (Functional Task) — 실제 기능 과제 연습</div>
+    <div class="step-item">④ 적응 (Adaptation) — 환경 변화에 적응</div>
+  </div>
+</div>
+<div class="detail-section">
+  <h3>2가지 접근 방향</h3>
+  <div class="detail-item blue"><b>손상 치료:</b> 근육 약화, 경직, ROM 제한 등 직접 치료</div>
+  <div class="detail-item blue"><b>기능 훈련:</b> 기능적 과제 직접 연습, 보상전략 활용</div>
+</div>`,
+
+handling:`<h2>핸들링 기법</h2>
+<div class="detail-section">
+  <h3>3가지 핵심 기법</h3>
+  <div class="detail-item accent"><b>촉진 (Facilitation):</b> 정상 움직임 유도 — "쉽게 만들기(making easy)"</div>
+  <div class="detail-item blue"><b>배치 (Placing):</b> 치료사가 자세 또는 움직임 방향 제시</div>
+  <div class="detail-item green"><b>Hand On/Off:</b> 접촉 → 감각 입력 제공 / 접촉 제거 → 자발적 조절 유도</div>
+</div>
+<div class="detail-section">
+  <h3>특수 기법</h3>
+  <div class="detail-item">근복(Muscle belly) 특이적 동원</div>
+  <div class="detail-item">관절 압박·신장 자극</div>
+</div>
+<div class="tip-box">💡 핸들링은 치료 중 지속적으로 조절 → 과제 수행에 맞춰 실시간 변경</div>`,
+
+bobath_movement:`<h2>보바스 움직임 분석틀</h2>
+<div class="detail-section">
+  <h3>Movement Components (움직임 구성요소)</h3>
+  <div class="detail-item accent">1. 시작 (Initiation)</div>
+  <div class="detail-item accent">2. 방향 (Direction)</div>
+  <div class="detail-item accent">3. 순서 (Sequence)</div>
+  <div class="detail-item accent">4. 체중이동 (Weight Shift)</div>
+</div>
+<div class="detail-section">
+  <h3>Movement Sequences (움직임 순서)</h3>
+  <table class="detail-table">
+    <tr><th>몸통</th><th>사지</th></tr>
+    <tr><td>시작 (Initiation)</td><td>시작 (Initiation)</td></tr>
+    <tr><td>전환 (Transition)</td><td>전환/과제 (Transition/Task)</td></tr>
+    <tr><td>—</td><td>수행 (Performance)</td></tr>
+    <tr><td>—</td><td>완성 (Completion)</td></tr>
+  </table>
+</div>`,
+
+rolling:`<h2>구르기 (Rolling)</h2>
+<div class="detail-section">
+  <h3>기능적 역할</h3>
+  <div class="detail-item accent">기능적 회전 (Functional Turning) — 체위 변환의 기초</div>
+  <div class="detail-item blue">몸통 움직임 요소 평가 가능 — 시작·방향·순서·체중이동</div>
+</div>
+<div class="detail-section">
+  <h3>정상 패턴</h3>
+  <div class="detail-item">상지 주도 vs 하지 주도 구르기</div>
+  <div class="detail-item">분절적 회전 (Segmental rotation) 필수</div>
+  <div class="detail-item">척추 중립 유지하며 회전</div>
+</div>`,
+
+bridging:`<h2>브리징 (Bridging)</h2>
+<div class="detail-section">
+  <h3>주요 목적</h3>
+  <div class="detail-item accent"><b>핵심:</b> 고관절 선택적 신전 + 복근 활성화의 통합 훈련</div>
+  <div class="detail-item blue">골반-요추 안정화 재교육</div>
+  <div class="detail-item blue">하지 체중 지지 준비</div>
+</div>
+<div class="detail-section">
+  <h3>정상 브리징 순서</h3>
+  <div class="step-flow">
+    <div class="step-item">① 복근 예비 활성화</div>
+    <div class="step-item">② 골반 후방경사 시작</div>
+    <div class="step-item">③ 고관절 신전 — 둔근 + 햄스트링</div>
+    <div class="step-item">④ 중립 척추 위치에서 유지</div>
+  </div>
+</div>`,
+
+sts_phases:`<h2>STS 3단계</h2>
+<div class="detail-section">
+  <h3>Schenkman et al., 1990 분류</h3>
+  <table class="detail-table">
+    <tr><th>단계</th><th>핵심 과제</th><th>주동근</th></tr>
+    <tr><td>Weight Shift Phase</td><td>전방 체중이동, COG↓→BOS 안쪽</td><td>복근, 척추신전근</td></tr>
+    <tr><td>Transition Phase</td><td>앉기→서기 전환, 엉덩이 리프트</td><td>대퇴사두근, 햄스트링 공동수축</td></tr>
+    <tr><td>Lift/Extension Phase</td><td>완전 기립, COG 최고점</td><td>대퇴사두근, 장딴지근, 발목저측굴근</td></tr>
+  </table>
+</div>
+<div class="tip-box">💡 <b>운동량 이동 전략(Momentum Transfer):</b> 전방 굴곡 운동량을 신전 운동량으로 전환 → 최소 근력으로 기립</div>`,
+
+sts_lower:`<h2>하부 몸통 시작 패턴</h2>
+<div class="detail-section">
+  <h3>Lower Trunk Initiation</h3>
+  <div class="detail-item accent"><b>시작:</b> 요추 신전 + 몸통 전방 이동 + 고관절 굴곡</div>
+</div>
+<div class="detail-section">
+  <h3>3단계</h3>
+  <div class="step-flow">
+    <div class="step-item">Initiation — 요추 신전, 골반 전방경사, 상체 전방 이동</div>
+    <div class="step-item">Transition — 전방 이동 호(arc), 고관절-대퇴 신전력 생성</div>
+    <div class="step-item">Completion — 신체 흔들림(sway) 조절, 균형</div>
+  </div>
+</div>`,
+
+sts_upper:`<h2>상부 몸통 시작 패턴</h2>
+<div class="detail-section">
+  <h3>Upper Trunk Initiation</h3>
+  <div class="detail-item accent"><b>시작:</b> 흉추 굴곡(전방하방) + 고관절 굴곡 + 시선 하향</div>
+</div>
+<div class="detail-section">
+  <h3>3단계</h3>
+  <div class="step-flow">
+    <div class="step-item">Initiation — 흉추 굴곡, 머리·어깨 무릎 방향, COG 하강</div>
+    <div class="step-item">Early Transition — 전방이동호, 고관절 신전, 흉추 굴곡 유지</div>
+    <div class="step-item">Completion — 균형 완성, 기립 자세</div>
+  </div>
+</div>`,
+
+prob1:`<h2>① 몸통 조절 소실</h2>
+<div class="detail-section">
+  <h3>원인</h3>
+  <div class="detail-item accent">하부·상부 몸통 정렬 불량</div>
+  <div class="detail-item accent">골반-고관절 약화 → 체간 보상</div>
+</div>
+<div class="detail-section">
+  <h3>임상 소견</h3>
+  <div class="detail-item blue">흉추 굴곡, 늑골 회전, 측만 출현</div>
+  <div class="detail-item blue">하부 몸통 주도 시작 불가 → 상지 보상</div>
+  <div class="detail-item red">마비측 앉기→서기 시 편마비 다리 무게중심 이탈</div>
+</div>`,
+
+prob2:`<h2>② 체중이동 문제</h2>
+<div class="detail-section">
+  <h3>문제</h3>
+  <div class="detail-item accent">전방 체중이동 불충분 → 굴곡 운동량 부족</div>
+  <div class="detail-item blue">비침범측으로 과도한 체중 이동</div>
+</div>
+<div class="detail-section">
+  <h3>Reeducation</h3>
+  <div class="detail-item green">하부 몸통 시작 패턴 강화</div>
+  <div class="detail-item green">침범측 체중 부하 훈련</div>
+</div>`,
+
+prob3:`<h2>③ 하지 활성화 문제</h2>
+<div class="detail-section">
+  <h3>문제</h3>
+  <div class="detail-item accent">비침범 다리 과도 보상 → 침범 다리 발 지지 불량</div>
+  <div class="detail-item blue">골반 회전·하강, 무릎 굴곡, 발꿈치 들림</div>
+</div>
+<div class="detail-section">
+  <h3>Reeducation</h3>
+  <div class="detail-item green">침범발 정렬 교정 + 체중 부하</div>
+  <div class="detail-item green">근육 발화 순서 재훈련</div>
+</div>`,
+
+prob45:`<h2>④⑤ 무릎·발목 문제</h2>
+<div class="detail-section">
+  <h3>④ 무릎 문제</h3>
+  <div class="detail-item accent"><b>조기 무릎 신전:</b> 발목 배굴 ROM 제한 → 경골 전방 이동 불가</div>
+  <div class="detail-item blue"><b>과도한 무릎 신전:</b> 골반 회전·고관절 단축 → 대퇴 외전·외회전 보상</div>
+</div>
+<div class="detail-section">
+  <h3>⑤ 발목 문제</h3>
+  <div class="detail-item accent"><b>원인:</b> 장딴지근·햄스트링 단축, 부종</div>
+  <div class="detail-item blue">배굴 제한 → 전이단계 발꿈치 들림, Transition 방해</div>
+</div>`,
+
+prob678:`<h2>⑥⑦⑧ 근육 단축·균형·상지</h2>
+<div class="detail-section">
+  <h3>⑥ 근육 단축</h3>
+  <div class="detail-item accent">햄스트링, 장딴지근, 대퇴근막장근 단축 → 하지 정렬 불량</div>
+</div>
+<div class="detail-section">
+  <h3>⑦ 균형 문제</h3>
+  <div class="detail-item blue">몸통 조절 불충분 → 비침범측 과도 이동</div>
+  <div class="detail-item blue">무릎 과신전 → 하지 정렬 붕괴</div>
+  <div class="detail-item blue">대퇴사두근-햄스트링 불균형 → 운동 순서 이상</div>
+</div>
+<div class="detail-section">
+  <h3>⑧ 상지 문제</h3>
+  <div class="detail-item red">상지 굴곡 경직 → 하부-상부 몸통 정렬 방해</div>
+</div>`,
+
+};
+</script>
+</body>
+</html>
