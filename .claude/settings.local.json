@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pdftotext -layout \"C:\\\\Users\\\\wndud\\\\Desktop\\\\전공공부\\\\신경계운동치료학\\\\2026 신경계운동치료학 오리엔테이션 \\(1\\).pdf\" -)",
+      "Bash(ls *)",
+      "Bash(mkdir -p /tmp/neuro_slides/orientation)",
+      "Bash(pdftoppm -r 120 -png \"/c/Users/wndud/Desktop/전공공부/신경계운동치료학/2026 신경계운동치료학 오리엔테이션 \\(1\\).pdf\" /tmp/neuro_slides/orientation/slide)",
+      "Read(//tmp/neuro_slides/**)",
+      "Bash(python3 -c \"import fitz; print\\('PyMuPDF available'\\)\")",
+      "Bash(python3 -c \"import pdf2image; print\\('pdf2image available'\\)\")",
+      "Bash(pip show *)",
+      "Bash(python3.exe -c \"import fitz; print\\('PyMuPDF ok'\\)\")",
+      "Bash(python3.exe -c \"import pdf2image; print\\('pdf2image ok'\\)\")",
+      "Bash(cmd /c \"python -c \\\\\"import fitz; print\\('PyMuPDF ok'\\)\\\\\"\")",
+      "Bash(cmd /c \"python -c \\\\\"import pdf2image; print\\('pdf2image ok'\\)\\\\\"\")",
+      "Bash(cmd /c \"where python\")",
+      "Bash(cmd /c \"python --version\")",
+      "Read(//c/Users/wndud/AppData/Local/Programs/**)",
+      "Bash(ls /c/Python*)",
+      "Read(//c/Users/wndud/miniconda3/**)",
+      "Read(//c/Users/wndud/anaconda3/**)",
+      "Read(//c/Users/wndud/AppData/Local/Microsoft/WindowsApps/**)",
+      "Bash(/c/Users/wndud/AppData/Local/Microsoft/WindowsApps/python.exe --version)",
+      "Bash(/c/Users/wndud/AppData/Local/Microsoft/WindowsApps/python.exe -c \"import fitz; print\\('PyMuPDF ok'\\)\")",
+      "Bash(pdftotext -layout \"/c/Users/wndud/Desktop/전공공부/신경계운동치료학/2026 신경계운동치료학 오리엔테이션 \\(1\\).pdf\" /tmp/orientation.txt)",
+      "Read(//tmp/**)",
+      "Bash(iconv -f utf-8 -t utf-8)",
+      "Bash(echo \"Exit: $?\")",
+      "Bash(pdftotext -layout \"C:/Users/wndud/Desktop/전공공부/신경계운동치료학/2026 신경계운동치료학 오리엔테이션 \\(1\\).pdf\" \"C:/Users/wndud/Desktop/전공공부/신경계운동치료학/orientation_text.txt\")",
+      "Bash(pdftotext -layout \"C:/Users/wndud/Desktop/전공공부/신경계운동치료학/기능적 움직임 재교육 \\(1\\).pdf\" \"C:/Users/wndud/Desktop/전공공부/신경계운동치료학/fmr_text.txt\")",
+      "Bash(pdftotext -layout \"C:/Users/wndud/Desktop/전공공부/신경계운동치료학/루드의 치료법.pdf\" \"C:/Users/wndud/Desktop/전공공부/신경계운동치료학/rood_text.txt\")",
+      "Bash(pdftotext -layout \"C:/Users/wndud/Desktop/전공공부/신경계운동치료학/보바스브룬스트롬.pdf\" \"C:/Users/wndud/Desktop/전공공부/신경계운동치료학/bobath_text.txt\")",
+      "Bash(pdftotext -layout \"C:/Users/wndud/Desktop/전공공부/신경계운동치료학/보행1.pdf\" \"C:/Users/wndud/Desktop/전공공부/신경계운동치료학/gait_text.txt\")",
+      "Bash(git --version)",
+      "Bash(gh --version)",
+      "Bash(git config *)",
+      "Bash(gh auth *)"
+    ]
+  }
+}
