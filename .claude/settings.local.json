@@ -50,7 +50,22 @@
       "Bash(git -C \"C:/Users/wndud/Desktop/전공공부\" rev-parse --is-inside-work-tree)",
       "Bash(git -C \"C:/Users/wndud/Desktop/전공공부\" symbolic-ref --short HEAD)",
       "Bash(git -C \"C:/Users/wndud/Desktop/전공공부\" status --porcelain)",
-      "Bash(git -C \"C:/Users/wndud/Desktop/전공공부\" diff --stat)"
+      "Bash(git -C \"C:/Users/wndud/Desktop/전공공부\" diff --stat)",
+      "Read(//mingw64/**)",
+      "Read(//usr/**)",
+      "Bash(where ghostscript *)",
+      "Read(//c/Program Files/**)",
+      "Bash(npm list *)",
+      "Bash(scoop list *)",
+      "Bash(choco list *)",
+      "Bash(choco info *)",
+      "Bash(choco install *)",
+      "Bash(winget install *)",
+      "Bash(grep -o ':\\\\`')",
+      "Bash(awk *)",
+      "Bash(git symbolic-ref *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
     ]
   }
 }
