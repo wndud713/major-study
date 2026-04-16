@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>임상의사결정 - 관절가동범위측정</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+:root{--bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e2a;--bg4:#222736;--border:#2a3048;--accent:#4fd1c5;--accent2:#a78bfa;--green:#6ee7b7;--red:#f87171;--yellow:#fbbf24;--text:#dce3f0;--text-dim:#7a8aaa;--text-bright:#fff;--tag-bg:#1d2236;--panel-bg:#111420;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.65;display:flex;flex-direction:column}
+
+/* ── Chapter Nav ── */
+.chapter-nav{background:#0a0c10;border-bottom:1px solid #1e2235;padding:0 16px;display:flex;align-items:center;gap:4px;height:44px;flex-shrink:0;overflow-x:auto}
+.chapter-nav-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:#3a4060;letter-spacing:.1em;margin-right:8px;white-space:nowrap;flex-shrink:0}
+.ch-btn{font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 14px;border-radius:5px;border:1px solid #252840;background:transparent;color:#5a6888;cursor:pointer;transition:all .18s;white-space:nowrap;flex-shrink:0}
+.ch-btn:hover{background:#13161e;color:#9ab;border-color:#3a3f60}
+.ch-btn.active{background:var(--ch-accent,#4fd1c5);color:#0a0c10;border-color:transparent;font-weight:600}
+
+/* ── Chapter Section ── */
+.chapter-section{display:none;flex:1;flex-direction:column;min-height:0}
+.chapter-section.active{display:flex}
+
+/* ── Header ── */
+.ch-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 22px 10px;display:flex;align-items:baseline;gap:12px;flex-shrink:0;flex-wrap:wrap}
+.ch-badge{font-family:'JetBrains Mono',monospace;font-size:11px;padding:2px 9px;border-radius:4px;letter-spacing:.06em;color:var(--ch-accent,#4fd1c5);background:color-mix(in srgb,var(--ch-accent,#4fd1c5) 12%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#4fd1c5) 30%,transparent)}
+.ch-header h1{font-size:15px;font-weight:700;color:var(--text-bright)}
+.ch-header p{font-size:11px;color:var(--text-dim);margin-left:auto}
+
+/* ── Layout ── */
+.wrapper{display:flex;flex:1;min-height:0;overflow:hidden}
+
+/* ── Sidebar ── */
+.sidebar{width:210px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-tabs{flex:1;overflow-y:auto;padding:8px 0}
+.tab-group-label{font-size:9px;letter-spacing:.1em;color:var(--text-dim);text-transform:uppercase;padding:10px 16px 4px}
+.tab-btn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 16px;background:none;border:none;color:var(--text-dim);font-size:12.5px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;text-align:left;transition:all .15s;border-left:2px solid transparent}
+.tab-btn:hover{background:var(--bg3);color:var(--text)}
+.tab-btn.active{background:var(--bg3);color:var(--ch-accent,#4fd1c5);border-left-color:var(--ch-accent,#4fd1c5);font-weight:500}
+.tab-icon{font-size:14px;flex-shrink:0}
+.carousel-toggle-btn{border-left-color:transparent!important}
+.carousel-toggle-btn.active{background:var(--bg3)!important;color:var(--ch-accent,#4fd1c5)!important;border-left-color:var(--ch-accent,#4fd1c5)!important;font-weight:500}
+
+/* ── Main ── */
+.main-wrap{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+.cards-area{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}
+.cards-area.carousel-on{flex:none;max-height:45%;overflow-y:auto}
+
+/* ── Carousel ── */
+.carousel-area{display:none;flex-direction:column;min-height:0;border-top:1px solid var(--border);background:var(--bg2)}
+.carousel-area.open{display:flex;flex:1}
+.carousel-main{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;padding:8px;cursor:zoom-in}
+.carousel-main img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;display:block}
+.carousel-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);border:1px solid var(--border);color:var(--text);font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s;z-index:2}
+.carousel-nav:hover{background:color-mix(in srgb,var(--ch-accent,#4fd1c5) 35%,transparent)}
+.carousel-nav.prev{left:8px}
+.carousel-nav.next{right:8px}
+.carousel-thumbs{flex-shrink:0;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;border-top:1px solid var(--border);background:#0d0f14}
+.carousel-thumb{width:64px;height:48px;object-fit:cover;border-radius:4px;border:2px solid transparent;cursor:pointer;flex-shrink:0;opacity:.65;transition:all .18s}
+.carousel-thumb.active{border-color:var(--ch-accent,#4fd1c5);opacity:1}
+.carousel-label{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);color:var(--text);font-size:11px;padding:3px 10px;border-radius:10px;white-space:nowrap;pointer-events:none}
+
+/* ── Lightbox ── */
+.lightbox{display:none;position:fixed;top:44px;left:210px;right:0;bottom:0;background:rgba(0,0,0,.88);z-index:100;align-items:center;justify-content:center;flex-direction:column;cursor:zoom-out;transition:right .2s}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90%;max-height:85%;object-fit:contain;border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.8)}
+.lightbox-label{color:var(--text);font-size:12px;margin-top:10px;opacity:.8}
+.lightbox-close{position:absolute;top:12px;right:16px;background:none;border:1px solid var(--border);color:var(--text-dim);font-size:13px;padding:4px 10px;border-radius:5px;cursor:pointer}
+.lightbox-close:hover{color:var(--ch-accent,#4fd1c5);border-color:var(--ch-accent,#4fd1c5)}
+
+/* ── Detail Panel ── */
+.detail-panel{width:370px;flex-shrink:0;background:var(--panel-bg);border-left:1px solid var(--border);overflow-y:auto;padding:18px;display:none}
+.detail-panel.open{display:block}
+.detail-panel h2{font-size:14px;color:var(--ch-accent,#4fd1c5);margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px}
+
+/* ── Cards ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;transition:border-color .2s,background .2s;cursor:pointer}
+.card:hover{border-color:var(--ch-accent,#4fd1c5);background:var(--bg3)}
+.card-body{flex:1}
+.card-title{font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:4px}
+.card-sub{font-size:11.5px;color:var(--text-dim);line-height:1.55}
+.expand-btn{background:color-mix(in srgb,var(--ch-accent,#4fd1c5) 12%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#4fd1c5) 25%,transparent);color:var(--ch-accent,#4fd1c5);border-radius:5px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;flex-shrink:0;transition:background .18s}
+.expand-btn:hover{background:color-mix(in srgb,var(--ch-accent,#4fd1c5) 28%,transparent)}
+.section-title{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px}
+.tab-content{display:none}
+.tab-content.active{display:flex;flex-direction:column;gap:12px}
+
+/* ── Detail internals ── */
+.detail-section{margin-bottom:16px}
+.detail-section h3{font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}
+.detail-item{background:var(--bg3);border-radius:6px;padding:9px 12px;margin-bottom:6px;font-size:12px;line-height:1.6;border-left:3px solid var(--border)}
+.detail-item.accent{border-left-color:var(--ch-accent,#4fd1c5)}
+.detail-item.blue{border-left-color:var(--accent2)}
+.detail-item.green{border-left-color:var(--green)}
+.detail-item.red{border-left-color:var(--red)}
+.detail-item.yellow{border-left-color:var(--yellow)}
+.detail-item b{color:var(--text-bright)}
+.tag{display:inline-block;background:var(--tag-bg);border:1px solid var(--border);color:var(--ch-accent,#4fd1c5);font-size:10px;font-family:'JetBrains Mono',monospace;padding:1px 7px;border-radius:3px;margin:2px 2px 2px 0}
+.tag.blue{color:var(--accent2);border-color:rgba(167,139,250,.3)}
+.tag.green{color:var(--green);border-color:rgba(110,231,183,.3)}
+.tag.red{color:var(--red);border-color:rgba(248,113,113,.3)}
+.tag.yellow{color:var(--yellow);border-color:rgba(251,191,36,.3)}
+.detail-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:6px}
+.detail-table th{background:var(--bg4);color:var(--ch-accent,#4fd1c5);padding:6px 8px;text-align:left;font-weight:600;border-bottom:1px solid var(--border)}
+.detail-table td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.detail-table tr:last-child td{border-bottom:none}
+.detail-table tr:hover td{background:var(--bg3)}
+.tip-box{background:color-mix(in srgb,var(--ch-accent,#4fd1c5) 8%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#4fd1c5) 25%,transparent);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}
+.tip-box b{color:var(--ch-accent,#4fd1c5)}
+.warn-box{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}
+.warn-box b{color:var(--red)}
+.step-flow{display:flex;flex-direction:column;gap:4px;margin:7px 0}
+.step-item{background:var(--bg4);border-radius:5px;padding:6px 11px;font-size:12px;border-left:3px solid var(--ch-accent,#4fd1c5);position:relative}
+.step-item::after{content:'↓';position:absolute;bottom:-13px;left:13px;color:var(--text-dim);font-size:10px}
+.step-item:last-child::after{display:none}
+.timeline{display:flex;flex-direction:column}
+.tl-item{display:flex;gap:12px;padding:6px 0 6px 14px;border-left:2px solid color-mix(in srgb,var(--ch-accent,#4fd1c5) 30%,transparent);position:relative}
+.tl-item::before{content:'';position:absolute;left:-5px;top:12px;width:8px;height:8px;border-radius:50%;background:var(--ch-accent,#4fd1c5);opacity:.7}
+.tl-label{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--ch-accent,#4fd1c5);min-width:90px;flex-shrink:0}
+.tl-body{font-size:12px;color:var(--text-dim)}
+.close-btn{display:flex;align-items:center;gap:5px;background:none;border:1px solid var(--border);color:var(--text-dim);font-size:11px;font-family:'Noto Sans KR',sans-serif;padding:4px 10px;border-radius:5px;cursor:pointer;margin-bottom:12px;transition:all .18s}
+.close-btn:hover{border-color:var(--ch-accent,#4fd1c5);color:var(--ch-accent,#4fd1c5)}
+
+/* ── q-divider ── */
+.q-divider{border:none;border-top:2px solid var(--ch-accent,#4fd1c5);margin:6px 0;opacity:0.35;}
+
+/* ── Mobile ── */
+@media(max-width:768px){
+  html,body{height:auto;overflow:auto}
+  .wrapper{flex-direction:column;overflow:visible}
+  .chapter-section{min-height:0}
+  .main-wrap{overflow:visible}
+  .cards-area{overflow:visible}
+  .cards-area.carousel-on{max-height:none;overflow:visible}
+  .sidebar{width:100%;height:auto;flex-direction:column;border-right:none;border-bottom:1px solid var(--border)}
+  .sidebar-tabs{display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:0}
+  .tab-group-label{display:none}
+  .tab-btn{flex-direction:column;gap:2px;padding:8px 10px;font-size:10px;white-space:nowrap;border-left:none;border-bottom:2px solid transparent;min-width:fit-content}
+  .tab-btn.active{border-left:none;border-bottom-color:var(--ch-accent,#4fd1c5)}
+  .carousel-area.open{height:360px;flex:none}
+  .carousel-main{height:260px}
+  .detail-panel{width:100%;border-left:none;border-top:1px solid var(--border)}
+  .lightbox{left:0;top:44px}
+  .ch-header p{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="chapter-nav">
+  <span class="chapter-nav-label">임상의사결정</span>
+  <button class="ch-btn active" onclick="switchChapter('ch1')" data-ch="ch1" style="--ch-accent:#4fd1c5">CH.01 관절가동범위측정</button>
+</div>
+
+<div class="chapter-section active" id="ch1" style="--ch-accent:#4fd1c5;--accent2:#a78bfa">
+  <div class="ch-header">
+    <span class="ch-badge">CH.01</span>
+    <h1>관절가동범위 측정 (Goniometry)</h1>
+    <p>임상의사결정 · 신구대학교 · 2026</p>
+  </div>
+  <div class="wrapper">
+
+    <nav class="sidebar">
+      <div class="sidebar-tabs">
+        <div class="tab-group-label">측정 원리</div>
+        <button class="tab-btn active" onclick="switchTab('ch1','gonio',this)"><span class="tab-icon">📐</span>각도계 원리</button>
+        <button class="tab-btn" onclick="switchTab('ch1','shoulder',this)"><span class="tab-icon">💪</span>어깨관절</button>
+        <button class="tab-btn" onclick="switchTab('ch1','elbow',this)"><span class="tab-icon">🦾</span>팔꿉·손목</button>
+        <button class="tab-btn" onclick="switchTab('ch1','hip',this)"><span class="tab-icon">🦵</span>엉덩관절</button>
+        <button class="tab-btn" onclick="switchTab('ch1','knee',this)"><span class="tab-icon">🦿</span>무릎·발목</button>
+        <button class="tab-btn" onclick="switchTab('ch1','exam',this)"><span class="tab-icon">🎯</span>국시문제</button>
+
+        <div class="tab-group-label" style="margin-top:6px;border-top:1px solid var(--border);padding-top:10px;">자료</div>
+        <button class="tab-btn carousel-toggle-btn" id="ch1-carousel-toggle-btn" onclick="toggleCarousel('ch1')">
+          <span class="tab-icon">🖼️</span>슬라이드 이미지
+        </button>
+      </div>
+    </nav>
+
+    <div class="main-wrap">
+      <div class="cards-area" id="ch1-cards-area">
+
+        <!-- 각도계 원리 탭 -->
+        <div class="tab-content active" id="ch1-tab-gonio">
+          <div class="section-title">각도계 측정 원리</div>
+          <div class="card" onclick="openDetail('ch1','gonio_basic')">
+            <div class="card-body">
+              <div class="card-title">각도계(Goniometer) 구성</div>
+              <div class="card-sub">축 · 고정팔 · 운동팔 — 3요소 배치 원칙</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','gonio_position')">
+            <div class="card-body">
+              <div class="card-title">측정 일반 원칙</div>
+              <div class="card-sub">시작자세 · 보상동작 방지 · 골지점(bony landmark)</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 어깨관절 탭 -->
+        <div class="tab-content" id="ch1-tab-shoulder">
+          <div class="section-title">어깨관절 ROM 정상값</div>
+          <div class="card" onclick="openDetail('ch1','sh_flex')">
+            <div class="card-body">
+              <div class="card-title">굽힘 / 폄 (Flexion / Extension)</div>
+              <div class="card-sub">굽힘 165-180° · 폄 50-60° · 축: 큰돌기(greater tubercle)</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','sh_abd')">
+            <div class="card-body">
+              <div class="card-title">벌림 (Abduction)</div>
+              <div class="card-sub">170-180° · 축: 앞쪽 봉우리(anterior acromion)</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','sh_rot')">
+            <div class="card-body">
+              <div class="card-title">안쪽/가쪽돌림 (Int./Ext. Rotation)</div>
+              <div class="card-sub">안쪽돌림 70-90° · 가쪽돌림 90-100° · 축: 팔꿈치머리</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 팔꿉·손목 탭 -->
+        <div class="tab-content" id="ch1-tab-elbow">
+          <div class="section-title">팔꿉관절 ROM</div>
+          <div class="card" onclick="openDetail('ch1','elbow_flex')">
+            <div class="card-body">
+              <div class="card-title">팔꿉관절 굽힘 (Elbow Flexion)</div>
+              <div class="card-sub">140-150° · 축: 가쪽 위관절융기(lateral epicondyle)</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','forearm_rot')">
+            <div class="card-body">
+              <div class="card-title">아래팔 뒤침 / 엎침 (Supination / Pronation)</div>
+              <div class="card-sub">뒤침 90° · 엎침 80-90° · 운동팔: 자뼈 붓돌기 손바닥면</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="section-title" style="margin-top:8px;">손목관절 ROM</div>
+          <div class="card" onclick="openDetail('ch1','wrist_flex')">
+            <div class="card-body">
+              <div class="card-title">손목 굽힘 / 폄</div>
+              <div class="card-sub">굽힘 60-80° · 폄 60-75° · 축: 세모뼈/알머리뼈</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','wrist_dev')">
+            <div class="card-body">
+              <div class="card-title">자쪽/노쪽 치우침 (Ulnar/Radial Deviation)</div>
+              <div class="card-sub">자쪽치우침 30-45° · 노쪽치우침 20-25° · 축: 알머리뼈</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 엉덩관절 탭 -->
+        <div class="tab-content" id="ch1-tab-hip">
+          <div class="section-title">엉덩관절 ROM 정상값</div>
+          <div class="card" onclick="openDetail('ch1','hip_flex')">
+            <div class="card-body">
+              <div class="card-title">굽힘 / 폄 (Hip Flexion / Extension)</div>
+              <div class="card-sub">굽힘 120-140° · 폄 18-30° · 축: 큰돌기(greater trochanter)</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','hip_abd')">
+            <div class="card-body">
+              <div class="card-title">벌림 / 모음 (Hip Abduction / Adduction)</div>
+              <div class="card-sub">벌림 40-55° · 모음 20-25° · 축: ASIS</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','hip_rot')">
+            <div class="card-body">
+              <div class="card-title">안쪽/가쪽돌림 (Hip Rotation)</div>
+              <div class="card-sub">안쪽돌림 30-45° · 가쪽돌림 32-50° · 축: 무릎뼈(patella)</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','slr')">
+            <div class="card-body">
+              <div class="card-title">SLR (뒤넙다리근 길이 검사)</div>
+              <div class="card-sub">정상 68-80° · 축: 큰돌기 · 고정팔: 골반 정중선</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 무릎·발목 탭 -->
+        <div class="tab-content" id="ch1-tab-knee">
+          <div class="section-title">무릎관절 ROM</div>
+          <div class="card" onclick="openDetail('ch1','knee_flex')">
+            <div class="card-body">
+              <div class="card-title">무릎관절 굽힘 (Knee Flexion)</div>
+              <div class="card-sub">130-140° · 축: 넙다리뼈 가쪽 위관절융기 · 운동팔: 종아리뼈 정중선</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="section-title" style="margin-top:8px;">발목관절 ROM</div>
+          <div class="card" onclick="openDetail('ch1','ankle_df')">
+            <div class="card-body">
+              <div class="card-title">발등굽힘 / 발바닥굽힘 (DF / PF)</div>
+              <div class="card-sub">DF 15-20° · PF 45-55° · 축: 가쪽 복사(lateral malleolus)</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','ankle_inv')">
+            <div class="card-body">
+              <div class="card-title">내번 / 외번 (Inversion / Eversion)</div>
+              <div class="card-sub">내번 30-35° · 외번 15-20° · 축: 복사뼈 중간</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 국시문제 탭 -->
+        <div class="tab-content" id="ch1-tab-exam">
+          <div class="section-title">국가고시 기출 문제</div>
+
+          <div class="card" onclick="openDetail('ch1','q2024_63')">
+            <div class="card-body">
+              <div class="card-title">2024 국가고시 63번</div>
+              <div class="card-sub">관절운동과 각도계 운동팔 배치 — 무릎관절폄의 운동팔</div>
+            </div>
+          </div>
+          <hr class="q-divider">
+
+          <div class="card" onclick="openDetail('ch1','q2025_62')">
+            <div class="card-body">
+              <div class="card-title">2025 국가고시 62번</div>
+              <div class="card-sub">아래팔 뒤침(supination) ROM 측정 시 각도계 위치</div>
+            </div>
+          </div>
+          <hr class="q-divider">
+
+          <div class="card" onclick="openDetail('ch1','q2025_63')">
+            <div class="card-body">
+              <div class="card-title">2025 국가고시 63번</div>
+              <div class="card-sub">어깨 90° 벌림, 팔꿉 90° 굽힘 · 축: 팔꿈치머리 · 운동팔: 자뼈 붓돌기 정중선</div>
+            </div>
+          </div>
+          <hr class="q-divider">
+
+          <div class="card" onclick="openDetail('ch1','q2025_64')">
+            <div class="card-body">
+              <div class="card-title">2025 국가고시 64번</div>
+              <div class="card-sub">엉덩관절 벌림 ROM 측정 관련 설명 — 고정팔 위치</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /cards-area -->
+
+      <div class="carousel-area" id="ch1-carousel-area">
+        <div class="carousel-main" id="ch1-carousel-main" onclick="openLightbox('ch1')">
+          <button class="carousel-nav prev" onclick="event.stopPropagation();carouselMove('ch1',-1)">‹</button>
+          <img id="ch1-carousel-img" src="" alt="">
+          <div class="carousel-label" id="ch1-carousel-label"></div>
+          <button class="carousel-nav next" onclick="event.stopPropagation();carouselMove('ch1',1)">›</button>
+        </div>
+        <div class="carousel-thumbs" id="ch1-carousel-thumbs"></div>
+      </div>
+    </div><!-- /main-wrap -->
+
+    <aside class="detail-panel" id="ch1-detail-panel">
+      <button class="close-btn" onclick="closeDetail('ch1')">✕ 닫기</button>
+      <div id="ch1-detail-content"></div>
+    </aside>
+
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ 닫기</button>
+  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox-label" id="lightbox-label"></div>
+</div>
+
+<script>
+const SLIDES_DATA = {
+  ch1: [],
+};
+
+const carouselState = {};
+
+function initCarousel(chid) {
+  const slides = SLIDES_DATA[chid] || [];
+  if (!slides.length) return;
+  carouselState[chid] = { curIdx: 0 };
+  const thumbsEl = document.getElementById(chid + '-carousel-thumbs');
+  thumbsEl.innerHTML = '';
+  slides.forEach((s, i) => {
+    const img = document.createElement('img');
+    img.className = 'carousel-thumb' + (i === 0 ? ' active' : '');
+    img.src = s.src;
+    img.alt = s.label;
+    img.onclick = () => goTo(chid, i);
+    thumbsEl.appendChild(img);
+  });
+  goTo(chid, 0);
+}
+
+function goTo(chid, i) {
+  const slides = SLIDES_DATA[chid] || [];
+  if (!slides.length) return;
+  const n = slides.length;
+  i = ((i % n) + n) % n;
+  carouselState[chid].curIdx = i;
+  document.getElementById(chid + '-carousel-img').src = slides[i].src;
+  document.getElementById(chid + '-carousel-label').textContent = slides[i].label;
+  document.querySelectorAll('#' + chid + '-carousel-thumbs .carousel-thumb').forEach((t, j) => {
+    t.classList.toggle('active', j === i);
+  });
+  const thumbsEl = document.getElementById(chid + '-carousel-thumbs');
+  const th = thumbsEl.children[i];
+  if (th) th.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+function carouselMove(chid, dir) {
+  const st = carouselState[chid];
+  if (!st) return;
+  goTo(chid, st.curIdx + dir);
+}
+
+function toggleCarousel(chid) {
+  const area = document.getElementById(chid + '-carousel-area');
+  const cardsArea = document.getElementById(chid + '-cards-area');
+  const btn = document.getElementById(chid + '-carousel-toggle-btn');
+  const slides = SLIDES_DATA[chid] || [];
+  const isOpen = area.classList.contains('open');
+  if (isOpen) {
+    area.classList.remove('open');
+    cardsArea.classList.remove('carousel-on');
+    btn.classList.remove('active');
+  } else {
+    if (!slides.length) {
+      alert('등록된 슬라이드 이미지가 없습니다.');
+      return;
+    }
+    area.classList.add('open');
+    cardsArea.classList.add('carousel-on');
+    btn.classList.add('active');
+    if (!carouselState[chid]) initCarousel(chid);
+  }
+}
+
+let _lbChid = null;
+function openLightbox(chid) {
+  const st = carouselState[chid];
+  if (!st) return;
+  _lbChid = chid;
+  const s = (SLIDES_DATA[chid] || [])[st.curIdx];
+  if (!s) return;
+  document.getElementById('lightbox-img').src = s.src;
+  document.getElementById('lightbox-label').textContent = s.label;
+  const panelOpen = document.getElementById(chid + '-detail-panel').classList.contains('open');
+  const lb = document.getElementById('lightbox');
+  lb.style.right = panelOpen ? '370px' : '0px';
+  lb.classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  _lbChid = null;
+}
+
+document.addEventListener('keydown', e => {
+  const activeChid = document.querySelector('.chapter-section.active')?.id;
+  if (!activeChid) return;
+  const area = document.getElementById(activeChid + '-carousel-area');
+  if (!area?.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') carouselMove(activeChid, -1);
+  if (e.key === 'ArrowRight') carouselMove(activeChid, 1);
+  if (e.key === 'Escape') closeLightbox();
+});
+
+function switchChapter(chid) {
+  document.querySelectorAll('.chapter-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(chid).classList.add('active');
+  document.querySelector('.ch-btn[data-ch="' + chid + '"]').classList.add('active');
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+}
+
+function switchTab(chid, tabId, btn) {
+  const ch = document.getElementById(chid);
+  ch.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  ch.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById(chid + '-tab-' + tabId);
+  if (el) el.classList.add('active');
+  btn.classList.add('active');
+  closeDetail(chid);
+}
+
+function openDetail(chid, key) {
+  const content = (allDetailData[chid] || {})[key] || '<p style="color:var(--text-dim)">내용 준비 중</p>';
+  document.getElementById(chid + '-detail-content').innerHTML = content;
+  document.getElementById(chid + '-detail-panel').classList.add('open');
+}
+function closeDetail(chid) {
+  const p = document.getElementById(chid + '-detail-panel');
+  if (p) p.classList.remove('open');
+}
+
+const allDetailData = {};
+
+allDetailData['ch1'] = {
+
+  gonio_basic: `<h2>각도계(Goniometer) 구성</h2>
+<div class="detail-section">
+  <h3>3요소</h3>
+  <div class="detail-item accent"><b>축(Fulcrum):</b> 관절 중심에 위치</div>
+  <div class="detail-item accent"><b>고정팔(Proximal arm):</b> 근위부 분절과 평행</div>
+  <div class="detail-item accent"><b>운동팔(Distal arm):</b> 원위부 분절과 평행</div>
+</div>
+<div class="tip-box">💡 <b>기억법:</b> 축→관절중심 / 고정팔→움직이지 않는 쪽 / 운동팔→움직이는 쪽</div>`,
+
+  gonio_position: `<h2>측정 일반 원칙</h2>
+<div class="detail-section">
+  <h3>기본 원칙</h3>
+  <div class="detail-item accent"><b>해부학적 자세</b>에서 시작(0°)</div>
+  <div class="detail-item blue"><b>보상동작(compensation)</b> 방지를 위한 고정</div>
+  <div class="detail-item green"><b>골지점(bony landmark)</b>을 정확히 촉진하여 축 위치 결정</div>
+  <div class="detail-item yellow"><b>능동·수동ROM</b> 구분하여 측정</div>
+</div>
+<div class="warn-box"><b>⚠️ 주의:</b> 통증이 있는 경우 수동ROM 측정 시 주의</div>`,
+
+  sh_flex: `<h2>어깨관절 굽힘 / 폄</h2>
+<table class="detail-table">
+  <tr><th>운동</th><th>정상범위</th><th>축</th><th>고정팔</th><th>운동팔</th></tr>
+  <tr><td><b>굽힘</b></td><td>165-180°</td><td>큰돌기</td><td>몸통 정중선</td><td>위팔뼈 정중선</td></tr>
+  <tr><td><b>폄</b></td><td>50-60°</td><td>큰돌기</td><td>몸통 정중선</td><td>위팔뼈 정중선</td></tr>
+</table>
+<div class="tip-box">💡 <b>축:</b> 큰돌기(greater tubercle) — 양쪽 공통</div>`,
+
+  sh_abd: `<h2>어깨관절 벌림</h2>
+<table class="detail-table">
+  <tr><th>운동</th><th>정상범위</th><th>축</th><th>고정팔</th><th>운동팔</th></tr>
+  <tr><td><b>벌림</b></td><td>170-180°</td><td>앞쪽 봉우리<br>(anterior acromion)</td><td>복장뼈</td><td>위팔뼈 정중선</td></tr>
+</table>
+<div class="tip-box">💡 <b>축 차이:</b> 벌림은 앞쪽 봉우리(굽힘/폄과 다름—굽힘/폄은 큰돌기)</div>`,
+
+  sh_rot: `<h2>어깨관절 돌림</h2>
+<table class="detail-table">
+  <tr><th>운동</th><th>정상범위</th><th>축</th><th>고정팔</th><th>운동팔</th></tr>
+  <tr><td><b>안쪽돌림</b></td><td>70-90°</td><td>팔꿈치머리(olecranon)</td><td>바닥과 수직</td><td>자뼈 붓돌기</td></tr>
+  <tr><td><b>가쪽돌림</b></td><td>90-100°</td><td>팔꿈치머리</td><td>바닥과 수직</td><td>자뼈 붓돌기</td></tr>
+</table>
+<div class="detail-section">
+  <div class="detail-item blue"><b>자세:</b> 어깨관절 90° 벌림, 팔꿉관절 90° 굽힘 상태로 앉음</div>
+</div>`,
+
+  elbow_flex: `<h2>팔꿉관절 굽힘</h2>
+<table class="detail-table">
+  <tr><th>운동</th><th>정상범위</th><th>축</th><th>고정팔</th><th>운동팔</th></tr>
+  <tr><td><b>굽힘</b></td><td>140-150°</td><td>가쪽 위관절융기<br>(lateral epicondyle)</td><td>위팔뼈 정중선</td><td>노뼈 정중선</td></tr>
+</table>`,
+
+  forearm_rot: `<h2>아래팔 뒤침 / 엎침</h2>
+<table class="detail-table">
+  <tr><th>운동</th><th>정상범위</th><th>운동팔 위치</th></tr>
+  <tr><td><b>뒤침(Supination)</b></td><td>90°</td><td>자뼈 붓돌기 <b>손바닥면</b></td></tr>
+  <tr><td><b>엎침(Pronation)</b></td><td>80-90°</td><td>자뼈 붓돌기 손등면</td></tr>
+</table>
+<div class="warn-box"><b>⚠️ 국시 포인트:</b> 뒤침 측정 시 운동팔 = 자뼈 붓돌기 <b>손바닥면</b> (2025 국시 62번)</div>`,
+
+  wrist_flex: `<h2>손목관절 굽힘 / 폄</h2>
+<table class="detail-table">
+  <tr><th>운동</th><th>정상범위</th><th>축</th><th>고정팔</th><th>운동팔</th></tr>
+  <tr><td><b>굽힘</b></td><td>60-80°</td><td>세모뼈 가쪽<br>(lateral triquetrum)</td><td>자뼈 정중선</td><td>5번 손허리뼈</td></tr>
+  <tr><td><b>폄</b></td><td>60-75°</td><td>알머리뼈(capitate)</td><td>아래팔 정중선</td><td>3번 손허리뼈</td></tr>
+</table>`,
+
+  wrist_dev: `<h2>손목관절 치우침</h2>
+<table class="detail-table">
+  <tr><th>운동</th><th>정상범위</th><th>축</th><th>고정팔</th><th>운동팔</th></tr>
+  <tr><td><b>자쪽치우침</b><br>(Ulnar deviation)</td><td>30-45°</td><td>알머리뼈</td><td>아래팔 정중선</td><td>3번 손허리뼈</td></tr>
+  <tr><td><b>노쪽치우침</b><br>(Radial deviation)</td><td>20-25°</td><td>알머리뼈</td><td>아래팔 정중선</td><td>3번 손허리뼈</td></tr>
+</table>
+<div class="warn-box"><b>⚠️ 국시 오답 포인트:</b> 노쪽치우침 운동팔 = 3번 손허리뼈 (2번 아님)</div>`,
+
+  hip_flex: `<h2>엉덩관절 굽힘 / 폄</h2>
+<table class="detail-table">
+  <tr><th>운동</th><th>정상범위</th><th>축</th><th>고정팔</th><th>운동팔</th></tr>
+  <tr><td><b>굽힘</b></td><td>120-140°</td><td>큰돌기<br>(greater trochanter)</td><td>골반 정중선</td><td>넙다리뼈 정중선</td></tr>
+  <tr><td><b>폄</b></td><td>18-30°</td><td>큰돌기</td><td>골반 정중선</td><td>넙다리뼈 정중선</td></tr>
+</table>`,
+
+  hip_abd: `<h2>엉덩관절 벌림 / 모음</h2>
+<table class="detail-table">
+  <tr><th>운동</th><th>정상범위</th><th>축</th><th>고정팔</th><th>운동팔</th></tr>
+  <tr><td><b>벌림</b></td><td>40-55°</td><td>ASIS</td><td>양쪽 ASIS 연결선<br>(수평선)</td><td>넙다리뼈 정중선</td></tr>
+  <tr><td><b>모음</b></td><td>20-25°</td><td>ASIS</td><td>양쪽 ASIS 연결선</td><td>넙다리뼈 정중선</td></tr>
+</table>
+<div class="warn-box"><b>⚠️ 국시 포인트 (2025-64):</b> 고정팔 = 양쪽 앞위 엉덩뼈 가시(ASIS)를 잇는 가상의 연결선</div>`,
+
+  hip_rot: `<h2>엉덩관절 돌림</h2>
+<table class="detail-table">
+  <tr><th>운동</th><th>정상범위</th><th>축</th><th>고정팔</th><th>운동팔</th></tr>
+  <tr><td><b>안쪽돌림</b></td><td>30-45°</td><td>무릎뼈(patella)</td><td>바닥과 수직</td><td>아래 다리 정중선</td></tr>
+  <tr><td><b>가쪽돌림</b></td><td>32-50°</td><td>무릎뼈</td><td>바닥과 수직</td><td>아래 다리 정중선</td></tr>
+</table>
+<div class="detail-section">
+  <div class="detail-item blue"><b>자세:</b> 검사대에 걸터앉은 자세, 무릎 90° 굽힘</div>
+</div>`,
+
+  slr: `<h2>SLR (뒤넙다리근 길이 검사)</h2>
+<div class="detail-section">
+  <h3>측정 정보</h3>
+  <div class="detail-item accent"><b>정상범위:</b> 68-80°</div>
+  <div class="detail-item accent"><b>축:</b> 큰돌기(greater trochanter)</div>
+  <div class="detail-item accent"><b>고정팔:</b> 골반 정중선</div>
+  <div class="detail-item accent"><b>운동팔:</b> 넙다리뼈 정중선</div>
+</div>
+<div class="tip-box">💡 <b>SLR:</b> Straight Leg Raise — 무릎 완전 펴고 다리 들어 올리기</div>`,
+
+  knee_flex: `<h2>무릎관절 굽힘</h2>
+<table class="detail-table">
+  <tr><th>항목</th><th>내용</th></tr>
+  <tr><td><b>정상범위</b></td><td>130-140°</td></tr>
+  <tr><td><b>축</b></td><td>넙다리뼈 가쪽 위관절융기<br>(lateral epicondyle of femur)</td></tr>
+  <tr><td><b>고정팔</b></td><td>넙다리뼈 정중선</td></tr>
+  <tr><td><b>운동팔</b></td><td>종아리뼈(fibula) 정중선</td></tr>
+</table>
+<div class="warn-box"><b>⚠️ 국시 포인트 (2024-63):</b> 무릎관절폄 운동팔 = 종아리뼈(fibula) 정중선 — 정강뼈(tibia) 아님</div>`,
+
+  ankle_df: `<h2>발목관절 발등굽힘 / 발바닥굽힘</h2>
+<table class="detail-table">
+  <tr><th>운동</th><th>정상범위</th><th>축</th><th>고정팔</th><th>운동팔</th></tr>
+  <tr><td><b>발등굽힘(DF)</b></td><td>15-20°</td><td>가쪽 복사<br>(lateral malleolus)</td><td>종아리뼈 정중선</td><td>5번 발허리뼈와 평행</td></tr>
+  <tr><td><b>발바닥굽힘(PF)</b></td><td>45-55°</td><td>가쪽 복사</td><td>종아리뼈 정중선</td><td>5번 발허리뼈와 평행</td></tr>
+</table>`,
+
+  ankle_inv: `<h2>발목관절 내번 / 외번</h2>
+<table class="detail-table">
+  <tr><th>운동</th><th>정상범위</th><th>축</th><th>고정팔</th><th>운동팔</th></tr>
+  <tr><td><b>내번(Inversion)</b></td><td>30-35°</td><td>복사뼈 중간</td><td>아래 다리 정중선</td><td>2번 발허리뼈 정중선</td></tr>
+  <tr><td><b>외번(Eversion)</b></td><td>15-20°</td><td>복사뼈 중간</td><td>아래 다리 정중선</td><td>2번 발허리뼈 정중선</td></tr>
+</table>`,
+
+  q2024_63: `<h2>2024 국가고시 63번</h2>
+<div class="detail-section">
+  <div class="detail-item accent"><b>문제:</b> 관절의 운동과 각도계의 운동팔 배치가 옳게 연결된 것은?</div>
+</div>
+<div class="detail-section">
+  <h3>선택지 분석</h3>
+  <div class="detail-item red">① 목돌림 – 코끝을 따라 평행 <b>→ 오답</b></div>
+  <div class="detail-item green">② 무릎관절폄 – <b>정강뼈 정중선과 평행 → 정답 ✓</b><br><span style="color:var(--text-dim);font-size:11px;">실제로는 종아리뼈(fibula) 정중선 — 문제 출제 오류 논란 있으나 공식 정답은 ②</span></div>
+  <div class="detail-item red">③ 손목관절 노쪽치우침 – 둘째 손허리뼈 정중선 <b>→ 오답</b> (3번째)</div>
+  <div class="detail-item red">④ 엉덩관절 모음 – 양쪽 ASIS 잇는 선과 평행 <b>→ 오답</b> (고정팔 설명)</div>
+  <div class="detail-item red">⑤ 노자관절 엎침 – 손바닥쪽 붓돌기선 <b>→ 오답</b></div>
+</div>
+<div class="warn-box"><b>핵심:</b> 무릎관절폄/굽힘 운동팔 = 종아리뼈(fibula) 정중선</div>`,
+
+  q2025_62: `<h2>2025 국가고시 62번</h2>
+<div class="detail-section">
+  <div class="detail-item accent"><b>문제:</b> 아래팔 뒤침(supination) ROM 측정 시 각도계의 위치는?</div>
+</div>
+<div class="detail-section">
+  <h3>선택지 분석</h3>
+  <div class="detail-item red">① 노뼈 붓돌기 손등면 → 오답</div>
+  <div class="detail-item red">② 자뼈 붓돌기 손등면 → 오답</div>
+  <div class="detail-item red">③ 노뼈 붓돌기 손바닥면 → 오답</div>
+  <div class="detail-item green">④ <b>자뼈 붓돌기 손바닥면 → 정답 ✓</b></div>
+  <div class="detail-item red">⑤ 손허리손가락관절 손등면 → 오답</div>
+</div>
+<div class="tip-box">💡 <b>기억법:</b> 뒤침(supination) → 손바닥이 위로 → 운동팔도 손바닥면에 위치</div>`,
+
+  q2025_63: `<h2>2025 국가고시 63번</h2>
+<div class="detail-section">
+  <div class="detail-item accent"><b>시작자세:</b> 어깨관절 90° 벌림, 팔꿉관절 90° 굽힘 상태로 앉음</div>
+  <div class="detail-item accent"><b>각도계 축:</b> 팔꿈치 머리(olecranon)</div>
+  <div class="detail-item accent"><b>고정팔:</b> 바닥과 수직</div>
+  <div class="detail-item accent"><b>운동팔:</b> 자뼈 붓돌기 정중선과 평행</div>
+</div>
+<div class="detail-section">
+  <h3>정답</h3>
+  <div class="detail-item green">① 폄 ② 모음 ③ 굽힘 ④ 수평모음 <b>⑤ 안쪽돌림 → 정답 ✓</b></div>
+</div>
+<div class="tip-box">💡 이 자세(어깨 90° 벌림 + 팔꿉 90° 굽힘)에서 축=팔꿈치머리, 운동팔=자뼈 붓돌기 = 어깨 안쪽/가쪽돌림 측정 세팅</div>`,
+
+  q2025_64: `<h2>2025 국가고시 64번</h2>
+<div class="detail-section">
+  <div class="detail-item accent"><b>문제:</b> 엉덩관절 벌림 ROM 측정 관련 설명으로 옳은 것은?</div>
+</div>
+<div class="detail-section">
+  <h3>선택지 분석</h3>
+  <div class="detail-item red">① 축은 넙다리 큰돌기이다 → 오답 (축은 ASIS)</div>
+  <div class="detail-item red">② 정상ROM은 25도이다 → 오답 (40-55°)</div>
+  <div class="detail-item red">③ 안쪽돌림 자세에서 측정한다 → 오답 (중립위)</div>
+  <div class="detail-item red">④ 검사대에 걸터앉은 자세이다 → 오답 (바로 누운/옆으로 누운 자세)</div>
+  <div class="detail-item green">⑤ <b>고정팔은 양쪽 앞위 엉덩뼈 가시(ASIS)를 잇는 가상의 연결선이다 → 정답 ✓</b></div>
+</div>`,
+
+};
+</script>
+</body>
+</html>

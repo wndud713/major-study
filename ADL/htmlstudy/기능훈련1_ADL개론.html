@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>기능훈련 - 일상생활동작(ADL)의 개념과 이해</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+:root{--bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e2a;--bg4:#222736;--border:#2a3048;--accent:#38bdf8;--accent2:#a78bfa;--green:#6ee7b7;--red:#f87171;--yellow:#fbbf24;--text:#dce3f0;--text-dim:#7a8aaa;--text-bright:#fff;--tag-bg:#1d2236;--panel-bg:#111420;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.65;display:flex;flex-direction:column}
+
+/* ── Chapter Nav ── */
+.chapter-nav{background:#0a0c10;border-bottom:1px solid #1e2235;padding:0 16px;display:flex;align-items:center;gap:4px;height:44px;flex-shrink:0;overflow-x:auto}
+.chapter-nav-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:#3a4060;letter-spacing:.1em;margin-right:8px;white-space:nowrap;flex-shrink:0}
+.ch-btn{font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 14px;border-radius:5px;border:1px solid #252840;background:transparent;color:#5a6888;cursor:pointer;transition:all .18s;white-space:nowrap;flex-shrink:0}
+.ch-btn:hover{background:#13161e;color:#9ab;border-color:#3a3f60}
+.ch-btn.active{background:var(--ch-accent,#38bdf8);color:#0a0c10;border-color:transparent;font-weight:600}
+
+/* ── Chapter Section ── */
+.chapter-section{display:none;flex:1;flex-direction:column;min-height:0}
+.chapter-section.active{display:flex}
+
+/* ── Header ── */
+.ch-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 22px 10px;display:flex;align-items:baseline;gap:12px;flex-shrink:0;flex-wrap:wrap}
+.ch-badge{font-family:'JetBrains Mono',monospace;font-size:11px;padding:2px 9px;border-radius:4px;letter-spacing:.06em;color:var(--ch-accent,#38bdf8);background:color-mix(in srgb,var(--ch-accent,#38bdf8) 12%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#38bdf8) 30%,transparent)}
+.ch-header h1{font-size:15px;font-weight:700;color:var(--text-bright)}
+.ch-header p{font-size:11px;color:var(--text-dim);margin-left:auto}
+
+/* ── Layout ── */
+.wrapper{display:flex;flex:1;min-height:0;overflow:hidden}
+
+/* ── Sidebar ── */
+.sidebar{width:210px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-tabs{flex:1;overflow-y:auto;padding:8px 0}
+.tab-group-label{font-size:9px;letter-spacing:.1em;color:var(--text-dim);text-transform:uppercase;padding:10px 16px 4px}
+.tab-btn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 16px;background:none;border:none;color:var(--text-dim);font-size:12.5px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;text-align:left;transition:all .15s;border-left:2px solid transparent}
+.tab-btn:hover{background:var(--bg3);color:var(--text)}
+.tab-btn.active{background:var(--bg3);color:var(--ch-accent,#38bdf8);border-left-color:var(--ch-accent,#38bdf8);font-weight:500}
+.tab-icon{font-size:14px;flex-shrink:0}
+.carousel-toggle-btn{border-left-color:transparent!important}
+.carousel-toggle-btn.active{background:var(--bg3)!important;color:var(--ch-accent,#38bdf8)!important;border-left-color:var(--ch-accent,#38bdf8)!important;font-weight:500}
+
+/* ── Main ── */
+.main-wrap{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+.cards-area{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}
+.cards-area.carousel-on{flex:none;max-height:45%;overflow-y:auto}
+
+/* ── Carousel ── */
+.carousel-area{display:none;flex-direction:column;min-height:0;border-top:1px solid var(--border);background:var(--bg2)}
+.carousel-area.open{display:flex;flex:1}
+.carousel-main{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;padding:8px;cursor:zoom-in}
+.carousel-main img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;display:block}
+.carousel-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);border:1px solid var(--border);color:var(--text);font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s;z-index:2}
+.carousel-nav:hover{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 35%,transparent)}
+.carousel-nav.prev{left:8px}
+.carousel-nav.next{right:8px}
+.carousel-thumbs{flex-shrink:0;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;border-top:1px solid var(--border);background:#0d0f14}
+.carousel-thumb{width:64px;height:48px;object-fit:cover;border-radius:4px;border:2px solid transparent;cursor:pointer;flex-shrink:0;opacity:.65;transition:all .18s}
+.carousel-thumb.active{border-color:var(--ch-accent,#38bdf8);opacity:1}
+.carousel-label{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);color:var(--text);font-size:11px;padding:3px 10px;border-radius:10px;white-space:nowrap;pointer-events:none}
+
+/* ── Lightbox ── */
+.lightbox{display:none;position:fixed;top:44px;left:210px;right:0;bottom:0;background:rgba(0,0,0,.88);z-index:100;align-items:center;justify-content:center;flex-direction:column;cursor:zoom-out;transition:right .2s}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90%;max-height:85%;object-fit:contain;border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.8)}
+.lightbox-label{color:var(--text);font-size:12px;margin-top:10px;opacity:.8}
+.lightbox-close{position:absolute;top:12px;right:16px;background:none;border:1px solid var(--border);color:var(--text-dim);font-size:13px;padding:4px 10px;border-radius:5px;cursor:pointer}
+.lightbox-close:hover{color:var(--ch-accent,#38bdf8);border-color:var(--ch-accent,#38bdf8)}
+
+/* ── Detail Panel ── */
+.detail-panel{width:370px;flex-shrink:0;background:var(--panel-bg);border-left:1px solid var(--border);overflow-y:auto;padding:18px;display:none}
+.detail-panel.open{display:block}
+.detail-panel h2{font-size:14px;color:var(--ch-accent,#38bdf8);margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px}
+
+/* ── Cards ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;transition:border-color .2s,background .2s;cursor:pointer}
+.card:hover{border-color:var(--ch-accent,#38bdf8);background:var(--bg3)}
+.card-body{flex:1}
+.card-title{font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:4px}
+.card-sub{font-size:11.5px;color:var(--text-dim);line-height:1.55}
+.expand-btn{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 12%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#38bdf8) 25%,transparent);color:var(--ch-accent,#38bdf8);border-radius:5px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;flex-shrink:0;transition:background .18s}
+.expand-btn:hover{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 28%,transparent)}
+.section-title{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px}
+.tab-content{display:none}
+.tab-content.active{display:flex;flex-direction:column;gap:12px}
+
+/* ── Detail internals ── */
+.detail-section{margin-bottom:16px}
+.detail-section h3{font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}
+.detail-item{background:var(--bg3);border-radius:6px;padding:9px 12px;margin-bottom:6px;font-size:12px;line-height:1.6;border-left:3px solid var(--border)}
+.detail-item.accent{border-left-color:var(--ch-accent,#38bdf8)}
+.detail-item.blue{border-left-color:var(--accent2)}
+.detail-item.green{border-left-color:var(--green)}
+.detail-item.red{border-left-color:var(--red)}
+.detail-item.yellow{border-left-color:var(--yellow)}
+.detail-item b{color:var(--text-bright)}
+.tag{display:inline-block;background:var(--tag-bg);border:1px solid var(--border);color:var(--ch-accent,#38bdf8);font-size:10px;font-family:'JetBrains Mono',monospace;padding:1px 7px;border-radius:3px;margin:2px 2px 2px 0}
+.tag.blue{color:var(--accent2);border-color:rgba(167,139,250,.3)}
+.tag.green{color:var(--green);border-color:rgba(110,231,183,.3)}
+.tag.red{color:var(--red);border-color:rgba(248,113,113,.3)}
+.tag.yellow{color:var(--yellow);border-color:rgba(251,191,36,.3)}
+.detail-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:6px}
+.detail-table th{background:var(--bg4);color:var(--ch-accent,#38bdf8);padding:6px 8px;text-align:left;font-weight:600;border-bottom:1px solid var(--border)}
+.detail-table td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.detail-table tr:last-child td{border-bottom:none}
+.detail-table tr:hover td{background:var(--bg3)}
+.tip-box{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 8%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#38bdf8) 25%,transparent);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}
+.tip-box b{color:var(--ch-accent,#38bdf8)}
+.warn-box{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}
+.warn-box b{color:var(--red)}
+.step-flow{display:flex;flex-direction:column;gap:4px;margin:7px 0}
+.step-item{background:var(--bg4);border-radius:5px;padding:6px 11px;font-size:12px;border-left:3px solid var(--ch-accent,#38bdf8);position:relative}
+.step-item::after{content:'↓';position:absolute;bottom:-13px;left:13px;color:var(--text-dim);font-size:10px}
+.step-item:last-child::after{display:none}
+.timeline{display:flex;flex-direction:column}
+.tl-item{display:flex;gap:12px;padding:6px 0 6px 14px;border-left:2px solid color-mix(in srgb,var(--ch-accent,#38bdf8) 30%,transparent);position:relative}
+.tl-item::before{content:'';position:absolute;left:-5px;top:12px;width:8px;height:8px;border-radius:50%;background:var(--ch-accent,#38bdf8);opacity:.7}
+.tl-label{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--ch-accent,#38bdf8);min-width:90px;flex-shrink:0}
+.tl-body{font-size:12px;color:var(--text-dim)}
+.close-btn{display:flex;align-items:center;gap:5px;background:none;border:1px solid var(--border);color:var(--text-dim);font-size:11px;font-family:'Noto Sans KR',sans-serif;padding:4px 10px;border-radius:5px;cursor:pointer;margin-bottom:12px;transition:all .18s}
+.close-btn:hover{border-color:var(--ch-accent,#38bdf8);color:var(--ch-accent,#38bdf8)}
+
+/* ── 국시문제 구분선 ── */
+.q-divider{border:none;border-top:2px solid var(--ch-accent,#38bdf8);margin:6px 0;opacity:0.35}
+
+/* ── Mobile ── */
+@media(max-width:768px){
+  html,body{height:auto;overflow:auto}
+  .wrapper{flex-direction:column;overflow:visible}
+  .chapter-section{min-height:0}
+  .main-wrap{overflow:visible}
+  .cards-area{overflow:visible}
+  .cards-area.carousel-on{max-height:none;overflow:visible}
+  .sidebar{width:100%;height:auto;flex-direction:column;border-right:none;border-bottom:1px solid var(--border)}
+  .sidebar-tabs{display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:0}
+  .tab-group-label{display:none}
+  .tab-btn{flex-direction:column;gap:2px;padding:8px 10px;font-size:10px;white-space:nowrap;border-left:none;border-bottom:2px solid transparent;min-width:fit-content}
+  .tab-btn.active{border-left:none;border-bottom-color:var(--ch-accent,#38bdf8)}
+  .carousel-area.open{height:360px;flex:none}
+  .carousel-main{height:260px}
+  .detail-panel{width:100%;border-left:none;border-top:1px solid var(--border)}
+  .lightbox{left:0;top:44px}
+  .ch-header p{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="chapter-nav">
+  <span class="chapter-nav-label">기능훈련(ADL)</span>
+  <button class="ch-btn active" onclick="switchChapter('ch1')" data-ch="ch1" style="--ch-accent:#38bdf8">CH.01 ADL 개론</button>
+</div>
+
+<div class="chapter-section active" id="ch1" style="--ch-accent:#38bdf8;--accent2:#a78bfa">
+  <div class="ch-header">
+    <span class="ch-badge">CH.01</span>
+    <h1>일상생활동작(ADL)의 개념과 이해</h1>
+    <p>기능훈련 · 최윤정 교수 · 2026</p>
+  </div>
+  <div class="wrapper">
+
+    <nav class="sidebar">
+      <div class="sidebar-tabs">
+        <div class="tab-group-label">개념 · 분류</div>
+        <button class="tab-btn active" onclick="switchTab('ch1','tab1',this)"><span class="tab-icon">📋</span>ADL 개요</button>
+        <button class="tab-btn" onclick="switchTab('ch1','tab2',this)"><span class="tab-icon">🏃</span>ADL 훈련 방법</button>
+        <button class="tab-btn" onclick="switchTab('ch1','tab3',this)"><span class="tab-icon">🌍</span>ICF 장애 분류</button>
+        <button class="tab-btn" onclick="switchTab('ch1','tab4',this)"><span class="tab-icon">🎯</span>국시문제</button>
+
+        <div class="tab-group-label" style="margin-top:6px;border-top:1px solid var(--border);padding-top:10px;">자료</div>
+        <button class="tab-btn carousel-toggle-btn" id="ch1-carousel-toggle-btn" onclick="toggleCarousel('ch1')">
+          <span class="tab-icon">🖼️</span>슬라이드 이미지
+        </button>
+      </div>
+    </nav>
+
+    <div class="main-wrap">
+      <div class="cards-area" id="ch1-cards-area">
+
+        <!-- 탭 1: ADL 개요 -->
+        <div class="tab-content active" id="ch1-tab-tab1">
+          <div class="section-title">정의 · 분류 · 목적</div>
+
+          <div class="card" onclick="openDetail('ch1','adl-def')">
+            <div class="card-body">
+              <div class="card-title">ADL 정의</div>
+              <div class="card-sub">매일 수행하는 기초적 활동 · Lawton(1956) · Spector 등(1987) · ICF(2001)</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','adl-class')">
+            <div class="card-body">
+              <div class="card-title">ADL 분류 (AOTA 2002)</div>
+              <div class="card-sub">BADL(기본적 ADL) · IADL(수단적 ADL) · OTPF Ⅲ(2014)</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','adl-goal')">
+            <div class="card-body">
+              <div class="card-title">ADL의 목적</div>
+              <div class="card-sub">독립적 자기관리 · 삶의 질 향상 · 사회생활 최대 독립성 성취</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭 2: ADL 훈련 방법 -->
+        <div class="tab-content" id="ch1-tab-tab2">
+          <div class="section-title">5가지 훈련 프로그램</div>
+
+          <div class="card" onclick="openDetail('ch1','train-task')">
+            <div class="card-body">
+              <div class="card-title">① 과제지향적 프로그램</div>
+              <div class="card-sub">Task-oriented · 숟가락/젓가락 사용, 세수, 단추잠그기 등 과제 특수화 전략</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','train-bio')">
+            <div class="card-body">
+              <div class="card-title">② IT 기반 생체되먹임 프로그램</div>
+              <div class="card-sub">Biofeedback · 손상 부위 정상 움직임 패턴 촉진 · 재활기법</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','train-vr')">
+            <div class="card-body">
+              <div class="card-title">③ 가상현실 프로그램</div>
+              <div class="card-sub">Virtual Reality · 컴퓨터 H/W+S/W · 인간과 특정 환경 연결 인터페이스</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','train-dao')">
+            <div class="card-body">
+              <div class="card-title">④ 원격동작관찰 프로그램</div>
+              <div class="card-sub">Distance Action Observation · 화상 통신 기술 · 치료사가 화면으로 동작 시범</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','train-robot')">
+            <div class="card-body">
+              <div class="card-title">⑤ 상지 착용형 로봇 프로그램</div>
+              <div class="card-sub">Wearable Robot · 과제지향 치료와 병합 · 체계적 데이터 수집</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭 3: ICF 장애 분류 -->
+        <div class="tab-content" id="ch1-tab-tab3">
+          <div class="section-title">ICIDH → ICF 변천 · 구성요소</div>
+
+          <div class="card" onclick="openDetail('ch1','icf-overview')">
+            <div class="card-body">
+              <div class="card-title">ICF 개요 (2001)</div>
+              <div class="card-sub">WHO 국제 기능·장애·건강분류 · 건강관련 구성요소 표준화</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','icidh-vs-icf')">
+            <div class="card-body">
+              <div class="card-title">ICIDH(1980) vs ICF(2001) 비교</div>
+              <div class="card-sub">손상→무능력→사회적 불리 → 기능성·무능력·건강 개념 수정</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','icf-components')">
+            <div class="card-body">
+              <div class="card-title">ICF 주요 구성요소</div>
+              <div class="card-sub">신체 기능·구조 / 활동 / 참여 / 배경요인(환경·개인)</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭 4: 국시문제 -->
+        <div class="tab-content" id="ch1-tab-tab4">
+          <div class="section-title">국가고시 기출 · 예상 문제</div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">Q1. ADL의 정의로 옳은 것은?</div>
+              <div class="card-sub">
+                ① 직업적 활동을 포함한 모든 일상 행동<br>
+                ② 보통의 하루를 보내는 데 필요한 기초적 활동<br>
+                ③ 여가 및 스포츠 활동만을 의미한다<br>
+                ④ 의료적 재활 프로그램에서만 수행하는 활동<br>
+                ⑤ 사회적 봉사 활동을 포함한 지역사회 활동<br>
+                <br><b style="color:var(--ch-accent)">정답: ② </b><span style="color:var(--text-dim)">— Lawton(1956): 직업적 활동이 아닌 기초적 활동</span>
+              </div>
+            </div>
+          </div>
+
+          <hr class="q-divider">
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">Q2. AOTA 2002 기준 수단적 일상생활활동(IADL)에 해당하는 것은?</div>
+              <div class="card-sub">
+                ① 세수하기<br>
+                ② 식사하기<br>
+                ③ 지역사회 내 쇼핑하기<br>
+                ④ 옷 입기<br>
+                ⑤ 대소변 조절<br>
+                <br><b style="color:var(--ch-accent)">정답: ③ </b><span style="color:var(--text-dim)">— IADL은 가정·지역사회 내 복잡한 활동(쇼핑, 가사 등); ①②④⑤는 BADL</span>
+              </div>
+            </div>
+          </div>
+
+          <hr class="q-divider">
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">Q3. ICF(2001)에서 ICIDH(1980)와 비교한 변화로 올바른 것은?</div>
+              <div class="card-sub">
+                ① 장애를 질병 관점에서만 바라보게 되었다<br>
+                ② '활동'이 '무능력(Disability)'으로 개념 수정되었다<br>
+                ③ '참여(Participation)' 개념이 새로 추가되었다<br>
+                ④ 개인요인을 배경요인에서 제외하였다<br>
+                ⑤ 환경요인의 영향을 고려하지 않는다<br>
+                <br><b style="color:var(--ch-accent)">정답: ③ </b><span style="color:var(--text-dim)">— ICF는 '참여' 개념 추가 및 사회·환경적 맥락 반영</span>
+              </div>
+            </div>
+          </div>
+
+          <hr class="q-divider">
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">Q4. IT 기반 생체되먹임(Biofeedback) 프로그램에 대한 설명으로 옳은 것은?</div>
+              <div class="card-sub">
+                ① 환자가 로봇 구동장치를 직접 조작하는 훈련이다<br>
+                ② 손상된 신체의 움직임을 정상적인 움직임 패턴으로 촉진하는 재활기법이다<br>
+                ③ 치료사가 화상 화면을 통해 직접 동작을 보여주는 방식이다<br>
+                ④ 컴퓨터 소프트웨어로 가상의 환경을 만들어 치료한다<br>
+                ⑤ 숟가락이나 젓가락 사용 등 과제를 반복 연습하는 방법이다<br>
+                <br><b style="color:var(--ch-accent)">정답: ② </b><span style="color:var(--text-dim)">— ③은 원격동작관찰, ④는 VR, ⑤는 과제지향적 프로그램</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div><!-- /cards-area -->
+
+      <div class="carousel-area" id="ch1-carousel-area">
+        <div class="carousel-main" id="ch1-carousel-main" onclick="openLightbox('ch1')">
+          <button class="carousel-nav prev" onclick="event.stopPropagation();carouselMove('ch1',-1)">‹</button>
+          <img id="ch1-carousel-img" src="" alt="">
+          <div class="carousel-label" id="ch1-carousel-label"></div>
+          <button class="carousel-nav next" onclick="event.stopPropagation();carouselMove('ch1',1)">›</button>
+        </div>
+        <div class="carousel-thumbs" id="ch1-carousel-thumbs"></div>
+      </div>
+    </div><!-- /main-wrap -->
+
+    <aside class="detail-panel" id="ch1-detail-panel">
+      <button class="close-btn" onclick="closeDetail('ch1')">✕ 닫기</button>
+      <div id="ch1-detail-content"></div>
+    </aside>
+
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ 닫기</button>
+  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox-label" id="lightbox-label"></div>
+</div>
+
+
+<script>
+const SLIDES_DATA = {
+  ch1: [],
+};
+
+const carouselState = {};
+
+function initCarousel(chid) {
+  const slides = SLIDES_DATA[chid] || [];
+  if (!slides.length) return;
+  carouselState[chid] = { curIdx: 0 };
+  const thumbsEl = document.getElementById(chid + '-carousel-thumbs');
+  thumbsEl.innerHTML = '';
+  slides.forEach((s, i) => {
+    const img = document.createElement('img');
+    img.className = 'carousel-thumb' + (i === 0 ? ' active' : '');
+    img.src = s.src;
+    img.alt = s.label;
+    img.onclick = () => goTo(chid, i);
+    thumbsEl.appendChild(img);
+  });
+  goTo(chid, 0);
+}
+
+function goTo(chid, i) {
+  const slides = SLIDES_DATA[chid] || [];
+  if (!slides.length) return;
+  const n = slides.length;
+  i = ((i % n) + n) % n;
+  carouselState[chid].curIdx = i;
+  document.getElementById(chid + '-carousel-img').src = slides[i].src;
+  document.getElementById(chid + '-carousel-label').textContent = slides[i].label;
+  document.querySelectorAll('#' + chid + '-carousel-thumbs .carousel-thumb').forEach((t, j) => {
+    t.classList.toggle('active', j === i);
+  });
+  const thumbsEl = document.getElementById(chid + '-carousel-thumbs');
+  const th = thumbsEl.children[i];
+  if (th) th.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+function carouselMove(chid, dir) {
+  const st = carouselState[chid];
+  if (!st) return;
+  goTo(chid, st.curIdx + dir);
+}
+
+function toggleCarousel(chid) {
+  const area = document.getElementById(chid + '-carousel-area');
+  const cardsArea = document.getElementById(chid + '-cards-area');
+  const btn = document.getElementById(chid + '-carousel-toggle-btn');
+  const slides = SLIDES_DATA[chid] || [];
+  const isOpen = area.classList.contains('open');
+  if (isOpen) {
+    area.classList.remove('open');
+    cardsArea.classList.remove('carousel-on');
+    btn.classList.remove('active');
+  } else {
+    if (!slides.length) {
+      alert('등록된 슬라이드 이미지가 없습니다.');
+      return;
+    }
+    area.classList.add('open');
+    cardsArea.classList.add('carousel-on');
+    btn.classList.add('active');
+    if (!carouselState[chid]) initCarousel(chid);
+  }
+}
+
+let _lbChid = null;
+function openLightbox(chid) {
+  const st = carouselState[chid];
+  if (!st) return;
+  _lbChid = chid;
+  const s = (SLIDES_DATA[chid] || [])[st.curIdx];
+  if (!s) return;
+  document.getElementById('lightbox-img').src = s.src;
+  document.getElementById('lightbox-label').textContent = s.label;
+  const panelOpen = document.getElementById(chid + '-detail-panel').classList.contains('open');
+  const lb = document.getElementById('lightbox');
+  lb.style.right = panelOpen ? '370px' : '0px';
+  lb.classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  _lbChid = null;
+}
+
+document.addEventListener('keydown', e => {
+  const activeChid = document.querySelector('.chapter-section.active')?.id;
+  if (!activeChid) return;
+  const area = document.getElementById(activeChid + '-carousel-area');
+  if (!area?.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') carouselMove(activeChid, -1);
+  if (e.key === 'ArrowRight') carouselMove(activeChid, 1);
+  if (e.key === 'Escape') closeLightbox();
+});
+
+function switchChapter(chid) {
+  document.querySelectorAll('.chapter-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(chid).classList.add('active');
+  document.querySelector(`.ch-btn[data-ch="${chid}"]`).classList.add('active');
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+}
+
+function switchTab(chid, tabId, btn) {
+  const ch = document.getElementById(chid);
+  ch.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  ch.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById(chid + '-tab-' + tabId);
+  if (el) el.classList.add('active');
+  btn.classList.add('active');
+  closeDetail(chid);
+}
+
+function openDetail(chid, key) {
+  const content = (allDetailData[chid] || {})[key] || '<p style="color:var(--text-dim)">내용 준비 중</p>';
+  document.getElementById(chid + '-detail-content').innerHTML = content;
+  document.getElementById(chid + '-detail-panel').classList.add('open');
+}
+function closeDetail(chid) {
+  const p = document.getElementById(chid + '-detail-panel');
+  if (p) p.classList.remove('open');
+}
+
+const allDetailData = {};
+
+allDetailData['ch1'] = {
+
+  'adl-def': `<h2>ADL 정의</h2>
+<div class="detail-section">
+  <h3>기본 개념</h3>
+  <div class="detail-item accent"><b>ADL(Activities of Daily Living):</b> 사람이 하루를 보내는 데 필요한 기초적인 활동으로서 일상적으로 매일 수행하는 활동</div>
+</div>
+<div class="detail-section">
+  <h3>학자별 정의</h3>
+  <div class="detail-item blue"><b>Lawton(1956):</b> "인간의 모든 활동에서 직업적인 활동이 아닌 보통의 하루를 보내는데 필요한 기초적 활동이며 국가별·생활습관의 차이는 있으나 기본적이고 본질적인 공통된 활동"</div>
+  <div class="detail-item green"><b>Spector 등(1987):</b> "주위환경에 적응하는 능력"</div>
+  <div class="detail-item yellow"><b>국제기능·장애·건강분류(2001):</b> "활동을 개인에 의한 일상행위 또는 과제수행"</div>
+</div>
+<div class="tip-box">💡 <b>핵심:</b> ADL은 직업(work)과 구별되며, 국가나 문화를 초월하는 기본적·본질적 공통 활동임</div>`,
+
+  'adl-class': `<h2>ADL 분류 (AOTA 2002)</h2>
+<div class="detail-section">
+  <h3>두 가지 분류</h3>
+  <div class="detail-item accent"><b>기본적 일상생활활동 (Basic ADL, BADL):</b> 개인 생활을 지속하기 위해 매일 행하는 활동이나 과제<br>예) 세수, 식사, 옷 입기, 대소변 조절, 이동</div>
+  <div class="detail-item blue"><b>수단적 일상생활활동 (Instrumental ADL, IADL):</b> 가정과 지역사회 내에서의 생활을 지지하며, 자조관리에 비해 복잡한 활동<br>예) 쇼핑, 가사, 교통수단 이용, 금전 관리</div>
+</div>
+<div class="detail-section">
+  <h3>OTPF Ⅲ (2014) 분류 체계</h3>
+  <div class="detail-item green"><b>OTPF (Occupational Therapy Practice Framework) Ⅲ:</b> 2014년 발표된 작업치료 실무 체계로, ADL의 분류를 더욱 세분화하고 체계화함</div>
+</div>
+<table class="detail-table">
+  <tr><th>구분</th><th>BADL</th><th>IADL</th></tr>
+  <tr><td>복잡도</td><td>단순 (기본적)</td><td>복잡 (수단적)</td></tr>
+  <tr><td>범위</td><td>개인 자기관리</td><td>가정·지역사회</td></tr>
+  <tr><td>예시</td><td>식사, 세수, 보행</td><td>쇼핑, 청소, 운전</td></tr>
+</table>`,
+
+  'adl-goal': `<h2>ADL의 목적</h2>
+<div class="detail-section">
+  <h3>독립적 수행의 의미</h3>
+  <div class="detail-item accent"><b>독립적 수행 시:</b> 개인의 자기 관리 능력 유지 + 삶의 질 향상</div>
+  <div class="detail-item red"><b>비독립적인 경우:</b> 활동의 의존성 → 자존감 상실 → 개인의 역할 상실 → 심하면 자살충동 → 삶의 질 저하</div>
+</div>
+<div class="detail-section">
+  <h3>ADL 훈련의 최종 목표</h3>
+  <div class="detail-item green"><b>①</b> 개인의 성공적인 가정생활과 사회생활 영위</div>
+  <div class="detail-item green"><b>②</b> 일상생활활동의 최대 독립성 성취</div>
+</div>
+<div class="tip-box">💡 <b>임상 맥락:</b> ADL 훈련의 핵심은 단순한 기능 회복이 아니라 환자의 자존감과 사회적 역할을 되찾아 삶의 질을 높이는 것</div>`,
+
+  'train-task': `<h2>① 과제지향적 프로그램</h2>
+<div class="detail-section">
+  <h3>Task-oriented Program</h3>
+  <div class="detail-item accent"><b>원리:</b> 일상생활의 실제 과제를 직접 반복 연습함으로써 기능적 움직임 패턴을 학습</div>
+</div>
+<div class="detail-section">
+  <h3>훈련 과제 예시</h3>
+  <div class="detail-item blue">숟가락/젓가락 사용하여 식사하기</div>
+  <div class="detail-item blue">세수하기, 머리 감기</div>
+  <div class="detail-item blue">단추 잠그기/풀기, 지퍼채우기</div>
+</div>
+<div class="detail-section">
+  <h3>핵심 전략</h3>
+  <div class="detail-item green"><b>과제 특수화(Task-specific) 전략:</b> 특정 기능을 반복적으로 수행하게 하여 신경가소성(Neuroplasticity) 촉진</div>
+</div>
+<div class="tip-box">💡 <b>핵심:</b> 실제 생활 과제와 유사한 상황에서 훈련하면 전이(transfer) 효과가 극대화됨</div>`,
+
+  'train-bio': `<h2>② IT 기반 생체되먹임 프로그램</h2>
+<div class="detail-section">
+  <h3>Biofeedback Program</h3>
+  <div class="detail-item accent"><b>정의:</b> 손상된 신체의 움직임을 정상적인 움직임 패턴으로 촉진시키는 재활기법</div>
+  <div class="detail-item blue"><b>방법:</b> 각 신체 부위의 기능을 IT 기술을 통해 효율적으로 측정·피드백</div>
+</div>
+<div class="detail-section">
+  <h3>특징</h3>
+  <div class="detail-item green">생체 신호(근전도, 관절각도 등)를 실시간으로 환자에게 피드백</div>
+  <div class="detail-item green">시각적·청각적 피드백으로 자발적 움직임 교정 유도</div>
+</div>
+<div class="tip-box">💡 <b>어원:</b> Bio(생체) + Feedback(되먹임) — 몸의 신호를 다시 돌려주어 스스로 교정하게 함</div>`,
+
+  'train-vr': `<h2>③ 가상현실 프로그램</h2>
+<div class="detail-section">
+  <h3>Virtual Reality Program</h3>
+  <div class="detail-item accent"><b>정의:</b> 컴퓨터 하드웨어와 소프트웨어를 사용하여 인간과 특정 환경 및 상황을 연결하는 인터페이스 기법</div>
+</div>
+<div class="detail-section">
+  <h3>장점</h3>
+  <div class="detail-item blue">안전한 가상 환경에서 실제와 유사한 ADL 상황 경험 가능</div>
+  <div class="detail-item blue">게임화(Gamification)로 동기 부여 증가</div>
+  <div class="detail-item blue">반복 훈련 용이, 난이도 조절 가능</div>
+</div>
+<div class="tip-box">💡 <b>임상 활용:</b> 뇌졸중, 척수손상 환자의 상지 기능 훈련에 많이 사용됨</div>`,
+
+  'train-dao': `<h2>④ 원격동작관찰 프로그램</h2>
+<div class="detail-section">
+  <h3>Distance Action Observation Program</h3>
+  <div class="detail-item accent"><b>정의:</b> 화상방식의 통신 기술을 이용하여 치료사가 화면을 통해 직접 동작을 보여주고 환자가 따라 하는 일상생활 적응력 증진 프로그램</div>
+</div>
+<div class="detail-section">
+  <h3>특징</h3>
+  <div class="detail-item blue">원격(비대면) 재활 가능 → 이동 제한 환자에 유리</div>
+  <div class="detail-item blue">동작 관찰(Action Observation) 기반 → 거울신경계(Mirror Neuron) 활성화</div>
+  <div class="detail-item green">코로나19 이후 원격 재활(Telerehabilitation)의 주요 형태로 부각</div>
+</div>`,
+
+  'train-robot': `<h2>⑤ 상지 착용형 로봇 프로그램</h2>
+<div class="detail-section">
+  <h3>Wearable Robot Program</h3>
+  <div class="detail-item accent"><b>정의:</b> 로봇의 구동장치를 과제지향 혹은 과제기반의 치료와 병합한 재활훈련 방법</div>
+  <div class="detail-item blue"><b>장점:</b> 정확한 데이터 수집으로 체계적인 재활 프로그램 제공 가능</div>
+</div>
+<div class="detail-section">
+  <h3>특징</h3>
+  <div class="detail-item green">반복적이고 정량화된 훈련 제공</div>
+  <div class="detail-item green">치료사의 신체적 부담 경감</div>
+  <div class="detail-item green">객관적 평가 데이터 자동 수집</div>
+</div>
+<div class="tip-box">💡 <b>임상:</b> 신경계 질환(뇌졸중, SCI) 환자의 상지 기능 회복에 효과적</div>`,
+
+  'icf-overview': `<h2>ICF 개요 (2001)</h2>
+<div class="detail-section">
+  <h3>정의</h3>
+  <div class="detail-item accent"><b>ICF (International Classification of Functioning, Disability and Health):</b> WHO(2001)가 제시한 국제 기능·장애·건강분류</div>
+  <div class="detail-item blue">건강과 건강관련 구성요소를 정의하고 체계적으로 분류하는 표준화된 개념의 틀</div>
+</div>
+<div class="detail-section">
+  <h3>개정 배경</h3>
+  <div class="detail-item green">1990년대 장애인 정책 기조 변화: 소득보조 위주 → 사회적 통합, 동등한 취업기회 보장</div>
+  <div class="detail-item green">기존 ICIDH의 의학적·부정적 관점 한계 극복 필요</div>
+</div>
+<div class="tip-box">💡 <b>핵심 변화:</b> 장애를 개인의 결핍이 아닌 개인-환경 상호작용의 결과로 바라보는 사회-생의학적 모델</div>`,
+
+  'icidh-vs-icf': `<h2>ICIDH vs ICF 비교</h2>
+<div class="detail-section">
+  <h3>ICIDH (1980)</h3>
+  <div class="detail-item red"><b>관점:</b> 장애를 질병이나 신체 이상의 의학적 관점에서 바라봄</div>
+  <div class="step-flow">
+    <div class="step-item">Disease/disorder (질병)</div>
+    <div class="step-item">Impairments (손상)</div>
+    <div class="step-item">Disabilities (무능력)</div>
+    <div class="step-item">Handicaps (사회적 불리)</div>
+  </div>
+</div>
+<div class="detail-section">
+  <h3>개념 변화</h3>
+  <table class="detail-table">
+    <tr><th>ICF</th><th>ICIDH</th></tr>
+    <tr><td>신체 기능 및 구조 (Body function/structure)</td><td>기능/구조적 손상 (Impairments)</td></tr>
+    <tr><td>활동 (Activities)</td><td>활동의 제약 (Disability)</td></tr>
+    <tr><td>참여 (Participation)</td><td>사회적 불이익 (Handicap)</td></tr>
+    <tr><td>배경요인 (환경+개인)</td><td>—</td></tr>
+  </table>
+</div>
+<div class="tip-box">💡 <b>핵심:</b> "손상·무능력·사회적 불리" → "기능성·무능력·건강"으로 긍정적·통합적 개념으로 전환</div>`,
+
+  'icf-components': `<h2>ICF 주요 구성요소</h2>
+<div class="detail-section">
+  <h3>① 신체 기능 및 구조 (Body function & structure)</h3>
+  <div class="detail-item accent"><b>신체기능 제한 예시:</b> 근력저하, 신경손상, 관절구축, 생리적 기능 저하, 기억력 저하</div>
+</div>
+<div class="detail-section">
+  <h3>② 활동 (Activity)</h3>
+  <div class="detail-item blue"><b>정의:</b> 개인이 과제를 수행하는 행위 자체</div>
+  <div class="detail-item blue"><b>활동제한 예시:</b> 옷 입기, 식사하기, 화장실 가기</div>
+</div>
+<div class="detail-section">
+  <h3>③ 참여 (Participation)</h3>
+  <div class="detail-item green"><b>정의:</b> 개인이 삶의 상황에 실제로 참여하는 것</div>
+  <div class="detail-item green"><b>참여제한 예시:</b> 사회적 역할, 직장, 쇼핑, 스포츠, 여가, 여행</div>
+</div>
+<div class="detail-section">
+  <h3>+ 배경요인</h3>
+  <div class="detail-item yellow"><b>환경요인:</b> 물리적·사회적·태도적 환경 (장벽 또는 촉진 요소)</div>
+  <div class="detail-item yellow"><b>개인요인:</b> 연령, 성별, 직업, 교육 등 개인 특성</div>
+</div>`,
+
+};
+</script>
+</body>
+</html>

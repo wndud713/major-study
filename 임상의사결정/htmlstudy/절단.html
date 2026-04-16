@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>임상의사결정 - 절단</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+:root{--bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e2a;--bg4:#222736;--border:#2a3048;--accent:#38bdf8;--accent2:#a78bfa;--green:#6ee7b7;--red:#f87171;--yellow:#fbbf24;--text:#dce3f0;--text-dim:#7a8aaa;--text-bright:#fff;--tag-bg:#1d2236;--panel-bg:#111420;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.65;display:flex;flex-direction:column}
+
+/* ── Chapter Nav ── */
+.chapter-nav{background:#0a0c10;border-bottom:1px solid #1e2235;padding:0 16px;display:flex;align-items:center;gap:4px;height:44px;flex-shrink:0;overflow-x:auto}
+.chapter-nav-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:#3a4060;letter-spacing:.1em;margin-right:8px;white-space:nowrap;flex-shrink:0}
+.ch-btn{font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 14px;border-radius:5px;border:1px solid #252840;background:transparent;color:#5a6888;cursor:pointer;transition:all .18s;white-space:nowrap;flex-shrink:0}
+.ch-btn:hover{background:#13161e;color:#9ab;border-color:#3a3f60}
+.ch-btn.active{background:var(--ch-accent,#38bdf8);color:#0a0c10;border-color:transparent;font-weight:600}
+
+/* ── Chapter Section ── */
+.chapter-section{display:none;flex:1;flex-direction:column;min-height:0}
+.chapter-section.active{display:flex}
+
+/* ── Header ── */
+.ch-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 22px 10px;display:flex;align-items:baseline;gap:12px;flex-shrink:0;flex-wrap:wrap}
+.ch-badge{font-family:'JetBrains Mono',monospace;font-size:11px;padding:2px 9px;border-radius:4px;letter-spacing:.06em;color:var(--ch-accent,#38bdf8);background:color-mix(in srgb,var(--ch-accent,#38bdf8) 12%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#38bdf8) 30%,transparent)}
+.ch-header h1{font-size:15px;font-weight:700;color:var(--text-bright)}
+.ch-header p{font-size:11px;color:var(--text-dim);margin-left:auto}
+
+/* ── Layout ── */
+.wrapper{display:flex;flex:1;min-height:0;overflow:hidden}
+
+/* ── Sidebar ── */
+.sidebar{width:210px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-tabs{flex:1;overflow-y:auto;padding:8px 0}
+.tab-group-label{font-size:9px;letter-spacing:.1em;color:var(--text-dim);text-transform:uppercase;padding:10px 16px 4px}
+.tab-btn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 16px;background:none;border:none;color:var(--text-dim);font-size:12.5px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;text-align:left;transition:all .15s;border-left:2px solid transparent}
+.tab-btn:hover{background:var(--bg3);color:var(--text)}
+.tab-btn.active{background:var(--bg3);color:var(--ch-accent,#38bdf8);border-left-color:var(--ch-accent,#38bdf8);font-weight:500}
+.tab-icon{font-size:14px;flex-shrink:0}
+.carousel-toggle-btn{border-left-color:transparent!important}
+.carousel-toggle-btn.active{background:var(--bg3)!important;color:var(--ch-accent,#38bdf8)!important;border-left-color:var(--ch-accent,#38bdf8)!important;font-weight:500}
+
+/* ── Main ── */
+.main-wrap{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+.cards-area{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}
+.cards-area.carousel-on{flex:none;max-height:45%;overflow-y:auto}
+
+/* ── Carousel ── */
+.carousel-area{display:none;flex-direction:column;min-height:0;border-top:1px solid var(--border);background:var(--bg2)}
+.carousel-area.open{display:flex;flex:1}
+.carousel-main{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;padding:8px;cursor:zoom-in}
+.carousel-main img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;display:block}
+.carousel-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);border:1px solid var(--border);color:var(--text);font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s;z-index:2}
+.carousel-nav:hover{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 35%,transparent)}
+.carousel-nav.prev{left:8px}
+.carousel-nav.next{right:8px}
+.carousel-thumbs{flex-shrink:0;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;border-top:1px solid var(--border);background:#0d0f14}
+.carousel-thumb{width:64px;height:48px;object-fit:cover;border-radius:4px;border:2px solid transparent;cursor:pointer;flex-shrink:0;opacity:.65;transition:all .18s}
+.carousel-thumb.active{border-color:var(--ch-accent,#38bdf8);opacity:1}
+.carousel-label{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);color:var(--text);font-size:11px;padding:3px 10px;border-radius:10px;white-space:nowrap;pointer-events:none}
+
+/* ── Lightbox ── */
+.lightbox{display:none;position:fixed;top:44px;left:210px;right:0;bottom:0;background:rgba(0,0,0,.88);z-index:100;align-items:center;justify-content:center;flex-direction:column;cursor:zoom-out;transition:right .2s}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90%;max-height:85%;object-fit:contain;border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.8)}
+.lightbox-label{color:var(--text);font-size:12px;margin-top:10px;opacity:.8}
+.lightbox-close{position:absolute;top:12px;right:16px;background:none;border:1px solid var(--border);color:var(--text-dim);font-size:13px;padding:4px 10px;border-radius:5px;cursor:pointer}
+.lightbox-close:hover{color:var(--ch-accent,#38bdf8);border-color:var(--ch-accent,#38bdf8)}
+
+/* ── Detail Panel ── */
+.detail-panel{width:370px;flex-shrink:0;background:var(--panel-bg);border-left:1px solid var(--border);overflow-y:auto;padding:18px;display:none}
+.detail-panel.open{display:block}
+.detail-panel h2{font-size:14px;color:var(--ch-accent,#38bdf8);margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px}
+
+/* ── Cards ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;transition:border-color .2s,background .2s;cursor:pointer}
+.card:hover{border-color:var(--ch-accent,#38bdf8);background:var(--bg3)}
+.card-body{flex:1}
+.card-title{font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:4px}
+.card-sub{font-size:11.5px;color:var(--text-dim);line-height:1.55}
+.expand-btn{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 12%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#38bdf8) 25%,transparent);color:var(--ch-accent,#38bdf8);border-radius:5px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;flex-shrink:0;transition:background .18s}
+.expand-btn:hover{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 28%,transparent)}
+.section-title{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px}
+.tab-content{display:none}
+.tab-content.active{display:flex;flex-direction:column;gap:12px}
+
+/* ── Detail internals ── */
+.detail-section{margin-bottom:16px}
+.detail-section h3{font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}
+.detail-item{background:var(--bg3);border-radius:6px;padding:9px 12px;margin-bottom:6px;font-size:12px;line-height:1.6;border-left:3px solid var(--border)}
+.detail-item.accent{border-left-color:var(--ch-accent,#38bdf8)}
+.detail-item.blue{border-left-color:var(--accent2)}
+.detail-item.green{border-left-color:var(--green)}
+.detail-item.red{border-left-color:var(--red)}
+.detail-item.yellow{border-left-color:var(--yellow)}
+.detail-item b{color:var(--text-bright)}
+.tag{display:inline-block;background:var(--tag-bg);border:1px solid var(--border);color:var(--ch-accent,#38bdf8);font-size:10px;font-family:'JetBrains Mono',monospace;padding:1px 7px;border-radius:3px;margin:2px 2px 2px 0}
+.tag.blue{color:var(--accent2);border-color:rgba(167,139,250,.3)}
+.tag.green{color:var(--green);border-color:rgba(110,231,183,.3)}
+.tag.red{color:var(--red);border-color:rgba(248,113,113,.3)}
+.tag.yellow{color:var(--yellow);border-color:rgba(251,191,36,.3)}
+.detail-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:6px}
+.detail-table th{background:var(--bg4);color:var(--ch-accent,#38bdf8);padding:6px 8px;text-align:left;font-weight:600;border-bottom:1px solid var(--border)}
+.detail-table td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.detail-table tr:last-child td{border-bottom:none}
+.detail-table tr:hover td{background:var(--bg3)}
+.tip-box{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 8%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#38bdf8) 25%,transparent);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}
+.tip-box b{color:var(--ch-accent,#38bdf8)}
+.warn-box{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}
+.warn-box b{color:var(--red)}
+.step-flow{display:flex;flex-direction:column;gap:4px;margin:7px 0}
+.step-item{background:var(--bg4);border-radius:5px;padding:6px 11px;font-size:12px;border-left:3px solid var(--ch-accent,#38bdf8);position:relative}
+.step-item::after{content:'↓';position:absolute;bottom:-13px;left:13px;color:var(--text-dim);font-size:10px}
+.step-item:last-child::after{display:none}
+.timeline{display:flex;flex-direction:column}
+.tl-item{display:flex;gap:12px;padding:6px 0 6px 14px;border-left:2px solid color-mix(in srgb,var(--ch-accent,#38bdf8) 30%,transparent);position:relative}
+.tl-item::before{content:'';position:absolute;left:-5px;top:12px;width:8px;height:8px;border-radius:50%;background:var(--ch-accent,#38bdf8);opacity:.7}
+.tl-label{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--ch-accent,#38bdf8);min-width:90px;flex-shrink:0}
+.tl-body{font-size:12px;color:var(--text-dim)}
+.close-btn{display:flex;align-items:center;gap:5px;background:none;border:1px solid var(--border);color:var(--text-dim);font-size:11px;font-family:'Noto Sans KR',sans-serif;padding:4px 10px;border-radius:5px;cursor:pointer;margin-bottom:12px;transition:all .18s}
+.close-btn:hover{border-color:var(--ch-accent,#38bdf8);color:var(--ch-accent,#38bdf8)}
+
+/* ── 국시문제 ── */
+.q-divider{border:none;border-top:2px solid var(--ch-accent,#38bdf8);margin:6px 0;opacity:0.35}
+
+/* ── Mobile ── */
+@media(max-width:768px){
+  html,body{height:auto;overflow:auto}
+  .wrapper{flex-direction:column;overflow:visible}
+  .chapter-section{min-height:0}
+  .main-wrap{overflow:visible}
+  .cards-area{overflow:visible}
+  .cards-area.carousel-on{max-height:none;overflow:visible}
+  .sidebar{width:100%;height:auto;flex-direction:column;border-right:none;border-bottom:1px solid var(--border)}
+  .sidebar-tabs{display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:0}
+  .tab-group-label{display:none}
+  .tab-btn{flex-direction:column;gap:2px;padding:8px 10px;font-size:10px;white-space:nowrap;border-left:none;border-bottom:2px solid transparent;min-width:fit-content}
+  .tab-btn.active{border-left:none;border-bottom-color:var(--ch-accent,#38bdf8)}
+  .carousel-area.open{height:360px;flex:none}
+  .carousel-main{height:260px}
+  .detail-panel{width:100%;border-left:none;border-top:1px solid var(--border)}
+  .lightbox{left:0;top:44px}
+  .ch-header p{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="chapter-nav">
+  <span class="chapter-nav-label">임상의사결정</span>
+  <button class="ch-btn active" onclick="switchChapter('ch1')" data-ch="ch1" style="--ch-accent:#34d399">CH.01 절단</button>
+</div>
+
+<div class="chapter-section active" id="ch1" style="--ch-accent:#34d399;--accent2:#a78bfa">
+  <div class="ch-header">
+    <span class="ch-badge">CH.01</span>
+    <h1>절단 (Amputation)</h1>
+    <p>임상의사결정 · 신구대학교 · 2026</p>
+  </div>
+  <div class="wrapper">
+
+    <nav class="sidebar">
+      <div class="sidebar-tabs">
+        <div class="tab-group-label">개념</div>
+        <button class="tab-btn active" onclick="switchTab('ch1','contracture',this)"><span class="tab-icon">🦴</span>구축 관리</button>
+        <button class="tab-btn" onclick="switchTab('ch1','postop',this)"><span class="tab-icon">🏥</span>수술 후 중재</button>
+        <button class="tab-btn" onclick="switchTab('ch1','soap',this)"><span class="tab-icon">📋</span>SOAP 사례</button>
+        <button class="tab-btn" onclick="switchTab('ch1','note',this)"><span class="tab-icon">📝</span>노트 비교</button>
+        <div class="tab-group-label">국시</div>
+        <button class="tab-btn" onclick="switchTab('ch1','exam',this)"><span class="tab-icon">🎯</span>국시문제</button>
+        <div class="tab-group-label" style="margin-top:6px;border-top:1px solid var(--border);padding-top:10px;">자료</div>
+        <button class="tab-btn carousel-toggle-btn" id="ch1-carousel-toggle-btn" onclick="toggleCarousel('ch1')">
+          <span class="tab-icon">🖼️</span>슬라이드 이미지
+        </button>
+      </div>
+    </nav>
+
+    <div class="main-wrap">
+      <div class="cards-area" id="ch1-cards-area">
+
+        <!-- 탭 1: 구축 관리 -->
+        <div class="tab-content active" id="ch1-tab-contracture">
+          <div class="section-title">절단 부위별 구축 방향 및 운동 방향</div>
+          <div class="card" onclick="openDetail('ch1','ak')">
+            <div class="card-body">
+              <div class="card-title">A/K — 넙다리 절단 (Above Knee)</div>
+              <div class="card-sub">구축: 엉덩관절 굽힘 · 벌림 · 가쪽돌림<br>운동: 폄근 · 모음근 · 안쪽돌림근 강화</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','bk')">
+            <div class="card-body">
+              <div class="card-title">B/K — 정강이 절단 (Below Knee)</div>
+              <div class="card-sub">구축: 무릎관절 굽힘 구축<br>운동: 무릎 폄 강화 · 굽힘 구축 방지</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','ankle')">
+            <div class="card-body">
+              <div class="card-title">발목관절 절단</div>
+              <div class="card-sub">구축: 첨족(첨부) 변형<br>운동: 발배측굽힘 유지</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','ae')">
+            <div class="card-body">
+              <div class="card-title">A/E — 위팔 절단 (Above Elbow)</div>
+              <div class="card-sub">구축: 어깨관절 굽힘 · 모음 · 안쪽돌림<br>운동: 폄 · 벌림 · 가쪽돌림 강화</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','be')">
+            <div class="card-body">
+              <div class="card-title">B/E — 아래팔 절단 (Below Elbow)</div>
+              <div class="card-sub">구축: 팔꿉관절 굽힘<br>운동: 팔꿉 폄 강화</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭 2: 수술 후 중재 -->
+        <div class="tab-content" id="ch1-tab-postop">
+          <div class="section-title">수술 후 물리치료 중재</div>
+          <div class="card" onclick="openDetail('ch1','stump')">
+            <div class="card-body">
+              <div class="card-title">잘린끝(Stump) 관리</div>
+              <div class="card-sub">원추형 유지 · 탄력붕대 고정 · 말단 단단 / 근위 느슨</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','bandage')">
+            <div class="card-body">
+              <div class="card-title">탄력붕대 감기 원칙</div>
+              <div class="card-sub">먼쪽(말단) 단단히 → 가까운쪽 약간 느슨하게<br>피부 주름 없이 원추형 유지</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','exercise')">
+            <div class="card-body">
+              <div class="card-title">개별 맞춤 운동치료</div>
+              <div class="card-sub">ROM 운동 · 균형운동 · 자세정렬 · 보행훈련</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭 3: SOAP 사례 -->
+        <div class="tab-content" id="ch1-tab-soap">
+          <div class="section-title">환자 사례 — Lt Transtibial Amputation (왼쪽 정강이절단)</div>
+          <div class="card" onclick="openDetail('ch1','soap_s')">
+            <div class="card-body">
+              <div class="card-title">S — Subjective (주관적 정보)</div>
+              <div class="card-sub">환자 호소 통증 · 기능 제한 · 일상 불편</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','soap_o')">
+            <div class="card-body">
+              <div class="card-title">O — Objective (객관적 측정)</div>
+              <div class="card-sub">MMT Fair · BBS 18/56 · VAS stump 3 / phantom 5~6</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','soap_a')">
+            <div class="card-body">
+              <div class="card-title">A — Assessment (평가)</div>
+              <div class="card-sub">의지 착용 상태 균형·근력 감소 → 독립보행 불가</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','soap_p')">
+            <div class="card-body">
+              <div class="card-title">P — Plan (계획 / 목표)</div>
+              <div class="card-sub">단기 4주 · 장기 8주 목표 설정 · 중재 계획</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭 4: 노트 비교 -->
+        <div class="tab-content" id="ch1-tab-note">
+          <div class="section-title">SOAP vs 환자/고객관리 노트 대응 관계</div>
+          <div class="card" onclick="openDetail('ch1','soap_compare')">
+            <div class="card-body">
+              <div class="card-title">SOAP ↔ 환자/고객관리 대응표</div>
+              <div class="card-sub">S=병력 / O=신체조직재조명+검사측정 / A=진단+예후 / P=목표+계획</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+          <div class="card" onclick="openDetail('ch1','vas')">
+            <div class="card-body">
+              <div class="card-title">VAS — Visual Analogue Scale</div>
+              <div class="card-sub">0~10 통증 척도 · 시각적 아날로그 척도</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭 5: 국시문제 -->
+        <div class="tab-content" id="ch1-tab-exam">
+          <div class="section-title">국가고시 기출 문제</div>
+
+          <div class="card" onclick="openDetail('ch1','q2025_49')">
+            <div class="card-body">
+              <div class="card-title">2025 국가고시 49번</div>
+              <div class="card-sub">
+                절단부(stump) 관리 및 구축방지에 대한 설명으로 옳은 것은?<br>
+                <hr class="q-divider">
+                1. 아래팔 절단시 팔꿉관절 <b>폄</b> 강화운동 시행<br>
+                2. 느슨한 피부압박과 주름을 만드는 드레싱<br>
+                3. 절단 끝부터 몸쪽으로 갈수록 <b>단단하게</b> 드레싱<br>
+                4. 넙다리절단은 엉덩관절 굽힘·벌림·바깥돌림 <b>강화</b>운동<br>
+                <hr class="q-divider">
+                ✅ 정답 키워드: B/K 무릎굽힘 구축 방지 / 말단 단단·근위 느슨
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div><!-- /cards-area -->
+
+      <div class="carousel-area" id="ch1-carousel-area">
+        <div class="carousel-main" id="ch1-carousel-main" onclick="openLightbox('ch1')">
+          <button class="carousel-nav prev" onclick="event.stopPropagation();carouselMove('ch1',-1)">‹</button>
+          <img id="ch1-carousel-img" src="" alt="">
+          <div class="carousel-label" id="ch1-carousel-label"></div>
+          <button class="carousel-nav next" onclick="event.stopPropagation();carouselMove('ch1',1)">›</button>
+        </div>
+        <div class="carousel-thumbs" id="ch1-carousel-thumbs"></div>
+      </div>
+    </div><!-- /main-wrap -->
+
+    <aside class="detail-panel" id="ch1-detail-panel">
+      <button class="close-btn" onclick="closeDetail('ch1')">✕ 닫기</button>
+      <div id="ch1-detail-content"></div>
+    </aside>
+
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ 닫기</button>
+  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox-label" id="lightbox-label"></div>
+</div>
+
+
+<script>
+const SLIDES_DATA = {
+  ch1: [],
+};
+
+const carouselState = {};
+
+function initCarousel(chid) {
+  const slides = SLIDES_DATA[chid] || [];
+  if (!slides.length) return;
+  carouselState[chid] = { curIdx: 0 };
+  const thumbsEl = document.getElementById(chid + '-carousel-thumbs');
+  thumbsEl.innerHTML = '';
+  slides.forEach((s, i) => {
+    const img = document.createElement('img');
+    img.className = 'carousel-thumb' + (i === 0 ? ' active' : '');
+    img.src = s.src;
+    img.alt = s.label;
+    img.onclick = () => goTo(chid, i);
+    thumbsEl.appendChild(img);
+  });
+  goTo(chid, 0);
+}
+
+function goTo(chid, i) {
+  const slides = SLIDES_DATA[chid] || [];
+  if (!slides.length) return;
+  const n = slides.length;
+  i = ((i % n) + n) % n;
+  carouselState[chid].curIdx = i;
+  document.getElementById(chid + '-carousel-img').src = slides[i].src;
+  document.getElementById(chid + '-carousel-label').textContent = slides[i].label;
+  document.querySelectorAll('#' + chid + '-carousel-thumbs .carousel-thumb').forEach((t, j) => {
+    t.classList.toggle('active', j === i);
+  });
+  const thumbsEl = document.getElementById(chid + '-carousel-thumbs');
+  const th = thumbsEl.children[i];
+  if (th) th.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+function carouselMove(chid, dir) {
+  const st = carouselState[chid];
+  if (!st) return;
+  goTo(chid, st.curIdx + dir);
+}
+
+function toggleCarousel(chid) {
+  const area = document.getElementById(chid + '-carousel-area');
+  const cardsArea = document.getElementById(chid + '-cards-area');
+  const btn = document.getElementById(chid + '-carousel-toggle-btn');
+  const slides = SLIDES_DATA[chid] || [];
+  const isOpen = area.classList.contains('open');
+  if (isOpen) {
+    area.classList.remove('open');
+    cardsArea.classList.remove('carousel-on');
+    btn.classList.remove('active');
+  } else {
+    if (!slides.length) {
+      alert('등록된 슬라이드 이미지가 없습니다.');
+      return;
+    }
+    area.classList.add('open');
+    cardsArea.classList.add('carousel-on');
+    btn.classList.add('active');
+    if (!carouselState[chid]) initCarousel(chid);
+  }
+}
+
+let _lbChid = null;
+function openLightbox(chid) {
+  const st = carouselState[chid];
+  if (!st) return;
+  _lbChid = chid;
+  const s = (SLIDES_DATA[chid] || [])[st.curIdx];
+  if (!s) return;
+  document.getElementById('lightbox-img').src = s.src;
+  document.getElementById('lightbox-label').textContent = s.label;
+  const panelOpen = document.getElementById(chid + '-detail-panel').classList.contains('open');
+  const lb = document.getElementById('lightbox');
+  lb.style.right = panelOpen ? '370px' : '0px';
+  lb.classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  _lbChid = null;
+}
+
+document.addEventListener('keydown', e => {
+  const activeChid = document.querySelector('.chapter-section.active')?.id;
+  if (!activeChid) return;
+  const area = document.getElementById(activeChid + '-carousel-area');
+  if (!area?.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') carouselMove(activeChid, -1);
+  if (e.key === 'ArrowRight') carouselMove(activeChid, 1);
+  if (e.key === 'Escape') closeLightbox();
+});
+
+function switchChapter(chid) {
+  document.querySelectorAll('.chapter-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(chid).classList.add('active');
+  document.querySelector('.ch-btn[data-ch="' + chid + '"]').classList.add('active');
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+}
+
+function switchTab(chid, tabId, btn) {
+  const ch = document.getElementById(chid);
+  ch.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  ch.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById(chid + '-tab-' + tabId);
+  if (el) el.classList.add('active');
+  btn.classList.add('active');
+  closeDetail(chid);
+}
+
+function openDetail(chid, key) {
+  const content = (allDetailData[chid] || {})[key] || '<p style="color:var(--text-dim)">내용 준비 중</p>';
+  document.getElementById(chid + '-detail-content').innerHTML = content;
+  document.getElementById(chid + '-detail-panel').classList.add('open');
+}
+function closeDetail(chid) {
+  const p = document.getElementById(chid + '-detail-panel');
+  if (p) p.classList.remove('open');
+}
+
+const allDetailData = {};
+
+allDetailData['ch1'] = {
+
+  ak: `<h2>A/K — 넙다리 절단 (Above Knee)</h2>
+<div class="detail-section">
+  <h3>구축 방향</h3>
+  <div class="detail-item red"><b>엉덩관절 굽힘 구축</b> — 잘린 끝이 앞으로 당겨짐</div>
+  <div class="detail-item red"><b>엉덩관절 벌림 구축</b> — 다리가 바깥으로 벌어짐</div>
+  <div class="detail-item red"><b>가쪽돌림 구축</b> — 발끝이 바깥을 향함</div>
+</div>
+<div class="detail-section">
+  <h3>강화운동 방향</h3>
+  <div class="detail-item accent"><b>폄근(Extensor)</b> 강화 — 굽힘 구축 방지</div>
+  <div class="detail-item accent"><b>모음근(Adductor)</b> 강화 — 벌림 구축 방지</div>
+  <div class="detail-item accent"><b>안쪽돌림근</b> 강화 — 가쪽돌림 구축 방지</div>
+</div>
+<div class="tip-box">💡 <b>암기법:</b> 구축 방향의 반대 방향 근육을 강화한다.</div>`,
+
+  bk: `<h2>B/K — 정강이 절단 (Below Knee)</h2>
+<div class="detail-section">
+  <h3>구축 방향</h3>
+  <div class="detail-item red"><b>무릎관절 굽힘 구축</b> — 햄스트링 단축으로 무릎이 구부러짐</div>
+</div>
+<div class="detail-section">
+  <h3>강화운동 방향</h3>
+  <div class="detail-item accent"><b>무릎 폄근(대퇴사두근)</b> 강화</div>
+  <div class="detail-item accent">무릎 완전 폄 ROM 유지 필수</div>
+</div>
+<div class="warn-box"><b>⚠️ 주의:</b> 의자에 앉을 때 무릎이 굽혀진 상태를 오래 유지하지 않도록 지도</div>`,
+
+  ankle: `<h2>발목관절 절단</h2>
+<div class="detail-section">
+  <h3>구축 방향</h3>
+  <div class="detail-item red"><b>첨족(Equinus) 변형</b> — 발이 발바닥굽힘 방향으로 고정</div>
+</div>
+<div class="detail-section">
+  <h3>운동 방향</h3>
+  <div class="detail-item accent"><b>발배측굽힘(Dorsiflexion)</b> ROM 유지</div>
+  <div class="detail-item accent">종아리 스트레칭 및 발목 중립위 유지</div>
+</div>`,
+
+  ae: `<h2>A/E — 위팔 절단 (Above Elbow)</h2>
+<div class="detail-section">
+  <h3>구축 방향</h3>
+  <div class="detail-item red"><b>어깨관절 굽힘</b></div>
+  <div class="detail-item red"><b>어깨관절 모음</b></div>
+  <div class="detail-item red"><b>안쪽돌림</b></div>
+</div>
+<div class="detail-section">
+  <h3>강화운동</h3>
+  <div class="detail-item accent">어깨 <b>폄 · 벌림 · 가쪽돌림</b> 강화</div>
+</div>`,
+
+  be: `<h2>B/E — 아래팔 절단 (Below Elbow)</h2>
+<div class="detail-section">
+  <h3>구축 방향</h3>
+  <div class="detail-item red"><b>팔꿉관절 굽힘 구축</b> — 상완이두근 단축</div>
+</div>
+<div class="detail-section">
+  <h3>강화운동</h3>
+  <div class="detail-item accent"><b>팔꿉 폄근(상완삼두근)</b> 강화</div>
+  <div class="detail-item accent">팔꿉 완전 폄 ROM 유지</div>
+</div>`,
+
+  stump: `<h2>잘린끝(Stump) 관리</h2>
+<div class="detail-section">
+  <h3>목표</h3>
+  <div class="detail-item accent"><b>원추형(Conical shape)</b> 유지 — 의지 착용을 위한 최적 형태</div>
+</div>
+<div class="detail-section">
+  <h3>방법</h3>
+  <div class="step-flow">
+    <div class="step-item">① 탄력붕대 준비</div>
+    <div class="step-item">② 말단(먼쪽)부터 단단하게 감기 시작</div>
+    <div class="step-item">③ 근위부(몸쪽)로 올라갈수록 느슨하게</div>
+    <div class="step-item">④ 피부 주름이 생기지 않도록 주의</div>
+    <div class="step-item">⑤ 원추형 형태 완성 → 의지 착용 준비</div>
+  </div>
+</div>
+<div class="warn-box"><b>⚠️ 반대로 하면 안 됨:</b> 근위부를 단단하게 감으면 혈액순환 장애 발생</div>`,
+
+  bandage: `<h2>탄력붕대 감기 원칙</h2>
+<div class="detail-section">
+  <h3>핵심 원칙</h3>
+  <div class="detail-item accent"><b>말단 → 근위부</b> 순서로 감기</div>
+  <div class="detail-item green"><b>말단부: 단단히</b> — 부종 방지, 원추형 유지</div>
+  <div class="detail-item yellow"><b>근위부: 느슨하게</b> — 혈액순환 보장</div>
+</div>
+<div class="tip-box">💡 압박 강도 기울기: 원위부(강) → 근위부(약)<br>이것이 반대가 되면 국시에서 오답 선택지가 됨</div>`,
+
+  exercise: `<h2>개별 맞춤 운동치료</h2>
+<div class="detail-section">
+  <h3>운동 종류</h3>
+  <div class="detail-item accent"><b>관절가동범위 운동</b> — 신장 + 근력증강</div>
+  <div class="detail-item accent"><b>균형운동</b> — 편측 지지 훈련</div>
+  <div class="detail-item accent"><b>자세정렬운동</b> — 보상 패턴 교정</div>
+  <div class="detail-item accent"><b>균형 및 보행운동</b> — 의지 착용 보행 훈련</div>
+</div>`,
+
+  soap_s: `<h2>S — Subjective</h2>
+<div class="detail-section">
+  <h3>주관적 호소</h3>
+  <div class="detail-item blue"><b>통증:</b> Stump pain VAS 3, Phantom pain VAS 5~6</div>
+  <div class="detail-item blue"><b>기능:</b> 의지 착용 후 혼자 걷기 어려움</div>
+  <div class="detail-item blue"><b>진단명:</b> Lt transtibial amputation (왼쪽 정강이절단)</div>
+</div>
+<div class="tip-box">💡 Phantom pain(환상통)은 절단된 사지가 여전히 있는 것처럼 느끼는 통증</div>`,
+
+  soap_o: `<h2>O — Objective</h2>
+<div class="detail-section">
+  <h3>측정 결과</h3>
+  <div class="detail-item accent"><b>MMT:</b> Fair grade (근력 검사)</div>
+  <div class="detail-item accent"><b>ROM:</b> 제한 있음</div>
+  <div class="detail-item red"><b>VAS Stump pain:</b> 3 / 10</div>
+  <div class="detail-item red"><b>VAS Phantom pain:</b> 5~6 / 10</div>
+  <div class="detail-item yellow"><b>BBS:</b> 18 / 56 — 매우 높은 낙상 위험</div>
+  <div class="detail-item blue"><b>Ambulatory Index:</b> 보행 능력 지수 측정</div>
+</div>
+<table class="detail-table">
+  <tr><th>BBS 점수</th><th>낙상 위험</th></tr>
+  <tr><td>0~20</td><td>매우 높은 낙상 위험 (휠체어 필요)</td></tr>
+  <tr><td>21~40</td><td>보조도구 필요</td></tr>
+  <tr><td>41~56</td><td>독립보행 가능</td></tr>
+</table>`,
+
+  soap_a: `<h2>A — Assessment</h2>
+<div class="detail-section">
+  <h3>평가 결론</h3>
+  <div class="detail-item red"><b>의지 착용 상태에서 균형 감소</b></div>
+  <div class="detail-item red"><b>근력 감소</b> — MMT Fair</div>
+  <div class="detail-item red"><b>독립보행 불가능</b></div>
+</div>
+<div class="warn-box"><b>⚠️ 임상적 판단:</b> BBS 18/56 = 매우 높은 낙상 위험 → 즉각적 균형 및 근력 중재 필요</div>`,
+
+  soap_p: `<h2>P — Plan</h2>
+<div class="detail-section">
+  <h3>단기 목표 (4주)</h3>
+  <div class="detail-item green">50M 15분 이내 보행</div>
+  <div class="detail-item green">MMT Fair → Good</div>
+  <div class="detail-item green">Stump pain 3 → 2</div>
+  <div class="detail-item green">BBS 18 → 36</div>
+</div>
+<div class="detail-section">
+  <h3>장기 목표 (8주)</h3>
+  <div class="detail-item accent">50M 7분 이내 보행</div>
+  <div class="detail-item accent">MMT Good → Normal</div>
+  <div class="detail-item accent">Pain 2 → 1</div>
+  <div class="detail-item accent">BBS 36 → 56</div>
+</div>
+<div class="detail-section">
+  <h3>중재 계획</h3>
+  <div class="detail-item blue"><b>근력강화운동</b></div>
+  <div class="detail-item blue"><b>전기치료</b> — Laser</div>
+  <div class="detail-item blue"><b>거울치료</b> — Mirror therapy (환상통 완화)</div>
+  <div class="detail-item blue"><b>균형운동</b></div>
+</div>`,
+
+  soap_compare: `<h2>SOAP ↔ 환자/고객관리 노트 대응</h2>
+<table class="detail-table">
+  <tr><th>SOAP 요소</th><th>환자/고객관리 해당 항목</th></tr>
+  <tr><td><b>S</b> Subjective</td><td>병력 (History)</td></tr>
+  <tr><td><b>O</b> Objective</td><td>신체조직 재조명 + 검사 및 측정</td></tr>
+  <tr><td><b>A</b> Assessment</td><td>진단(Diagnosis) + 예후(Prognosis)</td></tr>
+  <tr><td><b>P</b> Plan</td><td>단기/장기 목표 + 중재계획</td></tr>
+</table>
+<div class="tip-box">💡 SOAP은 의사소통 형식, 환자/고객관리 노트는 포괄적 임상 기록 형식</div>`,
+
+  vas: `<h2>VAS — Visual Analogue Scale</h2>
+<div class="detail-section">
+  <h3>개요</h3>
+  <div class="detail-item accent"><b>0~10</b> 숫자로 통증 강도를 표현</div>
+  <div class="detail-item blue">0 = 통증 없음 / 10 = 상상할 수 없는 최악의 통증</div>
+</div>
+<div class="detail-section">
+  <h3>이 사례에서</h3>
+  <div class="detail-item yellow">Stump pain: <b>3</b> — 중등도 미만</div>
+  <div class="detail-item red">Phantom pain: <b>5~6</b> — 중등도~중증</div>
+</div>
+<div class="tip-box">💡 Phantom pain은 거울치료(Mirror therapy)로 뇌의 신체 지도 재구성을 통해 완화 가능</div>`,
+
+  q2025_49: `<h2>2025 국가고시 49번 — 절단부 관리 및 구축방지</h2>
+<div class="detail-section">
+  <h3>문제</h3>
+  <div class="detail-item blue">절단부(stump) 관리 및 구축방지에 대한 설명으로 옳은 것은?</div>
+</div>
+<div class="detail-section">
+  <h3>선택지 분석</h3>
+  <div class="detail-item red"><b>① 오답</b> — 아래팔 절단 시 팔꿉관절 <u>굽힘</u> 구축 발생 → 폄 강화가 아니라 폄 ROM 유지가 목표</div>
+  <div class="detail-item red"><b>② 오답</b> — 드레싱은 피부압박 강하게, 주름 없이 해야 함</div>
+  <div class="detail-item red"><b>③ 오답</b> — 절단 끝부터 몸쪽으로 갈수록 <u>느슨하게</u> 해야 함 (단단→느슨)</div>
+  <div class="detail-item red"><b>④ 오답</b> — 넙다리절단 구축 방향이 굽힘·벌림·바깥돌림 → 그 반대 방향 강화가 맞음; 구축 방향 자체를 강화하면 안 됨</div>
+</div>
+<div class="detail-section">
+  <h3>핵심 원칙 정리</h3>
+  <div class="detail-item accent">B/K → 무릎 굽힘 구축 방지 (폄 강화)</div>
+  <div class="detail-item accent">탄력붕대: 말단 단단히 → 근위부 느슨하게</div>
+  <div class="detail-item accent">드레싱: 주름 없이, 피부압박 원추형 유지</div>
+</div>
+<div class="tip-box">💡 <b>국시 출제 포인트:</b> 탄력붕대 방향(원위→근위), 구축 방향과 운동 방향(반대!) 확인</div>`,
+
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>임상의사결정 - 임상의사결정 개론</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+:root{--bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e2a;--bg4:#222736;--border:#2a3048;--accent:#38bdf8;--accent2:#a78bfa;--green:#6ee7b7;--red:#f87171;--yellow:#fbbf24;--text:#dce3f0;--text-dim:#7a8aaa;--text-bright:#fff;--tag-bg:#1d2236;--panel-bg:#111420;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.65;display:flex;flex-direction:column}
+
+/* ── Chapter Nav ── */
+.chapter-nav{background:#0a0c10;border-bottom:1px solid #1e2235;padding:0 16px;display:flex;align-items:center;gap:4px;height:44px;flex-shrink:0;overflow-x:auto}
+.chapter-nav-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:#3a4060;letter-spacing:.1em;margin-right:8px;white-space:nowrap;flex-shrink:0}
+.ch-btn{font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 14px;border-radius:5px;border:1px solid #252840;background:transparent;color:#5a6888;cursor:pointer;transition:all .18s;white-space:nowrap;flex-shrink:0}
+.ch-btn:hover{background:#13161e;color:#9ab;border-color:#3a3f60}
+.ch-btn.active{background:var(--ch-accent,#38bdf8);color:#0a0c10;border-color:transparent;font-weight:600}
+
+/* ── Chapter Section ── */
+.chapter-section{display:none;flex:1;flex-direction:column;min-height:0}
+.chapter-section.active{display:flex}
+
+/* ── Header ── */
+.ch-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 22px 10px;display:flex;align-items:baseline;gap:12px;flex-shrink:0;flex-wrap:wrap}
+.ch-badge{font-family:'JetBrains Mono',monospace;font-size:11px;padding:2px 9px;border-radius:4px;letter-spacing:.06em;color:var(--ch-accent,#38bdf8);background:color-mix(in srgb,var(--ch-accent,#38bdf8) 12%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#38bdf8) 30%,transparent)}
+.ch-header h1{font-size:15px;font-weight:700;color:var(--text-bright)}
+.ch-header p{font-size:11px;color:var(--text-dim);margin-left:auto}
+
+/* ── Layout ── */
+.wrapper{display:flex;flex:1;min-height:0;overflow:hidden}
+
+/* ── Sidebar ── */
+.sidebar{width:210px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-tabs{flex:1;overflow-y:auto;padding:8px 0}
+.tab-group-label{font-size:9px;letter-spacing:.1em;color:var(--text-dim);text-transform:uppercase;padding:10px 16px 4px}
+.tab-btn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 16px;background:none;border:none;color:var(--text-dim);font-size:12.5px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;text-align:left;transition:all .15s;border-left:2px solid transparent}
+.tab-btn:hover{background:var(--bg3);color:var(--text)}
+.tab-btn.active{background:var(--bg3);color:var(--ch-accent,#38bdf8);border-left-color:var(--ch-accent,#38bdf8);font-weight:500}
+.tab-icon{font-size:14px;flex-shrink:0}
+.carousel-toggle-btn{border-left-color:transparent!important}
+.carousel-toggle-btn.active{background:var(--bg3)!important;color:var(--ch-accent,#38bdf8)!important;border-left-color:var(--ch-accent,#38bdf8)!important;font-weight:500}
+
+/* ── Main ── */
+.main-wrap{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+.cards-area{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}
+.cards-area.carousel-on{flex:none;max-height:45%;overflow-y:auto}
+
+/* ── Carousel ── */
+.carousel-area{display:none;flex-direction:column;min-height:0;border-top:1px solid var(--border);background:var(--bg2)}
+.carousel-area.open{display:flex;flex:1}
+.carousel-main{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;padding:8px;cursor:zoom-in}
+.carousel-main img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;display:block}
+.carousel-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);border:1px solid var(--border);color:var(--text);font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s;z-index:2}
+.carousel-nav:hover{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 35%,transparent)}
+.carousel-nav.prev{left:8px}
+.carousel-nav.next{right:8px}
+.carousel-thumbs{flex-shrink:0;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;border-top:1px solid var(--border);background:#0d0f14}
+.carousel-thumb{width:64px;height:48px;object-fit:cover;border-radius:4px;border:2px solid transparent;cursor:pointer;flex-shrink:0;opacity:.65;transition:all .18s}
+.carousel-thumb.active{border-color:var(--ch-accent,#38bdf8);opacity:1}
+.carousel-label{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);color:var(--text);font-size:11px;padding:3px 10px;border-radius:10px;white-space:nowrap;pointer-events:none}
+
+/* ── Lightbox ── */
+.lightbox{display:none;position:fixed;top:44px;left:210px;right:0;bottom:0;background:rgba(0,0,0,.88);z-index:100;align-items:center;justify-content:center;flex-direction:column;cursor:zoom-out;transition:right .2s}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90%;max-height:85%;object-fit:contain;border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.8)}
+.lightbox-label{color:var(--text);font-size:12px;margin-top:10px;opacity:.8}
+.lightbox-close{position:absolute;top:12px;right:16px;background:none;border:1px solid var(--border);color:var(--text-dim);font-size:13px;padding:4px 10px;border-radius:5px;cursor:pointer}
+.lightbox-close:hover{color:var(--ch-accent,#38bdf8);border-color:var(--ch-accent,#38bdf8)}
+
+/* ── Detail Panel ── */
+.detail-panel{width:370px;flex-shrink:0;background:var(--panel-bg);border-left:1px solid var(--border);overflow-y:auto;padding:18px;display:none}
+.detail-panel.open{display:block}
+.detail-panel h2{font-size:14px;color:var(--ch-accent,#38bdf8);margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px}
+
+/* ── Cards ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;transition:border-color .2s,background .2s;cursor:pointer}
+.card:hover{border-color:var(--ch-accent,#38bdf8);background:var(--bg3)}
+.card-body{flex:1}
+.card-title{font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:4px}
+.card-sub{font-size:11.5px;color:var(--text-dim);line-height:1.55}
+.expand-btn{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 12%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#38bdf8) 25%,transparent);color:var(--ch-accent,#38bdf8);border-radius:5px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;flex-shrink:0;transition:background .18s}
+.expand-btn:hover{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 28%,transparent)}
+.section-title{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px}
+.tab-content{display:none}
+.tab-content.active{display:flex;flex-direction:column;gap:12px}
+
+/* ── Detail internals ── */
+.detail-section{margin-bottom:16px}
+.detail-section h3{font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}
+.detail-item{background:var(--bg3);border-radius:6px;padding:9px 12px;margin-bottom:6px;font-size:12px;line-height:1.6;border-left:3px solid var(--border)}
+.detail-item.accent{border-left-color:var(--ch-accent,#38bdf8)}
+.detail-item.blue{border-left-color:var(--accent2)}
+.detail-item.green{border-left-color:var(--green)}
+.detail-item.red{border-left-color:var(--red)}
+.detail-item.yellow{border-left-color:var(--yellow)}
+.detail-item b{color:var(--text-bright)}
+.tag{display:inline-block;background:var(--tag-bg);border:1px solid var(--border);color:var(--ch-accent,#38bdf8);font-size:10px;font-family:'JetBrains Mono',monospace;padding:1px 7px;border-radius:3px;margin:2px 2px 2px 0}
+.tag.blue{color:var(--accent2);border-color:rgba(167,139,250,.3)}
+.tag.green{color:var(--green);border-color:rgba(110,231,183,.3)}
+.tag.red{color:var(--red);border-color:rgba(248,113,113,.3)}
+.tag.yellow{color:var(--yellow);border-color:rgba(251,191,36,.3)}
+.detail-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:6px}
+.detail-table th{background:var(--bg4);color:var(--ch-accent,#38bdf8);padding:6px 8px;text-align:left;font-weight:600;border-bottom:1px solid var(--border)}
+.detail-table td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.detail-table tr:last-child td{border-bottom:none}
+.detail-table tr:hover td{background:var(--bg3)}
+.tip-box{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 8%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#38bdf8) 25%,transparent);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}
+.tip-box b{color:var(--ch-accent,#38bdf8)}
+.warn-box{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}
+.warn-box b{color:var(--red)}
+.step-flow{display:flex;flex-direction:column;gap:4px;margin:7px 0}
+.step-item{background:var(--bg4);border-radius:5px;padding:6px 11px;font-size:12px;border-left:3px solid var(--ch-accent,#38bdf8);position:relative}
+.step-item::after{content:'↓';position:absolute;bottom:-13px;left:13px;color:var(--text-dim);font-size:10px}
+.step-item:last-child::after{display:none}
+.timeline{display:flex;flex-direction:column}
+.tl-item{display:flex;gap:12px;padding:6px 0 6px 14px;border-left:2px solid color-mix(in srgb,var(--ch-accent,#38bdf8) 30%,transparent);position:relative}
+.tl-item::before{content:'';position:absolute;left:-5px;top:12px;width:8px;height:8px;border-radius:50%;background:var(--ch-accent,#38bdf8);opacity:.7}
+.tl-label{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--ch-accent,#38bdf8);min-width:90px;flex-shrink:0}
+.tl-body{font-size:12px;color:var(--text-dim)}
+.close-btn{display:flex;align-items:center;gap:5px;background:none;border:1px solid var(--border);color:var(--text-dim);font-size:11px;font-family:'Noto Sans KR',sans-serif;padding:4px 10px;border-radius:5px;cursor:pointer;margin-bottom:12px;transition:all .18s}
+.close-btn:hover{border-color:var(--ch-accent,#38bdf8);color:var(--ch-accent,#38bdf8)}
+
+/* ── 국시문제 전용 ── */
+.q-divider{border:none;border-top:2px solid var(--ch-accent,#38bdf8);margin:6px 0;opacity:0.35}
+.card.exam-card{cursor:default}
+.card.exam-card:hover{border-color:var(--ch-accent,#38bdf8);background:var(--bg3)}
+
+/* ── Mobile ── */
+@media(max-width:768px){
+  html,body{height:auto;overflow:auto}
+  .wrapper{flex-direction:column;overflow:visible}
+  .chapter-section{min-height:0}
+  .main-wrap{overflow:visible}
+  .cards-area{overflow:visible}
+  .cards-area.carousel-on{max-height:none;overflow:visible}
+  .sidebar{width:100%;height:auto;flex-direction:column;border-right:none;border-bottom:1px solid var(--border)}
+  .sidebar-tabs{display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:0}
+  .tab-group-label{display:none}
+  .tab-btn{flex-direction:column;gap:2px;padding:8px 10px;font-size:10px;white-space:nowrap;border-left:none;border-bottom:2px solid transparent;min-width:fit-content}
+  .tab-btn.active{border-left:none;border-bottom-color:var(--ch-accent,#38bdf8)}
+  .carousel-area.open{height:360px;flex:none}
+  .carousel-main{height:260px}
+  .detail-panel{width:100%;border-left:none;border-top:1px solid var(--border)}
+  .lightbox{left:0;top:44px}
+  .ch-header p{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="chapter-nav">
+  <span class="chapter-nav-label">임상의사결정</span>
+  <button class="ch-btn active" onclick="switchChapter('ch1')" data-ch="ch1" style="--ch-accent:#38bdf8">CH.01 임상의사결정 개론</button>
+</div>
+
+<div class="chapter-section active" id="ch1" style="--ch-accent:#38bdf8;--accent2:#a78bfa">
+  <div class="ch-header">
+    <span class="ch-badge">CH.01</span>
+    <h1>임상의사결정 개론</h1>
+    <p>임상의사결정 · 신구대학교 · 2026</p>
+  </div>
+  <div class="wrapper">
+
+    <nav class="sidebar">
+      <div class="sidebar-tabs">
+        <div class="tab-group-label">섹션</div>
+        <button class="tab-btn active" onclick="switchTab('ch1','tab1',this)"><span class="tab-icon">📋</span>임상의사결정 개론</button>
+        <button class="tab-btn" onclick="switchTab('ch1','tab2',this)"><span class="tab-icon">🏥</span>ICF 장애 분류</button>
+        <button class="tab-btn" onclick="switchTab('ch1','tab3',this)"><span class="tab-icon">🔬</span>임상추론 &amp; HOAC II</button>
+        <button class="tab-btn" onclick="switchTab('ch1','tab4',this)"><span class="tab-icon">📚</span>근거중심 물리치료</button>
+        <button class="tab-btn" onclick="switchTab('ch1','tab5',this)"><span class="tab-icon">📝</span>문서화</button>
+        <button class="tab-btn" onclick="switchTab('ch1','tab6',this)"><span class="tab-icon">🎯</span>국시문제</button>
+
+        <div class="tab-group-label" style="margin-top:6px;border-top:1px solid var(--border);padding-top:10px;">자료</div>
+        <button class="tab-btn carousel-toggle-btn" id="ch1-carousel-toggle-btn" onclick="toggleCarousel('ch1')">
+          <span class="tab-icon">🖼️</span>슬라이드 이미지
+        </button>
+      </div>
+    </nav>
+
+    <div class="main-wrap">
+      <div class="cards-area" id="ch1-cards-area">
+
+        <!-- 탭1: 임상의사결정 개론 -->
+        <div class="tab-content active" id="ch1-tab-tab1">
+          <div class="section-title">임상의사결정 기초 이론</div>
+
+          <div class="card" onclick="openDetail('ch1','def')">
+            <div class="card-body">
+              <div class="card-title">임상의사결정 정의</div>
+              <div class="card-sub">체계적·연속적 과정 · 대안 고찰 · 목표 달성 · 실제적 결정</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','nagi')">
+            <div class="card-body">
+              <div class="card-title">Nagi 모델 (1960년대)</div>
+              <div class="card-sub">능동적 병리학 → 손상 → 기능제한 → 장애 4단계 모델</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','patient_mgmt')">
+            <div class="card-body">
+              <div class="card-title">환자/고객 관리 모델</div>
+              <div class="card-sub">검진 → 평가 → 물리치료 진단 → 예후 → 중재 → 결과</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭2: ICF 장애 분류 -->
+        <div class="tab-content" id="ch1-tab-tab2">
+          <div class="section-title">장애 분류 모델 변천</div>
+
+          <div class="card" onclick="openDetail('ch1','icidh')">
+            <div class="card-body">
+              <div class="card-title">WHO ICIDH (1980)</div>
+              <div class="card-sub">손상(Impairment) · 장애(Disability) · 사회적 불리(Handicaps)</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','icf')">
+            <div class="card-body">
+              <div class="card-title">ICF (2001)</div>
+              <div class="card-sub">신체기능·구조 / 활동 / 참여 / 환경·개인요인 — "기능성, 장애, 건강"</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','icf_compare')">
+            <div class="card-body">
+              <div class="card-title">ICIDH vs ICF 비교</div>
+              <div class="card-sub">개념 전환: 결함 중심 → 기능성·참여 중심 분류</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭3: 임상추론 & HOAC II -->
+        <div class="tab-content" id="ch1-tab-tab3">
+          <div class="section-title">임상추론 및 의사결정 과정</div>
+
+          <div class="card" onclick="openDetail('ch1','clinical_reasoning')">
+            <div class="card-body">
+              <div class="card-title">임상추론 (Clinical Reasoning)</div>
+              <div class="card-sub">인지과정 및 사고 · 정보 분석·해석 · 환자 관리 향상</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','hoac2')">
+            <div class="card-body">
+              <div class="card-title">가설지향 알고리즘 II (HOAC II)</div>
+              <div class="card-sub">1~13단계 체계적 임상 의사결정 알고리즘</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭4: 근거중심 물리치료 -->
+        <div class="tab-content" id="ch1-tab-tab4">
+          <div class="section-title">Evidence-Based Physical Therapy</div>
+
+          <div class="card" onclick="openDetail('ch1','ebpt')">
+            <div class="card-body">
+              <div class="card-title">근거중심 물리치료 5단계</div>
+              <div class="card-sub">PICO · 근거찾기(PEDro/PubMed) · 근거평가 · 임상적용 · 수행평가</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','evidence_hierarchy')">
+            <div class="card-body">
+              <div class="card-title">근거의 질 위계</div>
+              <div class="card-sub">메타분석 &gt; 체계적 고찰 &gt; RCT &gt; 코호트 &gt; 사례연구</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','pico')">
+            <div class="card-body">
+              <div class="card-title">PICO 구성 요소</div>
+              <div class="card-sub">Patient / Intervention / Comparison / Outcome</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭5: 문서화 -->
+        <div class="tab-content" id="ch1-tab-tab5">
+          <div class="section-title">SOAP 노트 작성</div>
+
+          <div class="card" onclick="openDetail('ch1','soap')">
+            <div class="card-body">
+              <div class="card-title">SOAP 노트 구성</div>
+              <div class="card-sub">Subjective · Objective · Assessment · Plan — 4가지 항목</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','soap_principle')">
+            <div class="card-body">
+              <div class="card-title">SOAP 작성 원칙</div>
+              <div class="card-sub">정확성 · 간결성 · 명확성 · 날짜와 서명</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭6: 국시문제 -->
+        <div class="tab-content" id="ch1-tab-tab6">
+          <div class="section-title">국가고시 기출문제</div>
+
+          <div class="card exam-card">
+            <div class="card-body">
+              <div class="card-title">[2024 국가고시 101번] SOAP 노트 — 객관적 정보</div>
+              <div class="card-sub">
+                물리치료사는 HOAC II 절차에 따라 다음의 정량적 결과를 수집하였다. SOAP 노트의 어느 단락에 기록해야 하는가?<br>
+                &nbsp;&nbsp;• 오른쪽 다리: VAS 6, 다리기능척도(LEFS): 26점<br><br>
+                1. 예후 &nbsp; 2. 치료계획 &nbsp; 3. 주관적 정보 &nbsp; <b style="color:var(--ch-accent)">4. 객관적 정보 ✓</b> &nbsp; 5. 문제목록 작성
+              </div>
+            </div>
+          </div>
+          <hr class="q-divider">
+
+          <div class="card exam-card">
+            <div class="card-body">
+              <div class="card-title">[2024 국가고시 96번] 근거중심물리치료 — 임상질문 작성</div>
+              <div class="card-sub">
+                최적의 중재법을 선택하기 위하여 근거중심물리치료를 수행할 때 물리치료사의 의사결정이 필요한 내용을 PICO 형태로 구체화하고 조직화하는 단계는?<br><br>
+                1. 근거검색 &nbsp; 2. 근거선택 &nbsp; 3. 임상적용 &nbsp; 4. 치료결과 평가 &nbsp; <b style="color:var(--ch-accent)">5. 임상질문 작성 ✓</b>
+              </div>
+            </div>
+          </div>
+          <hr class="q-divider">
+
+          <div class="card exam-card">
+            <div class="card-body">
+              <div class="card-title">[2024 국가고시] ICF — 참여(Participation)</div>
+              <div class="card-sub">
+                국제기능·장애·건강분류(ICF)를 구성하는 건강요소 중에서 개개인의 사회적 역할을 의미하는 용어는?<br><br>
+                1. 활동 &nbsp; <b style="color:var(--ch-accent)">2. 참여 ✓</b> &nbsp; 3. 건강상태 &nbsp; 4. 환경요인 &nbsp; 5. 개인요인
+              </div>
+            </div>
+          </div>
+          <hr class="q-divider">
+
+          <div class="card exam-card">
+            <div class="card-body">
+              <div class="card-title">[2024 국가고시 100번] 환자/고객 관리 모델 — 검진</div>
+              <div class="card-sub">
+                환자/고객관리 모델에서 다음과 같은 정보를 바탕으로 측정항목을 결정하는 단계는?<br>
+                &nbsp;&nbsp;(가슴 앞을 가로질러 오른팔을 뻗을 때 어깨 통증, 팔을 위로 들어 옷 입기 어려움, 배드민턴 동호회 활동 못함)<br><br>
+                <b style="color:var(--ch-accent)">1. 검진 ✓</b> &nbsp; 2. 평가 &nbsp; 3. 중재 &nbsp; 4. 예후 &nbsp; 5. 물리치료 진단
+              </div>
+            </div>
+          </div>
+          <hr class="q-divider">
+
+          <div class="card exam-card">
+            <div class="card-body">
+              <div class="card-title">[2025 국가고시 100번] 임상의사결정 — 평가 단계</div>
+              <div class="card-sub">
+                임상의사 결정에서 수집한 자료에 대한 임상적 해석과 판단을 하는 과정으로 환자의 기능적 문제를 식별하여 인식하는 단계는?<br><br>
+                1. 검진 &nbsp; <b style="color:var(--ch-accent)">2. 평가 ✓</b> &nbsp; 3. 진단 &nbsp; 4. 예후 &nbsp; 5. 결과
+              </div>
+            </div>
+          </div>
+          <hr class="q-divider">
+
+          <div class="card exam-card">
+            <div class="card-body">
+              <div class="card-title">[2025 국가고시 101번] HOAC II — 중재전략수립</div>
+              <div class="card-sub">
+                적용할 중재법을 결정하고 치료의 기간, 강도, 횟수 등을 구체적으로 정하는 가설지향 알고리즘 II의 단계는?<br><br>
+                1. 목표수립 &nbsp; 2. 예측기준수립 &nbsp; 3. 검사전략수립 &nbsp; <b style="color:var(--ch-accent)">4. 중재전략수립 ✓</b> &nbsp; 5. 가설검증 기준수립
+              </div>
+            </div>
+          </div>
+          <hr class="q-divider">
+
+          <div class="card exam-card">
+            <div class="card-body">
+              <div class="card-title">[2025 국가고시 99번] 근거중심 물리치료 — 수행평가</div>
+              <div class="card-sub">
+                다음 근거중심 물리치료 절차는?<br>
+                &nbsp;&nbsp;(치료의 질 향상을 위한 자기성찰, 치료의 효과를 위해 최선의 근거를 활용했는지 점검, 중재 후 환자의 예후를 판단하고 향후 중재방법 보강)<br><br>
+                1. 임상질문 작성 &nbsp; 2. 근거찾기 &nbsp; 3. 근거평가 &nbsp; 4. 임상적용 &nbsp; <b style="color:var(--ch-accent)">5. 치료에 대한 수행평가 ✓</b>
+              </div>
+            </div>
+          </div>
+          <hr class="q-divider">
+
+          <div class="card exam-card">
+            <div class="card-body">
+              <div class="card-title">[2025 국가고시 102번] SOAP 노트 — 주관적 정보</div>
+              <div class="card-sub">
+                15세 남자가 목말밑 관절의 아탈구로 석고고정을 하고 물리치료실 방문. 손상부위의 외과적 치료방법, 합병증 유무, 복용약물, 환자의 목표 수집 시 SOAP 노트 단락은?<br><br>
+                1. 평가 &nbsp; 2. 진단 &nbsp; 3. 치료계획 &nbsp; <b style="color:var(--ch-accent)">4. 주관적 정보 ✓</b> &nbsp; 5. 객관적 정보
+              </div>
+            </div>
+          </div>
+          <hr class="q-divider">
+
+          <div class="card exam-card">
+            <div class="card-body">
+              <div class="card-title">[2024 국가고시 102번] 환자 개인정보 보호</div>
+              <div class="card-sub">
+                뇌졸중으로 운동치료를 받던 A 환자가 병원균에 감염되어 격리치료. B 환자가 A 환자의 격리치료 사유를 물어볼 때 대응방법은?<br><br>
+                1. 물리치료실 책임자와 상의하여 알려준다 &nbsp; 2. 담당간호사를 찾아가서 알아보라고 한다<br>
+                3. 자세하게 알려주고 감염에 관해 주의를 시킨다 &nbsp; 4. 사유를 알려주면서 혼자만 알고 있으라고 한다<br>
+                <b style="color:var(--ch-accent)">5. 개인 정보이므로 알려 줄 수 없음을 설명한다 ✓</b>
+              </div>
+            </div>
+          </div>
+          <hr class="q-divider">
+
+          <div class="card exam-card">
+            <div class="card-body">
+              <div class="card-title">[2024 국가고시 97번] 연구형태 — 단일 사례연구</div>
+              <div class="card-sub">
+                한 명의 대상자 또는 동일한 특성으로 묶인 한 집단을 대상으로 중재에 대하여 어떤 반응을 보이는지 알아보기 위한 연구형태는?<br><br>
+                1. 메타분석 &nbsp; 2. 단면연구 &nbsp; 3. 체계적 고찰 &nbsp; <b style="color:var(--ch-accent)">4. 단일 사례연구 ✓</b> &nbsp; 5. 무작위대조연구
+              </div>
+            </div>
+          </div>
+          <hr class="q-divider">
+
+          <div class="card exam-card">
+            <div class="card-body">
+              <div class="card-title">[Nagi 모델 문제] 조명기술자 사례 — 기능적 제한</div>
+              <div class="card-sub">
+                40대 박모씨, 어깨 위 통증, 팔을 머리 위로 들어 올릴 때 힘이 없어 완전한 올림이 어렵고 어깨를 움츠리게 됨. Nagi 모델에서 어느 단계?<br><br>
+                1. 병리학 &nbsp; 2. 손상 &nbsp; 3. 장애 &nbsp; <b style="color:var(--ch-accent)">4. 기능적 제한 ✓</b> &nbsp; 5. 핸디캡
+              </div>
+            </div>
+          </div>
+          <hr class="q-divider">
+
+          <div class="card exam-card">
+            <div class="card-body">
+              <div class="card-title">[HOAC II 문제] 환자 인식 문제 — 2단계</div>
+              <div class="card-sub">
+                환자: "밤에 화장실을 혼자 다니기 어렵다", "등산을 갈 수 없다", "공장 운영에 어려움이 많다." HOAC II 단계는?<br><br>
+                1. 1단계: 초기데이터 수집 &nbsp; <b style="color:var(--ch-accent)">2. 2단계: 환자가 인식한 문제리스트 작성 ✓</b><br>
+                3. 5단계: 환자가 인식하지 못한 문제점 추가 &nbsp; 4. 6단계: 가설수립 &nbsp; 5. 7단계: 문제리스트 구체화
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /tab6 -->
+
+      </div><!-- /cards-area -->
+
+      <div class="carousel-area" id="ch1-carousel-area">
+        <div class="carousel-main" id="ch1-carousel-main" onclick="openLightbox('ch1')">
+          <button class="carousel-nav prev" onclick="event.stopPropagation();carouselMove('ch1',-1)">‹</button>
+          <img id="ch1-carousel-img" src="" alt="">
+          <div class="carousel-label" id="ch1-carousel-label"></div>
+          <button class="carousel-nav next" onclick="event.stopPropagation();carouselMove('ch1',1)">›</button>
+        </div>
+        <div class="carousel-thumbs" id="ch1-carousel-thumbs"></div>
+      </div>
+    </div><!-- /main-wrap -->
+
+    <aside class="detail-panel" id="ch1-detail-panel">
+      <button class="close-btn" onclick="closeDetail('ch1')">✕ 닫기</button>
+      <div id="ch1-detail-content"></div>
+    </aside>
+
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ 닫기</button>
+  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox-label" id="lightbox-label"></div>
+</div>
+
+
+<script>
+// ════════════════════════════════════════
+//  CAROUSEL DATA
+// ════════════════════════════════════════
+const SLIDES_DATA = {
+  ch1: [],
+};
+
+// ════════════════════════════════════════
+//  CAROUSEL ENGINE
+// ════════════════════════════════════════
+const carouselState = {};
+
+function initCarousel(chid) {
+  const slides = SLIDES_DATA[chid] || [];
+  if (!slides.length) return;
+
+  carouselState[chid] = { curIdx: 0 };
+
+  const thumbsEl = document.getElementById(chid + '-carousel-thumbs');
+  thumbsEl.innerHTML = '';
+  slides.forEach((s, i) => {
+    const img = document.createElement('img');
+    img.className = 'carousel-thumb' + (i === 0 ? ' active' : '');
+    img.src = s.src;
+    img.alt = s.label;
+    img.onclick = () => goTo(chid, i);
+    thumbsEl.appendChild(img);
+  });
+
+  goTo(chid, 0);
+}
+
+function goTo(chid, i) {
+  const slides = SLIDES_DATA[chid] || [];
+  if (!slides.length) return;
+  const n = slides.length;
+  i = ((i % n) + n) % n;
+  carouselState[chid].curIdx = i;
+
+  document.getElementById(chid + '-carousel-img').src = slides[i].src;
+  document.getElementById(chid + '-carousel-label').textContent = slides[i].label;
+  document.querySelectorAll('#' + chid + '-carousel-thumbs .carousel-thumb').forEach((t, j) => {
+    t.classList.toggle('active', j === i);
+  });
+
+  const thumbsEl = document.getElementById(chid + '-carousel-thumbs');
+  const th = thumbsEl.children[i];
+  if (th) th.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+function carouselMove(chid, dir) {
+  const st = carouselState[chid];
+  if (!st) return;
+  goTo(chid, st.curIdx + dir);
+}
+
+function toggleCarousel(chid) {
+  const area = document.getElementById(chid + '-carousel-area');
+  const cardsArea = document.getElementById(chid + '-cards-area');
+  const btn = document.getElementById(chid + '-carousel-toggle-btn');
+  const slides = SLIDES_DATA[chid] || [];
+
+  const isOpen = area.classList.contains('open');
+  if (isOpen) {
+    area.classList.remove('open');
+    cardsArea.classList.remove('carousel-on');
+    btn.classList.remove('active');
+  } else {
+    if (!slides.length) {
+      alert('등록된 슬라이드 이미지가 없습니다.');
+      return;
+    }
+    area.classList.add('open');
+    cardsArea.classList.add('carousel-on');
+    btn.classList.add('active');
+    if (!carouselState[chid]) initCarousel(chid);
+  }
+}
+
+let _lbChid = null;
+function openLightbox(chid) {
+  const st = carouselState[chid];
+  if (!st) return;
+  _lbChid = chid;
+  const s = (SLIDES_DATA[chid] || [])[st.curIdx];
+  if (!s) return;
+  document.getElementById('lightbox-img').src = s.src;
+  document.getElementById('lightbox-label').textContent = s.label;
+  const panelOpen = document.getElementById(chid + '-detail-panel').classList.contains('open');
+  const lb = document.getElementById('lightbox');
+  lb.style.right = panelOpen ? '370px' : '0px';
+  lb.classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  _lbChid = null;
+}
+
+document.addEventListener('keydown', e => {
+  const activeChid = document.querySelector('.chapter-section.active')?.id;
+  if (!activeChid) return;
+  const area = document.getElementById(activeChid + '-carousel-area');
+  if (!area?.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') carouselMove(activeChid, -1);
+  if (e.key === 'ArrowRight') carouselMove(activeChid, 1);
+  if (e.key === 'Escape') closeLightbox();
+});
+
+// ════════════════════════════════════════
+//  챕터 · 탭 · 상세 패널
+// ════════════════════════════════════════
+function switchChapter(chid) {
+  document.querySelectorAll('.chapter-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(chid).classList.add('active');
+  document.querySelector('.ch-btn[data-ch="' + chid + '"]').classList.add('active');
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+}
+
+function switchTab(chid, tabId, btn) {
+  const ch = document.getElementById(chid);
+  ch.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  ch.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById(chid + '-tab-' + tabId);
+  if (el) el.classList.add('active');
+  btn.classList.add('active');
+  closeDetail(chid);
+}
+
+function openDetail(chid, key) {
+  const content = (allDetailData[chid] || {})[key] || '<p style="color:var(--text-dim)">내용 준비 중</p>';
+  document.getElementById(chid + '-detail-content').innerHTML = content;
+  document.getElementById(chid + '-detail-panel').classList.add('open');
+}
+function closeDetail(chid) {
+  const p = document.getElementById(chid + '-detail-panel');
+  if (p) p.classList.remove('open');
+}
+
+// ════════════════════════════════════════
+//  DETAIL PANEL DATA
+// ════════════════════════════════════════
+const allDetailData = {};
+
+allDetailData['ch1'] = {
+
+  def: `<h2>임상의사결정 정의</h2>
+<div class="detail-section">
+  <h3>핵심 정의</h3>
+  <div class="detail-item accent"><b>체계적·연속적 과정:</b> 인식된 문제를 해결하는 체계적이고 연속적인 과정</div>
+  <div class="detail-item accent"><b>대안 고찰:</b> 인식된 문제에 대한 대안을 고찰하여 선택하는 과정</div>
+  <div class="detail-item accent"><b>목표 달성:</b> 설정된 목표를 달성하는 과정</div>
+  <div class="detail-item accent"><b>실제적 결정:</b> 실제적인 결정을 내리는 유용한 과정</div>
+</div>
+<div class="tip-box">💡 <b>핵심:</b> 임상의사결정은 단순한 판단이 아닌 체계적·반복적 과정이며, 환자의 문제 해결을 위한 대안 탐색과 선택을 포함한다.</div>`,
+
+  nagi: `<h2>Nagi 모델 (1960년대)</h2>
+<div class="detail-section">
+  <h3>4단계 구성</h3>
+  <div class="step-flow">
+    <div class="step-item"><b>능동적 병리학(Active pathology):</b> 기능을 정상적으로 회복하기 위한 과정이 방해받는 것 (세포 수준)</div>
+    <div class="step-item"><b>손상(Impairment):</b> 해부학적, 생리학적, 정신적, 감정적 비정상 또는 소실 (기관 수준)</div>
+    <div class="step-item"><b>기능제한(Functional limitation):</b> 서기, 걷기, 오르기 등 온전한 인간 수준 수행의 제한 (개인 수준)</div>
+    <div class="step-item"><b>장애(Disability):</b> 사회적으로 정해진 역할 수행의 제한 (사회 수준)</div>
+  </div>
+</div>
+<div class="tip-box">💡 <b>국시 포인트:</b> 팔을 머리 위로 들기 어렵다 = <b>기능제한</b>, 사회적 역할 못함 = <b>장애</b>로 구분할 것!</div>`,
+
+  patient_mgmt: `<h2>환자/고객 관리 모델</h2>
+<div class="detail-section">
+  <h3>6단계 순서</h3>
+  <div class="step-flow">
+    <div class="step-item"><b>① 검진(Examination):</b> 병력청취, 시스템 검토, 검사·측정 — 측정항목을 결정하고 자료 수집</div>
+    <div class="step-item"><b>② 평가(Evaluation):</b> 수집된 자료에 대한 임상적 해석과 판단, 기능적 문제 식별</div>
+    <div class="step-item"><b>③ 물리치료 진단(Diagnosis):</b> 기능적 제한·장애를 고려한 진단 분류</div>
+    <div class="step-item"><b>④ 예후(Prognosis):</b> 최적의 개선 수준과 기간 예측</div>
+    <div class="step-item"><b>⑤ 중재(Intervention):</b> 치료 목표에 따른 물리치료 적용</div>
+    <div class="step-item"><b>⑥ 결과(Outcomes):</b> 치료 효과 측정 및 평가</div>
+  </div>
+</div>
+<div class="warn-box"><b>⚠️ 혼동 주의:</b> 검진(측정항목 결정) vs 평가(임상적 해석·판단) — 국시 자주 출제!</div>`,
+
+  icidh: `<h2>WHO ICIDH (1980)</h2>
+<div class="detail-section">
+  <h3>3개 차원</h3>
+  <table class="detail-table">
+    <tr><th>용어</th><th>차원</th><th>설명</th></tr>
+    <tr><td><b>손상(Impairment)</b></td><td>신체적 차원</td><td>타인이 인식 가능한 비정상 (기관/기관계 수준)</td></tr>
+    <tr><td><b>장애(Disability)</b></td><td>신체적 차원</td><td>활동 수행능력 감소 (개인 수준)</td></tr>
+    <tr><td><b>사회적 불리(Handicaps)</b></td><td>사회적 차원</td><td>사회적 참여 제한 (사회 수준)</td></tr>
+  </table>
+</div>
+<div class="tip-box">💡 <b>출판 연도:</b> 1980년 WHO 발표. 이후 2001년 ICF로 개정됨.</div>`,
+
+  icf: `<h2>ICF (2001)</h2>
+<div class="detail-section">
+  <h3>구성 요소</h3>
+  <div class="detail-item accent"><b>신체기능 및 구조(Body function/structure):</b> 근력저하, 신경손상, 관절구축 등 — 기관 수준</div>
+  <div class="detail-item blue"><b>활동(Activity):</b> 개인이 과제를 수행하는 행위 자체 (옷 입기, 식사하기, 화장실 가기)</div>
+  <div class="detail-item green"><b>참여(Participation):</b> 개인이 삶의 상황에 실제로 참여 (직장, 쇼핑, 스포츠, 여가) — 사회적 역할</div>
+  <div class="detail-item yellow"><b>환경요인:</b> 사회적 환경, 제도, 물리적 환경</div>
+  <div class="detail-item yellow"><b>개인요인:</b> 나이, 성별, 교육수준, 생활방식</div>
+</div>
+<div class="tip-box">💡 <b>핵심 구분:</b> 활동(개인 과제 수행) vs 참여(사회적 역할) — "사회적 역할" = 참여!</div>`,
+
+  icf_compare: `<h2>ICIDH vs ICF 비교</h2>
+<div class="detail-section">
+  <table class="detail-table">
+    <tr><th>구분</th><th>ICIDH (1980)</th><th>ICF (2001)</th></tr>
+    <tr><td>관점</td><td>결함·장애 중심</td><td>기능성·참여 중심</td></tr>
+    <tr><td>1단계</td><td>손상(Impairment)</td><td>신체기능 및 구조</td></tr>
+    <tr><td>2단계</td><td>장애(Disability)</td><td>활동(Activity)</td></tr>
+    <tr><td>3단계</td><td>사회적 불리(Handicaps)</td><td>참여(Participation)</td></tr>
+    <tr><td>환경요인</td><td>미포함</td><td>포함 (환경·개인요인)</td></tr>
+    <tr><td>분류 명칭</td><td>손상, 장애, 사회적 불리</td><td>기능성, 장애, 건강</td></tr>
+  </table>
+</div>
+<div class="tip-box">💡 <b>진화:</b> ICIDH → ICF는 "무엇이 잘못됐나?" → "무엇을 할 수 있나?"로 관점 전환.</div>`,
+
+  clinical_reasoning: `<h2>임상추론 (Clinical Reasoning)</h2>
+<div class="detail-section">
+  <h3>정의</h3>
+  <div class="detail-item accent"><b>정의:</b> 환자를 평가하고 관리하는 데 활용되는 인지과정 및 사고</div>
+  <div class="detail-item blue"><b>과정:</b> 문제를 인식하고 식별하여 환자의 더 나은 관리를 위해 끊임없이 정보를 분석하고 해석하는 것</div>
+</div>
+<div class="detail-section">
+  <h3>임상추론의 특징</h3>
+  <div class="detail-item green">반복적·순환적 과정 (선형이 아님)</div>
+  <div class="detail-item green">가설 형성과 검증을 반복</div>
+  <div class="detail-item green">임상적 판단 + 환자 맥락 통합</div>
+</div>`,
+
+  hoac2: `<h2>가설지향 알고리즘 II (HOAC II)</h2>
+<div class="detail-section">
+  <h3>전체 13단계</h3>
+  <div class="step-flow">
+    <div class="step-item"><b>1단계:</b> 초기데이터 수집 (병력, 주소, 기타 정보)</div>
+    <div class="step-item"><b>2단계:</b> 환자가 인식한 문제리스트 작성</div>
+    <div class="step-item"><b>3단계:</b> 검사전략 수립</div>
+    <div class="step-item"><b>4단계:</b> 검사수행 후 데이터 분석</div>
+    <div class="step-item"><b>5단계:</b> 환자가 인식하지 못한 점을 리스트에 추가</div>
+    <div class="step-item"><b>6단계:</b> 가설 수립 및 예방적 중재 근거제시</div>
+    <div class="step-item"><b>7단계:</b> 문제 리스트 구체화</div>
+    <div class="step-item"><b>8단계:</b> 문제별로 한 가지 이상 목표 설정</div>
+    <div class="step-item"><b>9단계:</b> 가설 검증</div>
+    <div class="step-item"><b>10단계:</b> 가설 검증 및 재평가 계획수립</div>
+    <div class="step-item"><b>11단계:</b> 중재전략수립 (기간·강도·횟수 구체화)</div>
+    <div class="step-item"><b>12단계:</b> 구체적 중재방법 결정</div>
+    <div class="step-item"><b>13단계:</b> 중재 실시</div>
+  </div>
+</div>
+<div class="tip-box">💡 <b>국시 포인트:</b> 2단계 = 환자가 인식한 문제리스트 | 11단계 = 중재전략수립(기간·강도·횟수)</div>`,
+
+  ebpt: `<h2>근거중심 물리치료 5단계</h2>
+<div class="detail-section">
+  <div class="step-flow">
+    <div class="step-item"><b>1단계: 임상질문 작성</b> — PICO 형태로 의사결정 내용을 구체화·조직화</div>
+    <div class="step-item"><b>2단계: 근거찾기</b> — PEDro(호주), MEDLINE/PubMed(미국), Embase(유럽), 국내사이트 검색</div>
+    <div class="step-item"><b>3단계: 근거평가</b> — 메타분석, 체계적 고찰 등 근거의 질 위계에 따른 평가</div>
+    <div class="step-item"><b>4단계: 임상적용</b> — 평가된 근거를 실제 환자에게 적용</div>
+    <div class="step-item"><b>5단계: 치료에 대한 수행평가</b> — 자기성찰, 최선의 근거 활용 점검, 예후 판단, 향후 중재 보강</div>
+  </div>
+</div>`,
+
+  evidence_hierarchy: `<h2>근거의 질 위계</h2>
+<div class="detail-section">
+  <h3>높은 근거 → 낮은 근거</h3>
+  <div class="timeline">
+    <div class="tl-item">
+      <span class="tl-label">Level 1</span>
+      <span class="tl-body"><b>메타분석(Meta-analysis)</b> — 여러 RCT 통합 분석</span>
+    </div>
+    <div class="tl-item">
+      <span class="tl-label">Level 2</span>
+      <span class="tl-body"><b>체계적 고찰(Systematic review)</b> — 문헌 체계적 검토</span>
+    </div>
+    <div class="tl-item">
+      <span class="tl-label">Level 3</span>
+      <span class="tl-body"><b>무작위 대조 실험(RCT)</b> — 금본위 임상 연구</span>
+    </div>
+    <div class="tl-item">
+      <span class="tl-label">Level 4</span>
+      <span class="tl-body"><b>코호트 연구(Cohort study)</b> — 전향적/후향적 관찰</span>
+    </div>
+    <div class="tl-item">
+      <span class="tl-label">Level 5</span>
+      <span class="tl-body"><b>사례연구(Case study)</b> — 단일 대상/소집단</span>
+    </div>
+  </div>
+</div>
+<div class="tip-box">💡 <b>국시 포인트:</b> 단일 사례연구 = 한 명 또는 동일 특성 집단을 대상으로 중재 반응 관찰</div>`,
+
+  pico: `<h2>PICO 구성 요소</h2>
+<div class="detail-section">
+  <table class="detail-table">
+    <tr><th>요소</th><th>의미</th><th>예시</th></tr>
+    <tr><td><b>P</b>atient</td><td>환자/대상자 특성</td><td>뇌졸중 편마비 환자</td></tr>
+    <tr><td><b>I</b>ntervention</td><td>중재/치료법</td><td>트레드밀 보행훈련</td></tr>
+    <tr><td><b>C</b>omparison</td><td>비교 대조군/방법</td><td>일반 보행훈련</td></tr>
+    <tr><td><b>O</b>utcome</td><td>결과/효과 지표</td><td>보행 속도, 균형 향상</td></tr>
+  </table>
+</div>
+<div class="tip-box">💡 <b>국시 포인트:</b> PICO = 임상질문 작성 단계(1단계)에서 사용. "의사결정 내용을 구체화·조직화"하는 것이 핵심.</div>`,
+
+  soap: `<h2>SOAP 노트 구성</h2>
+<div class="detail-section">
+  <table class="detail-table">
+    <tr><th>항목</th><th>내용</th><th>예시</th></tr>
+    <tr><td><b>S</b>ubjective</td><td>환자/가족/보호자로부터 면담으로 수집된 정보 (주관적 정보)</td><td>외과적 치료방법, 복용약물, 환자 목표, 통증 호소</td></tr>
+    <tr><td><b>O</b>bjective</td><td>물리치료사가 수행한 검사 및 측정 (객관적 정보)</td><td>VAS 점수, LEFS 점수, ROM 측정값</td></tr>
+    <tr><td><b>A</b>ssessment</td><td>기능적 결함, 기능적 손상이 포함된 진단, 예후</td><td>임상적 해석 및 판단</td></tr>
+    <tr><td><b>P</b>lan</td><td>장단기 목표와 치료계획</td><td>중재 방법, 횟수, 기간</td></tr>
+  </table>
+</div>
+<div class="warn-box"><b>⚠️ 혼동 주의:</b> 정량적 측정값(VAS, LEFS 등) = <b>Objective(객관적 정보)</b><br>환자가 말한 것(목표, 호소, 복용약물) = <b>Subjective(주관적 정보)</b></div>`,
+
+  soap_principle: `<h2>SOAP 작성 원칙</h2>
+<div class="detail-section">
+  <h3>4가지 작성 원칙</h3>
+  <div class="detail-item accent"><b>정확성:</b> 사실에 근거한 정확한 정보 기록</div>
+  <div class="detail-item blue"><b>간결성:</b> 불필요한 내용 없이 핵심만 기록</div>
+  <div class="detail-item green"><b>명확성:</b> 누가 읽어도 명확하게 이해 가능</div>
+  <div class="detail-item yellow"><b>날짜와 서명:</b> 반드시 날짜와 물리치료사 서명 포함</div>
+</div>
+<div class="tip-box">💡 <b>법적 효력:</b> SOAP 노트는 법적 문서로서 날짜와 서명이 필수임. 의무기록 감사 시 중요한 근거 자료.</div>`,
+
+};
+</script>
+</body>
+</html>

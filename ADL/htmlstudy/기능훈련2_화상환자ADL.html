@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>기능훈련 - 화상(Burn) 환자의 이해와 ADL</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+:root{--bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e2a;--bg4:#222736;--border:#2a3048;--accent:#fb923c;--accent2:#a78bfa;--green:#6ee7b7;--red:#f87171;--yellow:#fbbf24;--text:#dce3f0;--text-dim:#7a8aaa;--text-bright:#fff;--tag-bg:#1d2236;--panel-bg:#111420;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.65;display:flex;flex-direction:column}
+
+/* ── Chapter Nav ── */
+.chapter-nav{background:#0a0c10;border-bottom:1px solid #1e2235;padding:0 16px;display:flex;align-items:center;gap:4px;height:44px;flex-shrink:0;overflow-x:auto}
+.chapter-nav-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:#3a4060;letter-spacing:.1em;margin-right:8px;white-space:nowrap;flex-shrink:0}
+.ch-btn{font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 14px;border-radius:5px;border:1px solid #252840;background:transparent;color:#5a6888;cursor:pointer;transition:all .18s;white-space:nowrap;flex-shrink:0}
+.ch-btn:hover{background:#13161e;color:#9ab;border-color:#3a3f60}
+.ch-btn.active{background:var(--ch-accent,#fb923c);color:#0a0c10;border-color:transparent;font-weight:600}
+
+/* ── Chapter Section ── */
+.chapter-section{display:none;flex:1;flex-direction:column;min-height:0}
+.chapter-section.active{display:flex}
+
+/* ── Header ── */
+.ch-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 22px 10px;display:flex;align-items:baseline;gap:12px;flex-shrink:0;flex-wrap:wrap}
+.ch-badge{font-family:'JetBrains Mono',monospace;font-size:11px;padding:2px 9px;border-radius:4px;letter-spacing:.06em;color:var(--ch-accent,#fb923c);background:color-mix(in srgb,var(--ch-accent,#fb923c) 12%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#fb923c) 30%,transparent)}
+.ch-header h1{font-size:15px;font-weight:700;color:var(--text-bright)}
+.ch-header p{font-size:11px;color:var(--text-dim);margin-left:auto}
+
+/* ── Layout ── */
+.wrapper{display:flex;flex:1;min-height:0;overflow:hidden}
+
+/* ── Sidebar ── */
+.sidebar{width:210px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-tabs{flex:1;overflow-y:auto;padding:8px 0}
+.tab-group-label{font-size:9px;letter-spacing:.1em;color:var(--text-dim);text-transform:uppercase;padding:10px 16px 4px}
+.tab-btn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 16px;background:none;border:none;color:var(--text-dim);font-size:12.5px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;text-align:left;transition:all .15s;border-left:2px solid transparent}
+.tab-btn:hover{background:var(--bg3);color:var(--text)}
+.tab-btn.active{background:var(--bg3);color:var(--ch-accent,#fb923c);border-left-color:var(--ch-accent,#fb923c);font-weight:500}
+.tab-icon{font-size:14px;flex-shrink:0}
+.carousel-toggle-btn{border-left-color:transparent!important}
+.carousel-toggle-btn.active{background:var(--bg3)!important;color:var(--ch-accent,#fb923c)!important;border-left-color:var(--ch-accent,#fb923c)!important;font-weight:500}
+
+/* ── Main ── */
+.main-wrap{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+.cards-area{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}
+.cards-area.carousel-on{flex:none;max-height:45%;overflow-y:auto}
+
+/* ── Carousel ── */
+.carousel-area{display:none;flex-direction:column;min-height:0;border-top:1px solid var(--border);background:var(--bg2)}
+.carousel-area.open{display:flex;flex:1}
+.carousel-main{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;padding:8px;cursor:zoom-in}
+.carousel-main img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;display:block}
+.carousel-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);border:1px solid var(--border);color:var(--text);font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s;z-index:2}
+.carousel-nav:hover{background:color-mix(in srgb,var(--ch-accent,#fb923c) 35%,transparent)}
+.carousel-nav.prev{left:8px}
+.carousel-nav.next{right:8px}
+.carousel-thumbs{flex-shrink:0;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;border-top:1px solid var(--border);background:#0d0f14}
+.carousel-thumb{width:64px;height:48px;object-fit:cover;border-radius:4px;border:2px solid transparent;cursor:pointer;flex-shrink:0;opacity:.65;transition:all .18s}
+.carousel-thumb.active{border-color:var(--ch-accent,#fb923c);opacity:1}
+.carousel-label{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);color:var(--text);font-size:11px;padding:3px 10px;border-radius:10px;white-space:nowrap;pointer-events:none}
+
+/* ── Lightbox ── */
+.lightbox{display:none;position:fixed;top:44px;left:210px;right:0;bottom:0;background:rgba(0,0,0,.88);z-index:100;align-items:center;justify-content:center;flex-direction:column;cursor:zoom-out;transition:right .2s}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90%;max-height:85%;object-fit:contain;border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.8)}
+.lightbox-label{color:var(--text);font-size:12px;margin-top:10px;opacity:.8}
+.lightbox-close{position:absolute;top:12px;right:16px;background:none;border:1px solid var(--border);color:var(--text-dim);font-size:13px;padding:4px 10px;border-radius:5px;cursor:pointer}
+.lightbox-close:hover{color:var(--ch-accent,#fb923c);border-color:var(--ch-accent,#fb923c)}
+
+/* ── Detail Panel ── */
+.detail-panel{width:370px;flex-shrink:0;background:var(--panel-bg);border-left:1px solid var(--border);overflow-y:auto;padding:18px;display:none}
+.detail-panel.open{display:block}
+.detail-panel h2{font-size:14px;color:var(--ch-accent,#fb923c);margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px}
+
+/* ── Cards ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;transition:border-color .2s,background .2s;cursor:pointer}
+.card:hover{border-color:var(--ch-accent,#fb923c);background:var(--bg3)}
+.card-body{flex:1}
+.card-title{font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:4px}
+.card-sub{font-size:11.5px;color:var(--text-dim);line-height:1.55}
+.expand-btn{background:color-mix(in srgb,var(--ch-accent,#fb923c) 12%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#fb923c) 25%,transparent);color:var(--ch-accent,#fb923c);border-radius:5px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;flex-shrink:0;transition:background .18s}
+.expand-btn:hover{background:color-mix(in srgb,var(--ch-accent,#fb923c) 28%,transparent)}
+.section-title{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px}
+.tab-content{display:none}
+.tab-content.active{display:flex;flex-direction:column;gap:12px}
+
+/* ── Detail internals ── */
+.detail-section{margin-bottom:16px}
+.detail-section h3{font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}
+.detail-item{background:var(--bg3);border-radius:6px;padding:9px 12px;margin-bottom:6px;font-size:12px;line-height:1.6;border-left:3px solid var(--border)}
+.detail-item.accent{border-left-color:var(--ch-accent,#fb923c)}
+.detail-item.blue{border-left-color:var(--accent2)}
+.detail-item.green{border-left-color:var(--green)}
+.detail-item.red{border-left-color:var(--red)}
+.detail-item.yellow{border-left-color:var(--yellow)}
+.detail-item b{color:var(--text-bright)}
+.tag{display:inline-block;background:var(--tag-bg);border:1px solid var(--border);color:var(--ch-accent,#fb923c);font-size:10px;font-family:'JetBrains Mono',monospace;padding:1px 7px;border-radius:3px;margin:2px 2px 2px 0}
+.tag.blue{color:var(--accent2);border-color:rgba(167,139,250,.3)}
+.tag.green{color:var(--green);border-color:rgba(110,231,183,.3)}
+.tag.red{color:var(--red);border-color:rgba(248,113,113,.3)}
+.tag.yellow{color:var(--yellow);border-color:rgba(251,191,36,.3)}
+.detail-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:6px}
+.detail-table th{background:var(--bg4);color:var(--ch-accent,#fb923c);padding:6px 8px;text-align:left;font-weight:600;border-bottom:1px solid var(--border)}
+.detail-table td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.detail-table tr:last-child td{border-bottom:none}
+.detail-table tr:hover td{background:var(--bg3)}
+.tip-box{background:color-mix(in srgb,var(--ch-accent,#fb923c) 8%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#fb923c) 25%,transparent);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}
+.tip-box b{color:var(--ch-accent,#fb923c)}
+.warn-box{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}
+.warn-box b{color:var(--red)}
+.step-flow{display:flex;flex-direction:column;gap:4px;margin:7px 0}
+.step-item{background:var(--bg4);border-radius:5px;padding:6px 11px;font-size:12px;border-left:3px solid var(--ch-accent,#fb923c);position:relative}
+.step-item::after{content:'↓';position:absolute;bottom:-13px;left:13px;color:var(--text-dim);font-size:10px}
+.step-item:last-child::after{display:none}
+.timeline{display:flex;flex-direction:column}
+.tl-item{display:flex;gap:12px;padding:6px 0 6px 14px;border-left:2px solid color-mix(in srgb,var(--ch-accent,#fb923c) 30%,transparent);position:relative}
+.tl-item::before{content:'';position:absolute;left:-5px;top:12px;width:8px;height:8px;border-radius:50%;background:var(--ch-accent,#fb923c);opacity:.7}
+.tl-label{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--ch-accent,#fb923c);min-width:90px;flex-shrink:0}
+.tl-body{font-size:12px;color:var(--text-dim)}
+.close-btn{display:flex;align-items:center;gap:5px;background:none;border:1px solid var(--border);color:var(--text-dim);font-size:11px;font-family:'Noto Sans KR',sans-serif;padding:4px 10px;border-radius:5px;cursor:pointer;margin-bottom:12px;transition:all .18s}
+.close-btn:hover{border-color:var(--ch-accent,#fb923c);color:var(--ch-accent,#fb923c)}
+
+/* ── 국시문제 구분선 ── */
+.q-divider{border:none;border-top:2px solid var(--ch-accent,#fb923c);margin:6px 0;opacity:0.35}
+
+/* ── Mobile ── */
+@media(max-width:768px){
+  html,body{height:auto;overflow:auto}
+  .wrapper{flex-direction:column;overflow:visible}
+  .chapter-section{min-height:0}
+  .main-wrap{overflow:visible}
+  .cards-area{overflow:visible}
+  .cards-area.carousel-on{max-height:none;overflow:visible}
+  .sidebar{width:100%;height:auto;flex-direction:column;border-right:none;border-bottom:1px solid var(--border)}
+  .sidebar-tabs{display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:0}
+  .tab-group-label{display:none}
+  .tab-btn{flex-direction:column;gap:2px;padding:8px 10px;font-size:10px;white-space:nowrap;border-left:none;border-bottom:2px solid transparent;min-width:fit-content}
+  .tab-btn.active{border-left:none;border-bottom-color:var(--ch-accent,#fb923c)}
+  .carousel-area.open{height:360px;flex:none}
+  .carousel-main{height:260px}
+  .detail-panel{width:100%;border-left:none;border-top:1px solid var(--border)}
+  .lightbox{left:0;top:44px}
+  .ch-header p{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="chapter-nav">
+  <span class="chapter-nav-label">기능훈련(ADL)</span>
+  <button class="ch-btn active" onclick="switchChapter('ch1')" data-ch="ch1" style="--ch-accent:#fb923c">CH.02 화상환자 ADL</button>
+</div>
+
+<div class="chapter-section active" id="ch1" style="--ch-accent:#fb923c;--accent2:#a78bfa">
+  <div class="ch-header">
+    <span class="ch-badge">CH.02</span>
+    <h1>화상(Burn) 환자의 이해와 ADL</h1>
+    <p>기능훈련 · 최윤정 교수 · 2026</p>
+  </div>
+  <div class="wrapper">
+
+    <nav class="sidebar">
+      <div class="sidebar-tabs">
+        <div class="tab-group-label">화상 기초</div>
+        <button class="tab-btn active" onclick="switchTab('ch1','tab1',this)"><span class="tab-icon">🔥</span>화상 개요</button>
+        <button class="tab-btn" onclick="switchTab('ch1','tab2',this)"><span class="tab-icon">📐</span>화상 평가</button>
+        <button class="tab-btn" onclick="switchTab('ch1','tab3',this)"><span class="tab-icon">⚠️</span>합병증</button>
+        <button class="tab-btn" onclick="switchTab('ch1','tab4',this)"><span class="tab-icon">🏥</span>ADL 훈련</button>
+        <button class="tab-btn" onclick="switchTab('ch1','tab5',this)"><span class="tab-icon">🎯</span>국시문제</button>
+
+        <div class="tab-group-label" style="margin-top:6px;border-top:1px solid var(--border);padding-top:10px;">자료</div>
+        <button class="tab-btn carousel-toggle-btn" id="ch1-carousel-toggle-btn" onclick="toggleCarousel('ch1')">
+          <span class="tab-icon">🖼️</span>슬라이드 이미지
+        </button>
+      </div>
+    </nav>
+
+    <div class="main-wrap">
+      <div class="cards-area" id="ch1-cards-area">
+
+        <!-- 탭 1: 화상 개요 -->
+        <div class="tab-content active" id="ch1-tab-tab1">
+          <div class="section-title">피부 구조 · 원인 · 생존율</div>
+
+          <div class="card" onclick="openDetail('ch1','skin-structure')">
+            <div class="card-body">
+              <div class="card-title">피부 구조</div>
+              <div class="card-sub">각질층 → 표피 → 진피 → 피부밑조직 · 체중의 약 15% · 가장 큰 기관</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','burn-cause')">
+            <div class="card-body">
+              <div class="card-title">화상 원인과 특징</div>
+              <div class="card-sub">화염 · 끓는 물 · 전기 · 화학적 화상 · 전기화상은 내부 장기까지 손상</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','burn-survival')">
+            <div class="card-body">
+              <div class="card-title">화상 생존율 계산</div>
+              <div class="card-sub">생존율(%) = 100 − (연령 + 화상%) · 전층화상 50% → 생존 어려움</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭 2: 화상 평가 -->
+        <div class="tab-content" id="ch1-tab-tab2">
+          <div class="section-title">9의 법칙 · 깊이 분류</div>
+
+          <div class="card" onclick="openDetail('ch1','rule-of-nines')">
+            <div class="card-body">
+              <div class="card-title">9의 법칙 (Rule of Nines)</div>
+              <div class="card-sub">머리 9% · 몸통 앞 18% · 몸통 뒤 18% · 팔 9%×2 · 다리 18%×2 · 회음부 1%</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','burn-depth')">
+            <div class="card-body">
+              <div class="card-title">화상 깊이 분류</div>
+              <div class="card-sub">1도(홍반) · 2도=일부층화상(수포) · 3도=전층화상(무통각)</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭 3: 합병증 -->
+        <div class="tab-content" id="ch1-tab-tab3">
+          <div class="section-title">6가지 주요 합병증</div>
+
+          <div class="card" onclick="openDetail('ch1','comp-neuro')">
+            <div class="card-body">
+              <div class="card-title">신경계 합병증</div>
+              <div class="card-sub">말초신경 손상 → 감각이상 · 고압전기 감전 → 1~2년 후 척수마비 증상</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','comp-temp')">
+            <div class="card-body">
+              <div class="card-title">온도조절 장애</div>
+              <div class="card-sub">땀샘 없는 피부 이식 → 땀 배출 장애 → 체온조절 어려움</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','comp-myositis')">
+            <div class="card-body">
+              <div class="card-title">골화성 근염 (Myositis ossificans)</div>
+              <div class="card-sub">팔꿈치·어깨·무릎·골반에 비정상적 뼈조직 신생 · ROM 감소 · 심한 통증</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','comp-microstomia')">
+            <div class="card-body">
+              <div class="card-title">작은입증 (Microstomia)</div>
+              <div class="card-sub">얼굴 화상 → 입 주위 근육 당김 · 삽관·호흡 영향 · 스플린트 착용</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','comp-scar')">
+            <div class="card-body">
+              <div class="card-title">비후성 반흔 (Hypertrophic scar)</div>
+              <div class="card-sub">2도 화상 시 · 두텁고 단단하며 붉은 흉터 · 상처봉합 후 6~8주 형성</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','comp-psycho')">
+            <div class="card-body">
+              <div class="card-title">심리사회적 문제</div>
+              <div class="card-sub">외모 변형 → 우울증 · 적대감 · 회피반응 · 지역사회 적응 문제</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭 4: ADL 훈련 -->
+        <div class="tab-content" id="ch1-tab-tab4">
+          <div class="section-title">5단계 훈련 프로그램</div>
+
+          <div class="card" onclick="openDetail('ch1','adl-infection')">
+            <div class="card-body">
+              <div class="card-title">① 감염예방 관리</div>
+              <div class="card-sub">면역체계 손상 → 진균감염·폐혈증 위험 · 장갑+손씻기 · NPWT · 생물학적 드레싱</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','adl-deformity')">
+            <div class="card-body">
+              <div class="card-title">② 변형방지훈련</div>
+              <div class="card-sub">좋은 자세+스플린팅 · 조기관절운동 · 이식 수술 후 2~3일부터 능동운동</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','adl-skin')">
+            <div class="card-body">
+              <div class="card-title">③ 피부관리</div>
+              <div class="card-sub">보습 관리 · 압박의류(Pressure garment) 착용 → 비후성 반흔 예방</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','adl-functional')">
+            <div class="card-body">
+              <div class="card-title">④ 일상생활활동 훈련</div>
+              <div class="card-sub">기능적 동작 훈련 · 보조기기 활용</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+
+          <div class="card" onclick="openDetail('ch1','adl-psycho')">
+            <div class="card-body">
+              <div class="card-title">⑤ 심리사회적응 훈련</div>
+              <div class="card-sub">외모 변형 심리적 지지 · 사회 재통합 프로그램</div>
+            </div>
+            <button class="expand-btn">↗</button>
+          </div>
+        </div>
+
+        <!-- 탭 5: 국시문제 -->
+        <div class="tab-content" id="ch1-tab-tab5">
+          <div class="section-title">국가고시 기출 · 예상 문제</div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">Q1. 9의 법칙(Rule of Nines)에서 양쪽 다리의 화상 면적 비율로 옳은 것은?</div>
+              <div class="card-sub">
+                ① 18%<br>
+                ② 27%<br>
+                ③ 36%<br>
+                ④ 45%<br>
+                ⑤ 54%<br>
+                <br><b style="color:var(--ch-accent)">정답: ③ </b><span style="color:var(--text-dim)">— 한쪽 다리 18% × 2 = 36%</span>
+              </div>
+            </div>
+          </div>
+
+          <hr class="q-divider">
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">Q2. 화상 깊이 분류에서 수포(물집)가 특징적으로 나타나는 단계는?</div>
+              <div class="card-sub">
+                ① 1도 화상 (표피 손상)<br>
+                ② 2도 화상 (일부층화상)<br>
+                ③ 3도 화상 (전층화상)<br>
+                ④ 4도 화상 (골·근육 손상)<br>
+                ⑤ 수포는 어떤 단계에서도 나타나지 않는다<br>
+                <br><b style="color:var(--ch-accent)">정답: ② </b><span style="color:var(--text-dim)">— 2도(일부층화상): 표피+일부 진피 손상 → 수포 형성</span>
+              </div>
+            </div>
+          </div>
+
+          <hr class="q-divider">
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">Q3. 화상 환자의 비후성 반흔(Hypertrophic scar) 예방을 위해 착용하는 것은?</div>
+              <div class="card-sub">
+                ① 부목(Splint)<br>
+                ② 압박의류(Pressure garment)<br>
+                ③ 보행보조기<br>
+                ④ 탄력붕대만 사용<br>
+                ⑤ 석고붕대<br>
+                <br><b style="color:var(--ch-accent)">정답: ② </b><span style="color:var(--text-dim)">— 압박의류: 지속적 압박으로 비후성 반흔 형성 억제</span>
+              </div>
+            </div>
+          </div>
+
+          <hr class="q-divider">
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">Q4. 화상 환자의 골화성 근염(Myositis ossificans)에 대한 설명으로 옳은 것은?</div>
+              <div class="card-sub">
+                ① 주로 손목과 발목에 발생한다<br>
+                ② 피부 이식 후 발생하는 흉터 과증식이다<br>
+                ③ 팔꿈치, 어깨, 무릎 등에 비정상적 뼈조직이 신생된다<br>
+                ④ 통증 없이 진행된다<br>
+                ⑤ 관절가동범위를 증가시킨다<br>
+                <br><b style="color:var(--ch-accent)">정답: ③ </b><span style="color:var(--text-dim)">— 골화성 근염: 팔꿈치·어깨·무릎·골반에 비정상적 뼈조직 신생 → ROM 감소, 심한 통증</span>
+              </div>
+            </div>
+          </div>
+
+          <hr class="q-divider">
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">Q5. 화상 환자의 변형방지훈련에서 피부 이식 수술 후 능동운동을 시작하는 시기는?</div>
+              <div class="card-sub">
+                ① 수술 직후 당일<br>
+                ② 수술 후 1일<br>
+                ③ 수술 후 2~3일<br>
+                ④ 수술 후 1주일<br>
+                ⑤ 수술 후 2주일<br>
+                <br><b style="color:var(--ch-accent)">정답: ③ </b><span style="color:var(--text-dim)">— 상처 안정 후(이식 수술 후 2~3일부터) 능동운동 실시</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div><!-- /cards-area -->
+
+      <div class="carousel-area" id="ch1-carousel-area">
+        <div class="carousel-main" id="ch1-carousel-main" onclick="openLightbox('ch1')">
+          <button class="carousel-nav prev" onclick="event.stopPropagation();carouselMove('ch1',-1)">‹</button>
+          <img id="ch1-carousel-img" src="" alt="">
+          <div class="carousel-label" id="ch1-carousel-label"></div>
+          <button class="carousel-nav next" onclick="event.stopPropagation();carouselMove('ch1',1)">›</button>
+        </div>
+        <div class="carousel-thumbs" id="ch1-carousel-thumbs"></div>
+      </div>
+    </div><!-- /main-wrap -->
+
+    <aside class="detail-panel" id="ch1-detail-panel">
+      <button class="close-btn" onclick="closeDetail('ch1')">✕ 닫기</button>
+      <div id="ch1-detail-content"></div>
+    </aside>
+
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ 닫기</button>
+  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox-label" id="lightbox-label"></div>
+</div>
+
+
+<script>
+const SLIDES_DATA = {
+  ch1: [],
+};
+
+const carouselState = {};
+
+function initCarousel(chid) {
+  const slides = SLIDES_DATA[chid] || [];
+  if (!slides.length) return;
+  carouselState[chid] = { curIdx: 0 };
+  const thumbsEl = document.getElementById(chid + '-carousel-thumbs');
+  thumbsEl.innerHTML = '';
+  slides.forEach((s, i) => {
+    const img = document.createElement('img');
+    img.className = 'carousel-thumb' + (i === 0 ? ' active' : '');
+    img.src = s.src;
+    img.alt = s.label;
+    img.onclick = () => goTo(chid, i);
+    thumbsEl.appendChild(img);
+  });
+  goTo(chid, 0);
+}
+
+function goTo(chid, i) {
+  const slides = SLIDES_DATA[chid] || [];
+  if (!slides.length) return;
+  const n = slides.length;
+  i = ((i % n) + n) % n;
+  carouselState[chid].curIdx = i;
+  document.getElementById(chid + '-carousel-img').src = slides[i].src;
+  document.getElementById(chid + '-carousel-label').textContent = slides[i].label;
+  document.querySelectorAll('#' + chid + '-carousel-thumbs .carousel-thumb').forEach((t, j) => {
+    t.classList.toggle('active', j === i);
+  });
+  const thumbsEl = document.getElementById(chid + '-carousel-thumbs');
+  const th = thumbsEl.children[i];
+  if (th) th.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+function carouselMove(chid, dir) {
+  const st = carouselState[chid];
+  if (!st) return;
+  goTo(chid, st.curIdx + dir);
+}
+
+function toggleCarousel(chid) {
+  const area = document.getElementById(chid + '-carousel-area');
+  const cardsArea = document.getElementById(chid + '-cards-area');
+  const btn = document.getElementById(chid + '-carousel-toggle-btn');
+  const slides = SLIDES_DATA[chid] || [];
+  const isOpen = area.classList.contains('open');
+  if (isOpen) {
+    area.classList.remove('open');
+    cardsArea.classList.remove('carousel-on');
+    btn.classList.remove('active');
+  } else {
+    if (!slides.length) {
+      alert('등록된 슬라이드 이미지가 없습니다.');
+      return;
+    }
+    area.classList.add('open');
+    cardsArea.classList.add('carousel-on');
+    btn.classList.add('active');
+    if (!carouselState[chid]) initCarousel(chid);
+  }
+}
+
+let _lbChid = null;
+function openLightbox(chid) {
+  const st = carouselState[chid];
+  if (!st) return;
+  _lbChid = chid;
+  const s = (SLIDES_DATA[chid] || [])[st.curIdx];
+  if (!s) return;
+  document.getElementById('lightbox-img').src = s.src;
+  document.getElementById('lightbox-label').textContent = s.label;
+  const panelOpen = document.getElementById(chid + '-detail-panel').classList.contains('open');
+  const lb = document.getElementById('lightbox');
+  lb.style.right = panelOpen ? '370px' : '0px';
+  lb.classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  _lbChid = null;
+}
+
+document.addEventListener('keydown', e => {
+  const activeChid = document.querySelector('.chapter-section.active')?.id;
+  if (!activeChid) return;
+  const area = document.getElementById(activeChid + '-carousel-area');
+  if (!area?.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') carouselMove(activeChid, -1);
+  if (e.key === 'ArrowRight') carouselMove(activeChid, 1);
+  if (e.key === 'Escape') closeLightbox();
+});
+
+function switchChapter(chid) {
+  document.querySelectorAll('.chapter-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(chid).classList.add('active');
+  document.querySelector(`.ch-btn[data-ch="${chid}"]`).classList.add('active');
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+}
+
+function switchTab(chid, tabId, btn) {
+  const ch = document.getElementById(chid);
+  ch.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  ch.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById(chid + '-tab-' + tabId);
+  if (el) el.classList.add('active');
+  btn.classList.add('active');
+  closeDetail(chid);
+}
+
+function openDetail(chid, key) {
+  const content = (allDetailData[chid] || {})[key] || '<p style="color:var(--text-dim)">내용 준비 중</p>';
+  document.getElementById(chid + '-detail-content').innerHTML = content;
+  document.getElementById(chid + '-detail-panel').classList.add('open');
+}
+function closeDetail(chid) {
+  const p = document.getElementById(chid + '-detail-panel');
+  if (p) p.classList.remove('open');
+}
+
+const allDetailData = {};
+
+allDetailData['ch1'] = {
+
+  'skin-structure': `<h2>피부 구조</h2>
+<div class="detail-section">
+  <h3>층별 구조 (표면 → 심부)</h3>
+  <div class="detail-item accent"><b>각질층 (Stratum corneum):</b> 피부의 가장 바깥쪽. 죽은 세포로 구성되며 피부 보호 기능</div>
+  <div class="detail-item blue"><b>표피 (Epidermis):</b> 멜라닌 생성. 혈관 없음 → 아래 진피에서 영양 공급받음</div>
+  <div class="detail-item green"><b>진피 (Dermis):</b> 피부에 영양과 산소 공급. 콜라겐·엘라스틴 포함. 혈관·신경·땀샘·모낭 존재</div>
+  <div class="detail-item yellow"><b>피부밑조직 (Hypodermis):</b> 결합조직과 지방 포함. 충격 흡수, 체온 보전, 에너지 저장</div>
+</div>
+<div class="detail-section">
+  <h3>피부의 특성</h3>
+  <div class="detail-item accent"><b>체중의 약 15% 차지</b> — 인체에서 가장 큰 기관(Organ)</div>
+</div>
+<div class="tip-box">💡 <b>핵심:</b> 화상 깊이를 이해하려면 피부 층 구조가 기본 — 표피 손상=1도, 진피 일부=2도, 진피 전체=3도</div>`,
+
+  'burn-cause': `<h2>화상 원인과 특징</h2>
+<div class="detail-section">
+  <h3>원인별 종류</h3>
+  <div class="detail-item accent"><b>화염 화상:</b> 직접 불꽃 접촉. 심부 손상 가능</div>
+  <div class="detail-item blue"><b>끓는 물 화상 (열탕 화상):</b> 뜨거운 액체에 의한 화상. 소아에게 흔함</div>
+  <div class="detail-item green"><b>전기 화상:</b> 표피 손상뿐 아니라 전기 흐름에 따라 피부밑지방·장기·근육까지 손상 → 겉보기보다 심한 손상</div>
+  <div class="detail-item yellow"><b>화학적 화상:</b> 산·알칼리 화학물질에 의한 화상. 접촉 시간에 비례해 손상 심화</div>
+</div>
+<div class="warn-box"><b>⚠️ 전기화상 주의:</b> 겉으로 보이는 피부 손상이 작아 보여도 내부 장기, 근육, 신경까지 손상될 수 있어 예후가 매우 나쁠 수 있음</div>`,
+
+  'burn-survival': `<h2>화상 생존율 계산</h2>
+<div class="detail-section">
+  <h3>생존율 공식</h3>
+  <div class="detail-item accent" style="font-size:14px;text-align:center;padding:14px"><b>화상 생존율(%) = 100 − (연령 + 화상%)</b></div>
+</div>
+<div class="detail-section">
+  <h3>예시 및 기준</h3>
+  <div class="detail-item blue"><b>신체면적 70% 표면일부/깊은일부 화상:</b> 대개 생존 가능</div>
+  <div class="detail-item red"><b>전층화상 50%:</b> 생존 어려움</div>
+  <div class="detail-item yellow"><b>신체면적 20% 이하:</b> 살 수 있으나 고위험군(노인, 영아)은 15%에도 사망 가능</div>
+</div>
+<div class="tip-box">💡 <b>임상 적용:</b> 연령이 높을수록 같은 화상 면적에서도 생존율이 낮아짐 → 고령 환자는 더 적극적 초기 치료 필요</div>`,
+
+  'rule-of-nines': `<h2>9의 법칙 (Rule of Nines)</h2>
+<div class="detail-section">
+  <h3>신체 부위별 화상 면적</h3>
+  <table class="detail-table">
+    <tr><th>신체 부위</th><th>비율</th></tr>
+    <tr><td>머리(두부)</td><td>9%</td></tr>
+    <tr><td>몸통 앞면</td><td>18%</td></tr>
+    <tr><td>몸통 뒷면</td><td>18%</td></tr>
+    <tr><td>팔 (한쪽)</td><td>9%</td></tr>
+    <tr><td>팔 (양쪽 합계)</td><td>18%</td></tr>
+    <tr><td>다리 (한쪽)</td><td>18%</td></tr>
+    <tr><td>다리 (양쪽 합계)</td><td>36%</td></tr>
+    <tr><td>회음부</td><td>1%</td></tr>
+    <tr><td><b>합계</b></td><td><b>100%</b></td></tr>
+  </table>
+</div>
+<div class="tip-box">💡 <b>암기법:</b> 9의 법칙 — 각 신체 부위가 9의 배수. 팔=9×2=18, 다리=18×2=36. 나머지 1%는 회음부</div>`,
+
+  'burn-depth': `<h2>화상 깊이 분류</h2>
+<div class="detail-section">
+  <h3>깊이별 특징</h3>
+  <table class="detail-table">
+    <tr><th>분류</th><th>손상 층</th><th>주요 증상</th><th>예후</th></tr>
+    <tr><td><b>1도 화상</b></td><td>표피만</td><td>홍반(발적), 통증</td><td>흉터 없이 회복</td></tr>
+    <tr><td><b>2도 화상</b><br>(일부층화상)</td><td>표피 + 일부 진피</td><td>수포(물집), 심한 통증</td><td>흉터 가능, 비후성 반흔</td></tr>
+    <tr><td><b>3도 화상</b><br>(전층화상)</td><td>표피 + 진피 전체</td><td>무통각(신경 손상), 가죽 같은 피부</td><td>피부이식 필요</td></tr>
+  </table>
+</div>
+<div class="warn-box"><b>⚠️ 3도 화상:</b> 신경이 완전 손상되어 통증을 느끼지 못함 → 환자가 심각성을 과소평가할 수 있음</div>
+<div class="tip-box">💡 <b>암기:</b> 1도=빨개짐(홍반), 2도=물집(수포), 3도=통증 없음(무통각) + 이식 필요</div>`,
+
+  'comp-neuro': `<h2>신경계 합병증</h2>
+<div class="detail-section">
+  <h3>말초신경 손상</h3>
+  <div class="detail-item accent"><b>원인:</b> 직접적인 열 손상 또는 부종에 의한 압박</div>
+  <div class="detail-item blue"><b>증상:</b> 감각이상 (이상감각, 저린감, 감각 저하)</div>
+</div>
+<div class="detail-section">
+  <h3>고압 전기 감전 후 척수마비</h3>
+  <div class="detail-item red"><b>특징:</b> 고압전기 감전 시 즉각적 증상 없다가 <b>1~2년 후</b> 척수마비 증상 발현 가능</div>
+  <div class="detail-item red"><b>증상:</b> 배뇨장애, 보행장애, 성기능장애</div>
+</div>
+<div class="warn-box"><b>⚠️ 임상 주의:</b> 전기화상 환자는 초기에 증상이 없어도 장기 추적관찰 필요 — 지연성 신경 합병증 발생 위험</div>`,
+
+  'comp-temp': `<h2>온도조절 장애</h2>
+<div class="detail-section">
+  <h3>원인</h3>
+  <div class="detail-item accent"><b>피부 이식 시 문제:</b> 땀샘(한선)이 없는 피부를 이식하면 해당 부위에서 땀 배출이 불가능</div>
+</div>
+<div class="detail-section">
+  <h3>결과</h3>
+  <div class="detail-item red"><b>땀 배출 장애:</b> 체온 조절 기능 저하 → 더위에 취약</div>
+  <div class="detail-item red"><b>열사병 위험:</b> 고온 환경에서 체온 상승 위험 증가</div>
+</div>
+<div class="tip-box">💡 <b>관리:</b> 고온 환경 노출 제한, 충분한 수분 섭취, 시원한 환경 유지</div>`,
+
+  'comp-myositis': `<h2>골화성 근염 (Myositis ossificans)</h2>
+<div class="detail-section">
+  <h3>정의 및 원인</h3>
+  <div class="detail-item accent"><b>Myositis ossificans:</b> 근육·연부조직 내에 비정상적인 뼈조직(골화)이 새로 생성되는 현상</div>
+  <div class="detail-item blue"><b>호발 부위:</b> 팔꿈치, 어깨, 무릎, 골반</div>
+</div>
+<div class="detail-section">
+  <h3>증상</h3>
+  <div class="detail-item red"><b>관절가동범위(ROM) 감소:</b> 뼈조직이 관절 주변 조직을 제한</div>
+  <div class="detail-item red"><b>심한 통증:</b> 국소 압통, 열감</div>
+</div>
+<div class="tip-box">💡 <b>어원:</b> Myositis(근육염) + ossificans(골화) — 근육 내 뼈가 생기는 병적 상태</div>`,
+
+  'comp-microstomia': `<h2>작은입증 (Microstomia)</h2>
+<div class="detail-section">
+  <h3>정의 및 원인</h3>
+  <div class="detail-item accent"><b>Microstomia(소구증):</b> 얼굴 화상으로 인해 입 주위 근육과 피부가 당겨져 입이 비정상적으로 좁아지는 상태</div>
+</div>
+<div class="detail-section">
+  <h3>문제점</h3>
+  <div class="detail-item red"><b>기도 관리:</b> 삽관, 호흡에 영향</div>
+  <div class="detail-item red"><b>기능 장애:</b> 말하기, 먹기 어려움</div>
+</div>
+<div class="detail-section">
+  <h3>치료</h3>
+  <div class="detail-item green"><b>스트레칭 운동:</b> 입 주변 근육 및 피부 유연성 유지</div>
+  <div class="detail-item green"><b>스플린트(Splint) 착용:</b> 구강 주변 구축 방지</div>
+</div>
+<div class="tip-box">💡 <b>어원:</b> Micro(작은) + stoma(입) — 입이 작아지는 병적 상태</div>`,
+
+  'comp-scar': `<h2>비후성 반흔 (Hypertrophic scar)</h2>
+<div class="detail-section">
+  <h3>특징</h3>
+  <div class="detail-item accent"><b>Hypertrophic scar:</b> 2도 화상 시 발생하는 두텁고 단단하며 붉은 흉터</div>
+  <div class="detail-item blue"><b>형성 시기:</b> 상처 봉합 후 <b>6~8주</b>에 형성 시작</div>
+</div>
+<div class="detail-section">
+  <h3>특성</h3>
+  <div class="detail-item green">원래 상처 경계를 벗어나지 않음 (켈로이드와 구별)</div>
+  <div class="detail-item green">시간이 지나면 자연 소퇴 가능 (켈로이드는 지속적 성장)</div>
+</div>
+<div class="detail-section">
+  <h3>치료/예방</h3>
+  <div class="detail-item yellow"><b>압박의류(Pressure garment):</b> 지속적 압박으로 반흔 억제 — 최소 23시간/일 착용 권장</div>
+  <div class="detail-item yellow"><b>실리콘 시트:</b> 보조적 치료</div>
+</div>`,
+
+  'comp-psycho': `<h2>심리사회적 문제</h2>
+<div class="detail-section">
+  <h3>주요 심리 반응</h3>
+  <div class="detail-item red"><b>우울증:</b> 외모 변형, 기능 손실로 인한 정서적 위축</div>
+  <div class="detail-item red"><b>적대감:</b> 사고 원인에 대한 분노, 치료 과정에 대한 저항</div>
+  <div class="detail-item red"><b>회피반응:</b> 사회적 상황, 타인의 시선 회피</div>
+  <div class="detail-item red"><b>지역사회 적응 문제:</b> 직장 복귀, 사회관계 어려움</div>
+</div>
+<div class="detail-section">
+  <h3>재활에서의 대응</h3>
+  <div class="detail-item green">심리적 지지 상담 (정신건강의학과 연계)</div>
+  <div class="detail-item green">지지 그룹 연결 (같은 경험 화상 환자 모임)</div>
+  <div class="detail-item green">사회 재통합 프로그램 단계적 참여</div>
+</div>`,
+
+  'adl-infection': `<h2>① 감염예방 관리</h2>
+<div class="detail-section">
+  <h3>감염 위험성</h3>
+  <div class="detail-item red"><b>면역체계 손상:</b> 피부 방어벽 파괴 → 진균감염, 폐혈증(패혈증) 위험</div>
+</div>
+<div class="detail-section">
+  <h3>예방 방법</h3>
+  <div class="detail-item accent"><b>기본:</b> 장갑 사용 + 손씻기 철저히</div>
+  <div class="detail-item blue"><b>국소항생제 적용:</b> 상처 부위 세균 증식 억제</div>
+  <div class="detail-item green"><b>음압상처치료(NPWT, Negative Pressure Wound Therapy):</b> 음압으로 삼출액 제거, 육아조직 형성 촉진</div>
+</div>
+<div class="detail-section">
+  <h3>생물학적 드레싱</h3>
+  <div class="detail-item yellow"><b>목적:</b> 체액 손실 방지, 통증 완화, 상처 봉합, 오염 방지</div>
+  <div class="detail-item yellow"><b>종류:</b> 동종피부, 이종피부, 양막 등</div>
+</div>`,
+
+  'adl-deformity': `<h2>② 변형방지훈련</h2>
+<div class="detail-section">
+  <h3>주요 방법</h3>
+  <div class="detail-item accent"><b>좋은 자세 유지 + 스플린팅(Splinting):</b> 구축(Contracture) 예방을 위한 기능적 자세 고정</div>
+  <div class="detail-item blue"><b>조기관절운동:</b> 부종 감소, 관절가동범위 유지, 구축 예방</div>
+</div>
+<div class="detail-section">
+  <h3>능동운동 시작 시기</h3>
+  <div class="detail-item green"><b>이식 수술 후 2~3일부터</b> 능동운동 실시 (상처가 어느 정도 안정된 후)</div>
+</div>
+<div class="step-flow">
+  <div class="step-item">수술 직후: 안정 유지, 부동 자세 관리</div>
+  <div class="step-item">수술 후 2~3일: 능동운동 시작</div>
+  <div class="step-item">이후: 점진적 운동 강도·범위 증가</div>
+</div>
+<div class="tip-box">💡 <b>핵심:</b> 너무 일찍 운동하면 이식 부위 손상, 너무 늦으면 구축 발생 — 2~3일이 황금 시기</div>`,
+
+  'adl-skin': `<h2>③ 피부관리</h2>
+<div class="detail-section">
+  <h3>보습 관리</h3>
+  <div class="detail-item accent"><b>이유:</b> 화상 피부는 피지선·땀샘 손상으로 건조해짐 → 균열·가려움 발생</div>
+  <div class="detail-item blue"><b>방법:</b> 무향 보습 로션/크림을 하루 수회 규칙적으로 도포</div>
+</div>
+<div class="detail-section">
+  <h3>압박의류 (Pressure garment)</h3>
+  <div class="detail-item green"><b>목적:</b> 비후성 반흔 예방 및 억제</div>
+  <div class="detail-item green"><b>착용 시기:</b> 상처 봉합 후 조기 착용 시작</div>
+  <div class="detail-item green"><b>착용 시간:</b> 23시간/일 (목욕 시간 제외), 최소 12~18개월 착용 권장</div>
+</div>
+<div class="tip-box">💡 <b>환자 교육:</b> 압박의류 착용의 불편함에도 불구하고 흉터 억제를 위해 꾸준히 착용하도록 동기 부여 필요</div>`,
+
+  'adl-functional': `<h2>④ 일상생활활동 훈련</h2>
+<div class="detail-section">
+  <h3>기능적 동작 훈련</h3>
+  <div class="detail-item accent">식사, 세수, 옷 입기 등 기본 ADL 동작 회복 훈련</div>
+  <div class="detail-item blue">손 기능 훈련: 파지, 집기, 쥐기 등 세밀한 운동 기능 회복</div>
+</div>
+<div class="detail-section">
+  <h3>보조기기 활용</h3>
+  <div class="detail-item green"><b>보조기기(Adaptive equipment):</b> 기능 제한이 있는 동안 일상생활 독립성 유지를 위한 도구 사용</div>
+  <div class="detail-item green">예: 굵은 손잡이 수저, 버클/벨크로 의류, 긴 손잡이 도구 등</div>
+</div>
+<div class="tip-box">💡 <b>목표:</b> 기능적 독립성 최대화 — 화상 후 남은 기능으로 일상생활을 스스로 수행할 수 있도록 환경 조정과 훈련 병행</div>`,
+
+  'adl-psycho': `<h2>⑤ 심리사회적응 훈련</h2>
+<div class="detail-section">
+  <h3>심리적 지지</h3>
+  <div class="detail-item accent"><b>외모 변형 대처:</b> 자기 수용, 긍정적 자아상 형성을 위한 심리 상담</div>
+  <div class="detail-item blue"><b>우울·불안 관리:</b> 인지행동치료(CBT), 지지적 상담</div>
+</div>
+<div class="detail-section">
+  <h3>사회 재통합 프로그램</h3>
+  <div class="detail-item green">단계적 외출 훈련 및 지역사회 참여 증진</div>
+  <div class="detail-item green">직업 복귀 훈련 (직업재활 연계)</div>
+  <div class="detail-item green">화상 환자 자조 모임, 피어 서포트 프로그램 참여</div>
+</div>
+<div class="timeline">
+  <div class="tl-item">
+    <span class="tl-label">급성기</span>
+    <span class="tl-body">심리적 위기 개입, 불안·공황 관리</span>
+  </div>
+  <div class="tl-item">
+    <span class="tl-label">회복기</span>
+    <span class="tl-body">자기 수용, 신체상(Body image) 재형성</span>
+  </div>
+  <div class="tl-item">
+    <span class="tl-label">사회복귀</span>
+    <span class="tl-body">직장·학교·지역사회 재통합 훈련</span>
+  </div>
+</div>`,
+
+};
+</script>
+</body>
+</html>
