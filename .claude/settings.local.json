@@ -65,7 +65,23 @@
       "Bash(awk *)",
       "Bash(git symbolic-ref *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(git rev-list *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Skill(kkirikkiri:kkirikkiri)",
+      "Bash(grep *)",
+      "Bash(where python3 *)",
+      "Bash(cygpath -w /tmp/park_imgs)",
+      "Bash(head -5 echo \"PATH: $\\(cygpath -w /tmp/park_imgs || echo unknown\\)\")",
+      "Bash(cygpath -w /tmp/park_slides.json)",
+      "Bash(find \"/c/Users/wndud/Desktop/전공공부\" -name \"*.html\" -type f -exec ls -lh {} \\\\;)",
+      "Bash(sed 's/:.*//')",
+      "Bash(du -bc /c/Users/wndud/Desktop/전공공부/신경계운동치료학/htmlstudy/*.html)",
+      "Bash(du -bc /c/Users/wndud/Desktop/전공공부/스포츠물리치료학/htmlstudy/*.html)",
+      "Bash(du -bc /c/Users/wndud/Desktop/전공공부/신경계질환별물리치료\\\\\\(이제혁\\\\\\)/htmlstudy/*.html)",
+      "Bash(du -ch /c/Users/wndud/Desktop/전공공부/신경계운동치료학/htmlstudy/*.html)",
+      "Bash(du -ch /c/Users/wndud/Desktop/전공공부/스포츠물리치료학/htmlstudy/*.html)"
     ]
   }
 }

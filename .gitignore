@@ -1,0 +1,12 @@
+# 생성된 통합 HTML (node merge-html.js 결과물 — 대용량)
+*_통합.html
+전공공부_통합.html
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 임시 파일
+*.tmp
+*.log
+/tmp/
