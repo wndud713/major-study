@@ -252,7 +252,7 @@ function buildChapterNavHtml(currentSubjectId, currentChapterFile) {
 .vc-ch-link{display:block;padding:6px 10px;font-size:12px;color:#9ab;text-decoration:none;border-radius:4px;transition:all .15s;margin-bottom:3px}
 .vc-ch-link:hover{background:#1a1e2a;color:#dce3f0}
 .vc-ch-link.active{background:color-mix(in srgb,var(--subj-accent) 22%,transparent);color:var(--subj-accent);font-weight:600}
-.chapter-nav{margin-top:44px}
+.chapter-nav-label{display:none!important}
 @media(max-width:700px){.vc-pn-btn{max-width:90px;font-size:11px;padding:5px 9px}.vc-subj-trigger{font-size:12px;padding:5px 10px}}
 </style>
 <nav class="vc-top-nav">
