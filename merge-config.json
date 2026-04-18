@@ -113,6 +113,48 @@
           "shortTitle": "HKA 평가"
         }
       ]
+    },
+    {
+      "id": "clinical",
+      "name": "임상의사결정",
+      "outputFile": "임상의사결정_통합.html",
+      "chapters": [
+        {
+          "file": "임상의사결정/htmlstudy/임상의사결정개론.html",
+          "shortTitle": "임상의사결정개론"
+        },
+        {
+          "file": "임상의사결정/htmlstudy/관절가동범위측정.html",
+          "shortTitle": "ROM 측정"
+        },
+        {
+          "file": "임상의사결정/htmlstudy/손가락근력검사.html",
+          "shortTitle": "손가락 근력"
+        },
+        {
+          "file": "임상의사결정/htmlstudy/엉덩관절근력검사.html",
+          "shortTitle": "엉덩관절 근력"
+        },
+        {
+          "file": "임상의사결정/htmlstudy/손목굴증후군.html",
+          "shortTitle": "손목굴증후군"
+        },
+        {
+          "file": "임상의사결정/htmlstudy/절단.html",
+          "shortTitle": "절단"
+        }
+      ]
+    },
+    {
+      "id": "clinical-seminar",
+      "name": "임상세미나",
+      "outputFile": "임상세미나_통합.html",
+      "chapters": [
+        {
+          "file": "임상세미나/htmlstudy/임상세미나_연구방법론.html",
+          "shortTitle": "연구방법론"
+        }
+      ]
     }
   ]
 }
