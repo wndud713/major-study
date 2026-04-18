@@ -48,7 +48,7 @@ const tab7 = `
                     <tr style="background:rgba(56,189,248,0.08);"><td style="padding:7px 10px;border-bottom:1px solid var(--border);"><b>아래팔 (B/E, transradial)</b></td><td style="padding:7px 10px;border-bottom:1px solid var(--border);">팔꿉 아래, <b>길수록 엎침·뒤침 기능 ↑</b></td></tr>
                     <tr style="background:rgba(56,189,248,0.08);"><td style="padding:7px 10px;border-bottom:1px solid var(--border);">손목관절 분리 (wrist disart.)</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);">손목에서 절단</td></tr>
                     <tr style="background:rgba(56,189,248,0.08);"><td style="padding:7px 10px;border-bottom:1px solid var(--border);">부분 손 (손목/손허리/손가락뼈)</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);">위치별 세분</td></tr>
-                    <tr style="background:rgba(244,114,182,0.08);"><td rowspan="9" style="padding:7px 10px;border-left:3px solid #f472b6;font-weight:600;">다리 절단</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);">골반 젢반 (hemipelvectomy)</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);">골반 한쪽 + 다리 전체</td></tr>
+                    <tr style="background:rgba(244,114,182,0.08);"><td rowspan="9" style="padding:7px 10px;border-left:3px solid #f472b6;font-weight:600;">다리 절단</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);">골반 절반 (hemipelvectomy)</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);">골반 한쪽 + 다리 전체</td></tr>
                     <tr style="background:rgba(244,114,182,0.08);"><td style="padding:7px 10px;border-bottom:1px solid var(--border);">엉덩관절 분리 (hip disart.)</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);">다리 전체 완전 절단</td></tr>
                     <tr style="background:rgba(244,114,182,0.08);"><td style="padding:7px 10px;border-bottom:1px solid var(--border);"><b>넙다리 (A/K, transfemoral)</b></td><td style="padding:7px 10px;border-bottom:1px solid var(--border);">무릎 위쪽, <b>넙다리뼈 중간 1/3 이상적</b></td></tr>
                     <tr style="background:rgba(244,114,182,0.08);"><td style="padding:7px 10px;border-bottom:1px solid var(--border);">무릎관절 분리 (knee disart.)</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);">무릎관절에서</td></tr>
@@ -203,7 +203,7 @@ const dd = `
   'amp-leg': \`<h2>다리 절단 분류 (9종)</h2>
 <table class="detail-table">
   <tr><th>분류</th><th>영문</th><th>위치·특징</th></tr>
-  <tr><td>골반 젢반 절단</td><td>hemipelvectomy</td><td>골반 한쪽 + 다리 전체</td></tr>
+  <tr><td>골반 절반 절단</td><td>hemipelvectomy</td><td>골반 한쪽 + 다리 전체</td></tr>
   <tr><td>엉덩관절 분리절단</td><td>hip disarticulation</td><td>엉덩관절, 다리 전체 완전 절단</td></tr>
   <tr><td><b>넙다리뼈 절단 (A/K)</b></td><td>transfemoral</td><td>무릎 위쪽. <b>넙다리뼈 중간 1/3이 가장 이상적</b></td></tr>
   <tr><td>무릎관절 분리절단</td><td>knee disarticulation</td><td>무릎관절에서, 무릎 아래 전체</td></tr>
@@ -250,13 +250,13 @@ const dd = `
   'amp-don': \`<h2>의지(Prosthesis) 착용 훈련</h2>
 <div class="detail-section">
   <h3>기본 원칙</h3>
-  <div class="detail-item accent">의지 <b>착용과 벖기 전 과정을 환자 스스로 완전히 익힐 때까지</b> 반복 연습</div>
+  <div class="detail-item accent">의지 <b>착용과 벗기 전 과정을 환자 스스로 완전히 익힐 때까지</b> 반복 연습</div>
   <div class="detail-item accent"><b>올바른 착용 여부를 본인 스스로 점검</b>할 수 있도록 훈련</div>
 </div>
 <div class="detail-section">
   <h3>넙다리뼈 절단 환자의 의지 착용 순서 (7단계)</h3>
   <ol style="padding-left:20px;color:var(--text);line-height:1.8;">
-    <li>환자를 <b>서거나 앇힌다</b></li>
+    <li>환자를 <b>서거나 앉힌다</b></li>
     <li>피부에 가해지는 전단력 감소를 위해 <b>주름 없이 절단단 양말 착용</b></li>
     <li>소켓 안에서 양말 끝은 <b>공기 분출 밸브 구멍으로 빼내기 쉽게 느슨하게</b>, 절단단은 소켓에 정확히 맞게</li>
     <li>서 있는 자세에서 <b>절단단을 소켓 안에 넣음</b></li>

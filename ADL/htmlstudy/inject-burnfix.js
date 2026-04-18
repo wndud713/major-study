@@ -118,7 +118,7 @@ const newDetails = `
   'burn-severity': \`<h2>화상 중증도 분류 (American Burn Association)</h2>
 <table class="detail-table">
   <tr><th>등급</th><th>2도 화상</th><th>3도 화상</th><th>처치</th></tr>
-  <tr><td><b>경증 (Minor)</b></td><td>성인 <15%, 소아 <10%</td><td><2%</td><td>외래 처치</td></tr>
+  <tr><td><b>경증 (Minor)</b></td><td>성인 &lt;15%, 소아 &lt;10%</td><td>&lt;2%</td><td>외래 처치</td></tr>
   <tr><td><b>중등도 (Moderate)</b></td><td>성인 15~25%, 소아 10~20%</td><td>2~10%</td><td>일반 병원 입원</td></tr>
   <tr><td><b>중증 (Major)</b></td><td>성인 >25%, 소아 >20%</td><td>>10%</td><td><b>화상 전문센터</b> 입원</td></tr>
 </table>

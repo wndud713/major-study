@@ -90,7 +90,7 @@ const tab6 = `
                     <tr style="background:rgba(79,209,197,0.08);">
                       <td style="padding:7px 10px;border-left:3px solid #4fd1c5;font-weight:600;">행동</td>
                       <td style="padding:7px 10px;"><b>BPSD</b></td>
-                      <td style="padding:7px 10px;12가지 정신행동 증상 (망각·환각·초조·우울·수면 등)</td>
+                      <td style="padding:7px 10px;">12가지 정신행동 증상 (망각·환각·초조·우울·수면 등)</td>
                     </tr>
                   </tbody>
                 </table>

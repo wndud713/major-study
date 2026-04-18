@@ -1,6 +1,6 @@
 {
-  "templatePath": "C:/Users/wndud/Desktop/전공공부/shell_template_v2.html",
-  "outputDir": "C:/Users/wndud/Desktop/전공공부",
+  "templatePath": "shell_template_v2.html",
+  "outputDir": ".",
   "subjects": [
     {
       "id": "neuro-motor",

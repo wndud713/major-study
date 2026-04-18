@@ -17,6 +17,10 @@ const repl = [
   ['주관절', '팔꿉관절'],
   ['견관절', '어깨관절'],
   ['족관절', '발목관절'],
+  // muscles (compound — must precede bare 대퇴 rule to avoid partial collision)
+  ['대퇴사두근', '넙다리네갈래근'],
+  ['대퇴이두근', '넙다리두갈래근'],
+  ['비복근', '장딴지근'],
   // bones / regions
   ['대퇴골', '넙다리뼈'],
   ['대퇴', '넙다리'],
@@ -34,10 +38,6 @@ const repl = [
   ['수근', '손목뼈'],
   ['족지', '발가락'],
   ['수지', '손가락'],
-  // muscles
-  ['비복근', '장딴지근'],
-  ['대퇴사두근', '넙다리네갈래근'],
-  ['대퇴이두근', '넙다리두갈래근'],
   // movements (only standalone, not in compound words like 굴곡근)
   // Use word-boundary approximation via context check
   // restore sentinel
