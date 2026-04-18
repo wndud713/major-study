@@ -42,13 +42,13 @@ function loadSubject(subjectConfig) {
 function runSubject(subjectConfig) {
   const chapters = loadSubject(subjectConfig);
   const outputPath = resolvePath(
-    subjectConfig.outputFile.startsWith('C:')
+    path.isAbsolute(subjectConfig.outputFile)
       ? subjectConfig.outputFile
       : path.join(config.outputDir, subjectConfig.outputFile)
   );
   return mergeSubject({
     subject: subjectConfig.name,
-    templatePath: config.templatePath,
+    templatePath: resolvePath(config.templatePath),
     chapters,
     outputPath,
     title: subjectConfig.name + ' 통합'
@@ -60,9 +60,9 @@ function runAll() {
     subject: sc.name,
     chapters: loadSubject(sc)
   }));
-  const outputPath = path.join(config.outputDir, '전공공부_통합.html');
+  const outputPath = resolvePath(path.join(config.outputDir, '전공공부_통합.html'));
   return mergeAll({
-    templatePath: config.templatePath,
+    templatePath: resolvePath(config.templatePath),
     subjects,
     outputPath,
     title: '전공공부 통합'
