@@ -230,6 +230,25 @@ function buildChapterNavHtml(currentSubjectId, currentChapterFile) {
 .vc-ch-link.active{background:color-mix(in srgb,var(--subj-accent) 22%,transparent);color:var(--subj-accent);font-weight:600}
 .chapter-nav-label{display:none!important}
 @media(max-width:700px){.vc-pn-btn{max-width:90px;font-size:11px;padding:5px 9px}.vc-subj-trigger{font-size:12px;padding:5px 10px}}
+/* === Mobile layout overflow fix === */
+@media(max-width:768px){
+  html,body{max-width:100vw;overflow-x:hidden!important}
+  .chapter-section,.wrapper,.main-wrap,.sidebar,.cards-area,.detail-panel,.tab-content,.card,.detail-item{max-width:100%!important;box-sizing:border-box}
+  .sidebar{overflow:visible!important;width:100%!important}
+  .sidebar-tabs{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;flex-direction:initial!important;flex-wrap:initial!important;overflow:hidden!important;width:100%;gap:1px;padding:3px!important}
+  .tab-btn{min-width:0!important;width:auto!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;font-size:10.5px!important;gap:3px!important;padding:8px 4px!important;white-space:normal!important;box-sizing:border-box;overflow:hidden;line-height:1.25}
+  .tab-btn .tab-icon{font-size:15px;flex-shrink:0}
+  .tab-btn>span:not(.tab-icon),.tab-btn{word-break:keep-all;overflow-wrap:break-word}
+  .cards-area{padding:14px 12px!important;width:100%!important}
+  .card{width:100%!important;box-sizing:border-box;max-width:100%;flex-wrap:wrap}
+  .card-title,.card-sub{word-break:break-word;overflow-wrap:anywhere}
+  .detail-panel{padding:16px 14px!important;width:100%!important;align-self:stretch;box-sizing:border-box}
+  .detail-panel *{max-width:100%;box-sizing:border-box}
+  .detail-panel table{display:block;overflow-x:auto;width:100%;font-size:11px}
+  .detail-panel pre,.detail-panel img{max-width:100%}
+  .detail-item{word-break:break-word;overflow-wrap:anywhere}
+  .chapter-nav{flex-wrap:wrap}
+}
 </style>
 <nav class="vc-top-nav">
   <a class="vc-home-btn" href="/" title="전체 인덱스">🏠</a>
