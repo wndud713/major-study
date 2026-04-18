@@ -79,13 +79,9 @@ function buildIndex() {
     const meta = SUBJECT_META[s.id] || { icon: '📚', accent: '#38bdf8', desc: '' };
     return `    <a class="card" href="/subjects/${s.id}.html" style="--card-accent:${meta.accent}">
       <div class="card-icon">${meta.icon}</div>
-      <div class="card-meta">${s.chapters.length} 챕터</div>
       <div class="card-title">${s.name}</div>
-      <div class="card-desc">${meta.desc}</div>
     </a>`;
   }).join('\n');
-
-  const totalChapters = CONFIG.subjects.reduce((sum, s) => sum + s.chapters.length, 0);
 
   return `<!DOCTYPE html>
 <html lang="ko">
@@ -99,24 +95,11 @@ function buildIndex() {
 <div class="container">
   <header>
     <h1>📚 전공공부</h1>
-    <div class="subtitle">${CONFIG.subjects.length} 과목 · ${totalChapters} 챕터 — 원하는 과목 선택</div>
   </header>
-
-  <div class="tip">
-    💡 <b>사용 팁:</b> 각 챕터는 1~22MB. 처음 클릭 시 잠시 대기 → 두 번째부터는 캐시되어 즉시 로딩.
-    오프라인 사용 시 GitHub Releases에서 통합본 다운로드.
-  </div>
 
   <div class="grid">
 ${subjectsHtml}
   </div>
-
-  <footer>
-    💾 오프라인 다운로드:
-    <a href="https://github.com/wndud713/major-study/releases/latest" target="_blank" rel="noopener">GitHub Releases</a>
-    ·
-    <a href="https://github.com/wndud713/major-study" target="_blank" rel="noopener">소스 코드</a>
-  </footer>
 </div>
 </body>
 </html>`;
@@ -131,13 +114,9 @@ function buildSubjectIndex(subject) {
 
   const chaptersHtml = subject.chapters.map((ch, i) => {
     const filename = ch.file.split('/').pop();
-    const stat = fs.statSync(path.join(ROOT, ch.file));
-    const sizeMB = (stat.size / 1024 / 1024).toFixed(1);
     const href = `/chapters/${encodeURIComponent(subjectFolder)}/${encodeURIComponent(filename)}`;
     return `    <a class="card" href="${href}" style="--card-accent:${meta.accent}">
-      <div class="card-meta">CH.${String(i + 1).padStart(2, '0')} · ${sizeMB} MB</div>
-      <div class="card-title">${ch.shortTitle}</div>
-      <div class="card-desc">${filename.replace(/\.html$/, '')}</div>
+      <div class="card-title"><span class="ch-num">CH.${String(i + 1).padStart(2, '0')}</span> ${ch.shortTitle}</div>
     </a>`;
   }).join('\n');
 
@@ -147,23 +126,20 @@ function buildSubjectIndex(subject) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>${subject.name} — 전공공부</title>
-<style>${SHARED_CSS}</style>
+<style>${SHARED_CSS}
+.ch-num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--card-accent,var(--accent));margin-right:8px;letter-spacing:.05em}
+</style>
 </head>
 <body>
 <div class="container">
   <header>
     <div class="breadcrumb"><a href="/">← 전체 인덱스</a></div>
     <h1>${meta.icon} ${subject.name}</h1>
-    <div class="subtitle">${subject.chapters.length} 챕터 · ${meta.desc}</div>
   </header>
 
   <div class="grid">
 ${chaptersHtml}
   </div>
-
-  <footer>
-    <a href="/">← 전체 인덱스로</a>
-  </footer>
 </div>
 </body>
 </html>`;
