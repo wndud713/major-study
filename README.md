@@ -4,8 +4,7 @@ PDF 강의자료를 인터랙티브 HTML 스터디 파일로 변환. 6 과목, 2
 
 ## 🌐 온라인으로 보기
 
-> **Vercel 배포 후 URL 추가 예정**
-> 예시: https://major-study.vercel.app/
+**👉 https://major-study.vercel.app/**
 
 빠른 인덱스 → 과목 → 챕터 3단계 네비게이션. 각 챕터 1~22MB 점진 로딩.
 
