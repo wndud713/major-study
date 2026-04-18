@@ -15,6 +15,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { injectEditFeatures } = require('./lib/merge-engine');
 
 const ROOT = __dirname;
 const CONFIG = JSON.parse(fs.readFileSync(path.join(ROOT, 'merge-config.json'), 'utf8'));
@@ -185,8 +186,131 @@ function ensureDir(p) {
   if (!fs.existsSync(p)) fs.mkdirSync(p, { recursive: true });
 }
 
+// ============================================================
+// 챕터 페이지 상단 nav (모든 과목·챕터 dropdown)
+// ============================================================
+function buildChapterNavHtml(currentSubjectId, currentChapterFile) {
+  const subjectFolder = encodeURIComponent;
+  const fileEnc = encodeURIComponent;
+
+  // 옵션 HTML — 6 과목 × 챕터들
+  let dropdownHtml = '<div class="vc-nav-dropdown" id="vc-nav-dropdown">';
+  for (const s of CONFIG.subjects) {
+    const meta = SUBJECT_META[s.id] || { icon: '📚', accent: '#38bdf8' };
+    dropdownHtml += `<div class="vc-subj-group" style="--subj-accent:${meta.accent}">`;
+    dropdownHtml += `<div class="vc-subj-label">${meta.icon} ${s.name}</div>`;
+    for (let i = 0; i < s.chapters.length; i++) {
+      const ch = s.chapters[i];
+      const folder = ch.file.split('/')[0];
+      const fname = ch.file.split('/').pop();
+      const href = `/chapters/${fileEnc(folder)}/${fileEnc(fname)}`;
+      const isCurrent = (s.id === currentSubjectId && fname === currentChapterFile);
+      const activeCls = isCurrent ? ' active' : '';
+      dropdownHtml += `<a class="vc-ch-link${activeCls}" href="${href}">CH.${String(i+1).padStart(2,'0')} ${ch.shortTitle}</a>`;
+    }
+    dropdownHtml += `</div>`;
+  }
+  dropdownHtml += '</div>';
+
+  const currentMeta = SUBJECT_META[currentSubjectId] || { icon: '📚', accent: '#38bdf8' };
+  const currentSubject = CONFIG.subjects.find(s => s.id === currentSubjectId);
+  const currentSubjectName = currentSubject ? currentSubject.name : '전공공부';
+
+  // 이전·다음 챕터 계산
+  let prevHref = null, nextHref = null, prevTitle = '', nextTitle = '';
+  if (currentSubject) {
+    const idx = currentSubject.chapters.findIndex(ch => ch.file.split('/').pop() === currentChapterFile);
+    if (idx > 0) {
+      const p = currentSubject.chapters[idx - 1];
+      prevHref = `/chapters/${fileEnc(p.file.split('/')[0])}/${fileEnc(p.file.split('/').pop())}`;
+      prevTitle = p.shortTitle;
+    }
+    if (idx >= 0 && idx < currentSubject.chapters.length - 1) {
+      const n = currentSubject.chapters[idx + 1];
+      nextHref = `/chapters/${fileEnc(n.file.split('/')[0])}/${fileEnc(n.file.split('/').pop())}`;
+      nextTitle = n.shortTitle;
+    }
+  }
+
+  return `
+<style>
+.vc-top-nav{position:fixed;top:0;left:0;right:0;height:36px;background:#0a0c10;border-bottom:1px solid #1e2235;display:flex;align-items:center;padding:0 12px;gap:10px;z-index:1000;font-family:'Noto Sans KR',sans-serif;font-size:12px}
+.vc-home-btn{display:flex;align-items:center;gap:5px;padding:5px 10px;background:transparent;border:1px solid #252840;color:#7a8aaa;border-radius:5px;cursor:pointer;text-decoration:none;font-size:11px;transition:all .15s;white-space:nowrap}
+.vc-home-btn:hover{background:#13161e;color:#dce3f0;border-color:#3a3f60}
+.vc-subj-trigger{display:flex;align-items:center;gap:6px;padding:5px 12px;background:#13161e;border:1px solid #252840;color:#dce3f0;border-radius:5px;cursor:pointer;font-size:11px;transition:all .15s;white-space:nowrap;font-family:inherit}
+.vc-subj-trigger:hover{border-color:${currentMeta.accent}}
+.vc-subj-trigger .vc-arrow{font-size:9px;opacity:.7;transition:transform .2s}
+.vc-subj-trigger.open .vc-arrow{transform:rotate(180deg)}
+.vc-current-chip{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;background:color-mix(in srgb,${currentMeta.accent} 15%,transparent);color:${currentMeta.accent};border-radius:4px;white-space:nowrap;flex-shrink:0}
+.vc-prevnext{display:flex;gap:4px;margin-left:auto;flex-shrink:0}
+.vc-pn-btn{padding:5px 10px;background:transparent;border:1px solid #252840;color:#7a8aaa;border-radius:5px;cursor:pointer;text-decoration:none;font-size:10px;transition:all .15s;white-space:nowrap;max-width:160px;overflow:hidden;text-overflow:ellipsis}
+.vc-pn-btn:hover{background:#13161e;color:#dce3f0;border-color:#3a3f60}
+.vc-pn-btn.disabled{opacity:.3;pointer-events:none}
+.vc-nav-dropdown{display:none;position:fixed;top:36px;left:60px;background:#13161e;border:1px solid #2a3048;border-radius:8px;box-shadow:0 12px 32px rgba(0,0,0,.6);padding:8px;max-height:78vh;overflow-y:auto;z-index:999;min-width:300px;max-width:90vw}
+.vc-nav-dropdown.open{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.vc-subj-group{background:#0d0f14;border:1px solid #2a3048;border-radius:6px;padding:8px;border-left:3px solid var(--subj-accent)}
+.vc-subj-label{font-size:11px;font-weight:700;color:#dce3f0;margin-bottom:6px;padding-bottom:5px;border-bottom:1px solid #2a3048}
+.vc-ch-link{display:block;padding:5px 8px;font-size:11px;color:#7a8aaa;text-decoration:none;border-radius:4px;transition:all .15s;margin-bottom:2px}
+.vc-ch-link:hover{background:#1a1e2a;color:#dce3f0}
+.vc-ch-link.active{background:color-mix(in srgb,var(--subj-accent) 18%,transparent);color:var(--subj-accent);font-weight:600}
+body.vc-pad-top{padding-top:36px!important}
+html.vc-pad-top,html.vc-pad-top body{padding-top:36px!important}
+.chapter-nav{margin-top:36px}
+@media(max-width:700px){.vc-pn-btn{max-width:80px;font-size:9px}.vc-current-chip{display:none}}
+</style>
+<nav class="vc-top-nav">
+  <a class="vc-home-btn" href="/" title="전체 인덱스">🏠</a>
+  <button class="vc-subj-trigger" id="vc-subj-trigger" onclick="vcToggleNav()">${currentMeta.icon} ${currentSubjectName} <span class="vc-arrow">▼</span></button>
+  <span class="vc-current-chip">${currentChapterFile.replace(/\.html$/,'')}</span>
+  <div class="vc-prevnext">
+    ${prevHref ? `<a class="vc-pn-btn" href="${prevHref}" title="${prevTitle}">‹ ${prevTitle}</a>` : `<span class="vc-pn-btn disabled">‹</span>`}
+    ${nextHref ? `<a class="vc-pn-btn" href="${nextHref}" title="${nextTitle}">${nextTitle} ›</a>` : `<span class="vc-pn-btn disabled">›</span>`}
+  </div>
+</nav>
+${dropdownHtml}
+<script>
+function vcToggleNav(){
+  var dd=document.getElementById('vc-nav-dropdown');
+  var t=document.getElementById('vc-subj-trigger');
+  var open=dd.classList.toggle('open');
+  t.classList.toggle('open',open);
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.vc-subj-trigger') && !e.target.closest('.vc-nav-dropdown')){
+    document.getElementById('vc-nav-dropdown').classList.remove('open');
+    document.getElementById('vc-subj-trigger').classList.remove('open');
+  }
+});
+</script>
+`;
+}
+
+// 챕터 HTML에 nav + 편집 기능 주입
+function injectChapterFeatures(html, subjectId, chapterFile) {
+  const navBlock = buildChapterNavHtml(subjectId, chapterFile);
+
+  // 1. nav를 <body> 직후 삽입
+  html = html.replace(/<body([^>]*)>/, `<body$1>${navBlock}`);
+
+  // 2. body padding-top 보정 (기존 body 스타일에 padding-top:36px)
+  // body가 fixed height/overflow 라 nav로 인한 잘림 방지 — body 스타일 부분 수정
+  html = html.replace(
+    /body\{background:var\(--bg\);color:var\(--text\);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1\.65;display:flex;flex-direction:column\}/,
+    `body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.65;display:flex;flex-direction:column;padding-top:36px}`
+  );
+
+  // 3. 편집 기능 주입 (lib/merge-engine.js의 injectEditFeatures 재사용)
+  try {
+    html = injectEditFeatures(html);
+  } catch (e) {
+    console.log(`    편집 기능 주입 실패: ${e.message}`);
+  }
+
+  return html;
+}
+
 function copyChapters() {
-  console.log('\n=== Phase A: 챕터 HTML 복사 ===');
+  console.log('\n=== Phase A: 챕터 HTML 복사 + 후처리 (nav + 편집) ===');
   let count = 0, totalBytes = 0;
   for (const subject of CONFIG.subjects) {
     const subjectFolder = subject.chapters[0].file.split('/')[0];
@@ -196,14 +320,19 @@ function copyChapters() {
       const src = path.join(ROOT, ch.file);
       const filename = ch.file.split('/').pop();
       const dest = path.join(destDir, filename);
-      fs.copyFileSync(src, dest);
+
+      // 복사 + 후처리 (nav + 편집)
+      let html = fs.readFileSync(src, 'utf8');
+      html = injectChapterFeatures(html, subject.id, filename);
+      fs.writeFileSync(dest, html, 'utf8');
+
       const size = fs.statSync(dest).size;
       totalBytes += size;
       count++;
       console.log(`  ✓ [${subject.id}] ${filename} (${(size / 1024 / 1024).toFixed(1)} MB)`);
     }
   }
-  console.log(`\n  총 ${count} 챕터 복사 완료. 총 크기: ${(totalBytes / 1024 / 1024).toFixed(1)} MB`);
+  console.log(`\n  총 ${count} 챕터 복사 + nav·편집 주입 완료. 총 크기: ${(totalBytes / 1024 / 1024).toFixed(1)} MB`);
 }
 
 function buildSubjectIndexes() {
