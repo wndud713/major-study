@@ -1,0 +1,118 @@
+{
+  "templatePath": "C:/Users/wndud/Desktop/전공공부/shell_template_v2.html",
+  "outputDir": "C:/Users/wndud/Desktop/전공공부",
+  "subjects": [
+    {
+      "id": "neuro-motor",
+      "name": "신경계운동치료학",
+      "outputFile": "신경계운동치료학_통합.html",
+      "chapters": [
+        {
+          "file": "신경계운동치료학/htmlstudy/오리엔테이션.html",
+          "shortTitle": "오리엔테이션"
+        },
+        {
+          "file": "신경계운동치료학/htmlstudy/보바스브룬스트롬.html",
+          "shortTitle": "보바스·브룬스트롬"
+        },
+        {
+          "file": "신경계운동치료학/htmlstudy/루드의치료법.html",
+          "shortTitle": "루드치료법"
+        },
+        {
+          "file": "신경계운동치료학/htmlstudy/기능적움직임재교육.html",
+          "shortTitle": "기능적움직임"
+        },
+        {
+          "file": "신경계운동치료학/htmlstudy/보행1.html",
+          "shortTitle": "보행1"
+        }
+      ]
+    },
+    {
+      "id": "neuro-disease",
+      "name": "신경계질환별물리치료",
+      "outputFile": "신경계질환별물리치료_통합.html",
+      "chapters": [
+        {
+          "file": "신경계질환별물리치료(이제혁)/뇌졸중1_뇌혈관질환.html",
+          "shortTitle": "뇌졸중1"
+        },
+        {
+          "file": "신경계질환별물리치료(이제혁)/뇌졸중2_임상증상_평가.html",
+          "shortTitle": "뇌졸중2"
+        },
+        {
+          "file": "신경계질환별물리치료(이제혁)/뇌졸중3_중재_치료기법.html",
+          "shortTitle": "뇌졸중3"
+        },
+        {
+          "file": "신경계질환별물리치료(이제혁)/소뇌실조.html",
+          "shortTitle": "소뇌실조"
+        },
+        {
+          "file": "신경계질환별물리치료(이제혁)/파킨슨병.html",
+          "shortTitle": "파킨슨병"
+        },
+        {
+          "file": "신경계질환별물리치료(이제혁)/외상성뇌손상_TBI.html",
+          "shortTitle": "외상성뇌손상"
+        },
+        {
+          "file": "신경계질환별물리치료(이제혁)/SOAP_note_TBI.html",
+          "shortTitle": "SOAP(TBI)"
+        }
+      ]
+    },
+    {
+      "id": "adl",
+      "name": "기능훈련(ADL)",
+      "outputFile": "기능훈련_ADL_통합.html",
+      "chapters": [
+        {
+          "file": "ADL/htmlstudy/기능훈련1_ADL개론.html",
+          "shortTitle": "ADL개론"
+        },
+        {
+          "file": "ADL/htmlstudy/기능훈련2_화상환자ADL.html",
+          "shortTitle": "화상환자ADL"
+        }
+      ]
+    },
+    {
+      "id": "sports",
+      "name": "스포츠물리치료학",
+      "outputFile": "스포츠물리치료학_통합.html",
+      "chapters": [
+        {
+          "file": "스포츠물리치료학/htmlstudy/Ch1_상해선수의재활프로그램수립.html",
+          "shortTitle": "재활프로그램"
+        },
+        {
+          "file": "스포츠물리치료학/htmlstudy/Ch2_치유과정의이해와관리.html",
+          "shortTitle": "치유과정"
+        },
+        {
+          "file": "스포츠물리치료학/htmlstudy/Ch3_재활평가과정.html",
+          "shortTitle": "재활평가"
+        },
+        {
+          "file": "스포츠물리치료학/htmlstudy/Ch4_재활을위한심리적고찰.html",
+          "shortTitle": "심리적고찰"
+        },
+        {
+          "file": "스포츠물리치료학/htmlstudy/Ch5_핵심안정화.html",
+          "shortTitle": "핵심안정화"
+        },
+        {
+          "file": "스포츠물리치료학/htmlstudy/Ch6_신경근조절의재설정.html",
+          "shortTitle": "신경근조절"
+        },
+        {
+          "file": "스포츠물리치료학/htmlstudy/HKA_assessment_study.html",
+          "shortTitle": "HKA 평가"
+        }
+      ]
+    }
+  ]
+}
