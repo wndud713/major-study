@@ -234,34 +234,30 @@ function buildChapterNavHtml(currentSubjectId, currentChapterFile) {
 
   return `
 <style>
-.vc-top-nav{position:fixed;top:0;left:0;right:0;height:36px;background:#0a0c10;border-bottom:1px solid #1e2235;display:flex;align-items:center;padding:0 12px;gap:10px;z-index:1000;font-family:'Noto Sans KR',sans-serif;font-size:12px}
-.vc-home-btn{display:flex;align-items:center;gap:5px;padding:5px 10px;background:transparent;border:1px solid #252840;color:#7a8aaa;border-radius:5px;cursor:pointer;text-decoration:none;font-size:11px;transition:all .15s;white-space:nowrap}
-.vc-home-btn:hover{background:#13161e;color:#dce3f0;border-color:#3a3f60}
-.vc-subj-trigger{display:flex;align-items:center;gap:6px;padding:5px 12px;background:#13161e;border:1px solid #252840;color:#dce3f0;border-radius:5px;cursor:pointer;font-size:11px;transition:all .15s;white-space:nowrap;font-family:inherit}
+.vc-top-nav{position:fixed;top:0;left:0;right:0;height:44px;background:#0a0c10;border-bottom:1px solid #1e2235;display:flex;align-items:center;padding:0 14px;gap:8px;z-index:1000;font-family:'Noto Sans KR',sans-serif;font-size:13px}
+.vc-home-btn{display:flex;align-items:center;justify-content:center;width:34px;height:30px;background:transparent;border:1px solid #252840;color:#dce3f0;border-radius:6px;cursor:pointer;text-decoration:none;font-size:15px;transition:all .15s;flex-shrink:0}
+.vc-home-btn:hover{background:#13161e;border-color:#3a3f60}
+.vc-subj-trigger{display:flex;align-items:center;gap:8px;padding:6px 14px;background:#13161e;border:1px solid #252840;color:#dce3f0;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;transition:all .15s;white-space:nowrap;font-family:inherit;height:30px}
 .vc-subj-trigger:hover{border-color:${currentMeta.accent}}
-.vc-subj-trigger .vc-arrow{font-size:9px;opacity:.7;transition:transform .2s}
+.vc-subj-trigger .vc-arrow{font-size:10px;opacity:.7;transition:transform .2s}
 .vc-subj-trigger.open .vc-arrow{transform:rotate(180deg)}
-.vc-current-chip{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;background:color-mix(in srgb,${currentMeta.accent} 15%,transparent);color:${currentMeta.accent};border-radius:4px;white-space:nowrap;flex-shrink:0}
-.vc-prevnext{display:flex;gap:4px;margin-left:auto;flex-shrink:0}
-.vc-pn-btn{padding:5px 10px;background:transparent;border:1px solid #252840;color:#7a8aaa;border-radius:5px;cursor:pointer;text-decoration:none;font-size:10px;transition:all .15s;white-space:nowrap;max-width:160px;overflow:hidden;text-overflow:ellipsis}
-.vc-pn-btn:hover{background:#13161e;color:#dce3f0;border-color:#3a3f60}
-.vc-pn-btn.disabled{opacity:.3;pointer-events:none}
-.vc-nav-dropdown{display:none;position:fixed;top:36px;left:60px;background:#13161e;border:1px solid #2a3048;border-radius:8px;box-shadow:0 12px 32px rgba(0,0,0,.6);padding:8px;max-height:78vh;overflow-y:auto;z-index:999;min-width:300px;max-width:90vw}
-.vc-nav-dropdown.open{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
-.vc-subj-group{background:#0d0f14;border:1px solid #2a3048;border-radius:6px;padding:8px;border-left:3px solid var(--subj-accent)}
-.vc-subj-label{font-size:11px;font-weight:700;color:#dce3f0;margin-bottom:6px;padding-bottom:5px;border-bottom:1px solid #2a3048}
-.vc-ch-link{display:block;padding:5px 8px;font-size:11px;color:#7a8aaa;text-decoration:none;border-radius:4px;transition:all .15s;margin-bottom:2px}
+.vc-prevnext{display:flex;gap:6px;margin-left:auto;flex-shrink:0}
+.vc-pn-btn{padding:6px 14px;background:color-mix(in srgb,${currentMeta.accent} 12%,transparent);border:1px solid color-mix(in srgb,${currentMeta.accent} 35%,transparent);color:${currentMeta.accent};border-radius:6px;cursor:pointer;text-decoration:none;font-size:12.5px;font-weight:600;transition:all .15s;white-space:nowrap;max-width:200px;overflow:hidden;text-overflow:ellipsis;height:30px;display:flex;align-items:center;font-family:inherit}
+.vc-pn-btn:hover{background:color-mix(in srgb,${currentMeta.accent} 22%,transparent);border-color:${currentMeta.accent}}
+.vc-pn-btn.disabled{opacity:.25;pointer-events:none;background:transparent;border-color:#252840;color:#7a8aaa}
+.vc-nav-dropdown{display:none;position:fixed;top:44px;left:60px;background:#13161e;border:1px solid #2a3048;border-radius:8px;box-shadow:0 12px 32px rgba(0,0,0,.6);padding:10px;max-height:78vh;overflow-y:auto;z-index:999;min-width:320px;max-width:92vw}
+.vc-nav-dropdown.open{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.vc-subj-group{background:#0d0f14;border:1px solid #2a3048;border-radius:6px;padding:10px;border-left:3px solid var(--subj-accent)}
+.vc-subj-label{font-size:12.5px;font-weight:700;color:#dce3f0;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #2a3048}
+.vc-ch-link{display:block;padding:6px 10px;font-size:12px;color:#9ab;text-decoration:none;border-radius:4px;transition:all .15s;margin-bottom:3px}
 .vc-ch-link:hover{background:#1a1e2a;color:#dce3f0}
-.vc-ch-link.active{background:color-mix(in srgb,var(--subj-accent) 18%,transparent);color:var(--subj-accent);font-weight:600}
-body.vc-pad-top{padding-top:36px!important}
-html.vc-pad-top,html.vc-pad-top body{padding-top:36px!important}
-.chapter-nav{margin-top:36px}
-@media(max-width:700px){.vc-pn-btn{max-width:80px;font-size:9px}.vc-current-chip{display:none}}
+.vc-ch-link.active{background:color-mix(in srgb,var(--subj-accent) 22%,transparent);color:var(--subj-accent);font-weight:600}
+.chapter-nav{margin-top:44px}
+@media(max-width:700px){.vc-pn-btn{max-width:90px;font-size:11px;padding:5px 9px}.vc-subj-trigger{font-size:12px;padding:5px 10px}}
 </style>
 <nav class="vc-top-nav">
   <a class="vc-home-btn" href="/" title="전체 인덱스">🏠</a>
   <button class="vc-subj-trigger" id="vc-subj-trigger" onclick="vcToggleNav()">${currentMeta.icon} ${currentSubjectName} <span class="vc-arrow">▼</span></button>
-  <span class="vc-current-chip">${currentChapterFile.replace(/\.html$/,'')}</span>
   <div class="vc-prevnext">
     ${prevHref ? `<a class="vc-pn-btn" href="${prevHref}" title="${prevTitle}">‹ ${prevTitle}</a>` : `<span class="vc-pn-btn disabled">‹</span>`}
     ${nextHref ? `<a class="vc-pn-btn" href="${nextHref}" title="${nextTitle}">${nextTitle} ›</a>` : `<span class="vc-pn-btn disabled">›</span>`}
@@ -292,11 +288,10 @@ function injectChapterFeatures(html, subjectId, chapterFile) {
   // 1. nav를 <body> 직후 삽입
   html = html.replace(/<body([^>]*)>/, `<body$1>${navBlock}`);
 
-  // 2. body padding-top 보정 (기존 body 스타일에 padding-top:36px)
-  // body가 fixed height/overflow 라 nav로 인한 잘림 방지 — body 스타일 부분 수정
+  // 2. body padding-top 보정 (기존 body 스타일에 padding-top:44px)
   html = html.replace(
     /body\{background:var\(--bg\);color:var\(--text\);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1\.65;display:flex;flex-direction:column\}/,
-    `body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.65;display:flex;flex-direction:column;padding-top:36px}`
+    `body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.65;display:flex;flex-direction:column;padding-top:44px}`
   );
 
   // 3. 편집 기능 주입 (lib/merge-engine.js의 injectEditFeatures 재사용)
