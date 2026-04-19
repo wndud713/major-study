@@ -447,7 +447,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         >
           <div class="section-title">국가고시 기출 문제</div>
 
-          <div class="card" onclick="openDetail('ch1','exam_answers')" style="background:linear-gradient(135deg,rgba(56,189,248,0.12),rgba(167,139,250,0.12));border:1.5px solid var(--ch-accent);">
+          <div class="card" onclick="toggleCardExpand(this,'ch1','exam_answers')" style="background:linear-gradient(135deg,rgba(56,189,248,0.12),rgba(167,139,250,0.12));border:1.5px solid var(--ch-accent);">
             <div class="card-body">
               <div class="card-title">🎯 국시문제 답 모음</div>
               <div class="card-sub">5문항 전체 정답+해설 한눈에 보기</div>
@@ -455,7 +455,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
             <button class="expand-btn">↗</button>
           </div>
 
-          <div class="card" onclick="openDetail('ch1','exam_answer_nums')" style="background:linear-gradient(135deg,rgba(52,211,153,0.12),rgba(79,209,197,0.12));border:1.5px solid var(--ch-accent);margin-top:10px;">
+          <div class="card" onclick="toggleCardExpand(this,'ch1','exam_answer_nums')" style="background:linear-gradient(135deg,rgba(52,211,153,0.12),rgba(79,209,197,0.12));border:1.5px solid var(--ch-accent);margin-top:10px;">
             <div class="card-body">
               <div class="card-title">🔢 정답 번호만 보기</div>
               <div class="card-sub">문제 번호 + 정답(①~⑤)만 간단히</div>
