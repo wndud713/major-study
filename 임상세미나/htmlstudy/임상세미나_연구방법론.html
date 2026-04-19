@@ -189,6 +189,21 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
             </div>
             <button class="expand-btn">↗</button>
           </div>
+        
+          <div style="grid-column:1/-1;">
+            <div class="card" style="width:100%;box-sizing:border-box;cursor:pointer;"
+              onclick="(function(btn,t){var o=t.style.display!=='none';t.style.display=o?'none':'block';btn.textContent=o?'↗':'↙';})(this.querySelector('.expand-btn'),document.getElementById('sem-tab1-tbl-wrap'))">
+              <div class="card-body"><div class="card-title">📊 논문 작성법 — IMRaD 구조 + 작성 원칙</div><div class="card-sub">8 구성 요소 · 각 섹션 핵심 · 요건 6가지</div></div>
+              <button class="expand-btn">↗</button>
+            </div>
+            <div id="sem-tab1-tbl-wrap" style="display:none;padding:8px 0 20px;">
+              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:10px;">
+                <table class="detail-table" style="min-width:700px;font-size:0.78rem;border-collapse:collapse;">
+                  <tr><th>섹션</th><th>내용</th><th>핵심 원칙</th></tr><tr><td><tr style="background:rgba(56,189,248,0.20)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 8px;">🔵 논문 8 구성 요소</td></tr><tr><td><b>제목 (Title)</b></td><td>Effects of X on Y in Z</td><td>간결·구체·명료 · 추상 표현 금지</td></tr><tr><td><b>초록 (Abstract)</b></td><td>300 단어 이내</td><td>배경·방법·결과·결론 압축</td></tr><tr><td><b>서론 (Introduction)</b></td><td>배경·목적·가설</td><td>왜 이 연구인가 + 선행 연구</td></tr><tr><td><b>방법 (Methods)</b></td><td>대상·중재·측정·분석</td><td>재현 가능성 핵심 — 제3자 재현 가능해야</td></tr><tr><td><b>결과 (Results)</b></td><td>데이터·통계 수치</td><td>도표 + 본문 설명 · 해석 X</td></tr><tr><td><b>고찰 (Discussion)</b></td><td>결과 해석·한계·향후</td><td>선행 연구와 비교 + 임상 의의</td></tr><tr><td><b>결론 (Conclusion)</b></td><td>핵심 요약</td><td>임상 시사점 명시</td></tr><tr><td><b>참고문헌</b></td><td>5~10 (증례)</td><td>인용 정확성 + 투고규정 준수</td></tr><tr><td><tr style="background:rgba(167,139,250,0.20)"><td colspan="3" style="font-weight:700;color:#a78bfa;padding:6px 8px;">🟣 6 요건</td></tr><tr><td><b>① 창의성</b></td><td>기존 연구 차별</td><td>새로운 관점·방법·결과</td></tr><tr><td><b>② 결함 없는 계획</b></td><td>연구 디자인</td><td>편향 최소화 · 통계 적정</td></tr><tr><td><b>③ 정확성</b></td><td>데이터 검증</td><td>측정 신뢰도·타당도</td></tr><tr><td><b>④ 간결성</b></td><td>핵심만</td><td>군더더기 제거</td></tr><tr><td><b>⑤ 투고규정 준수</b></td><td>저널 지침</td><td>형식 맞춤</td></tr><tr><td><b>⑥ 자연스런 문장</b></td><td>가독성</td><td>학술 어조 유지</td></tr><tr><td><tr style="background:rgba(251,146,60,0.20)"><td colspan="3" style="font-weight:700;color:#fb923c;padding:6px 8px;">🟠 증례 논문 구조</td></tr><tr><td colspan="3" style="font-size:0.85em;padding:6px 10px;">제목 · 서론 · 증례(시간순 기록) · 고찰 · 참고문헌 5~10개</td></tr></td></tr><tr style="background:rgba(56,189,248,0.13)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 8px;font-size:0.85em;">💡 IMRaD = Introduction · Methods · Results · and Discussion — 과학논문 표준 구조</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="tab-content" id="ch1-tab-tab2">
@@ -228,6 +243,21 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
             </div>
             <button class="expand-btn">↗</button>
           </div>
+        
+          <div style="grid-column:1/-1;">
+            <div class="card" style="width:100%;box-sizing:border-box;cursor:pointer;"
+              onclick="(function(btn,t){var o=t.style.display!=='none';t.style.display=o?'none':'block';btn.textContent=o?'↗':'↙';})(this.querySelector('.expand-btn'),document.getElementById('sem-tab2-tbl-wrap'))">
+              <div class="card-body"><div class="card-title">📊 IRB 연구윤리 — 6 원칙 + 심의 절차</div><div class="card-sub">헬싱키 선언 · 생명윤리법 6 원칙 · 취약자 보호</div></div>
+              <button class="expand-btn">↗</button>
+            </div>
+            <div id="sem-tab2-tbl-wrap" style="display:none;padding:8px 0 20px;">
+              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:10px;">
+                <table class="detail-table" style="min-width:700px;font-size:0.78rem;border-collapse:collapse;">
+                  <tr><th>원칙</th><th>내용</th><th>적용</th></tr><tr><td><tr style="background:rgba(167,139,250,0.20)"><td colspan="3" style="font-weight:700;color:#a78bfa;padding:6px 8px;">🟣 6 생명윤리 원칙</td></tr><tr><td><b>① 인간존엄</b></td><td>Human Dignity</td><td>피험자 인간 가치 우선</td></tr><tr><td><b>② 자율성</b></td><td>Informed Consent</td><td>사전 동의 필수 + 충분한 정보 제공</td></tr><tr><td><b>③ 사생활</b></td><td>Privacy</td><td>개인정보 보호 · 익명화</td></tr><tr><td><b>④ 안전</b></td><td>Safety</td><td>위험 최소화 · 위험-이익 평가</td></tr><tr><td><b>⑤ 취약자 보호</b></td><td>Vulnerable Subjects</td><td>소아·임산부·정신질환자·수감자 등</td></tr><tr><td><b>⑥ 국제협력</b></td><td>International</td><td>헬싱키 선언 기반 · 글로벌 표준</td></tr><tr><td><tr style="background:rgba(251,146,60,0.20)"><td colspan="3" style="font-weight:700;color:#fb923c;padding:6px 8px;">🟠 IRB 심의</td></tr><tr><td><b>사전심의</b></td><td>필수</td><td>연구 시작 전 IRB 승인</td></tr><tr><td><b>심의면제</b></td><td>제한적</td><td>최소 위험 + 익명화 데이터 (익명 설문 등)</td></tr><tr><td><b>위험-이익 평가</b></td><td>필수</td><td>피험자 위험 < 사회적 이익</td></tr><tr><td><b>정기 재심의</b></td><td>1년 주기</td><td>장기 연구 진행 상황 보고</td></tr><tr><td><tr style="background:rgba(56,189,248,0.20)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 8px;">🔵 취약자 보호 특례</td></tr><tr><td><b>소아</b></td><td>법정대리인 동의</td><td>본인 동의 능력 평가 필요</td></tr><tr><td><b>임산부·태아</b></td><td>태아 영향 평가</td><td>치료 이익 > 위험 시만</td></tr><tr><td><b>정신질환자</b></td><td>판단능력 평가</td><td>후견인 동의 병행</td></tr><tr><td><b>수감자</b></td><td>자발성 보장</td><td>강제 참여 금지</td></tr><tr style="background:rgba(56,189,248,0.13)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 8px;font-size:0.85em;">💡 헬싱키 선언 = 인간 대상 의학연구 국제 윤리 기준. IRB = Institutional Review Board</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="tab-content" id="ch1-tab-tab3">
@@ -259,6 +289,21 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
               <div class="card-sub">통증: VAS(0~100mm) · 부종: 장딴지 둘레(cm) · 종아리 앞쪽 15cm 기준점</div>
             </div>
             <button class="expand-btn">↗</button>
+          </div>
+        
+          <div style="grid-column:1/-1;">
+            <div class="card" style="width:100%;box-sizing:border-box;cursor:pointer;"
+              onclick="(function(btn,t){var o=t.style.display!=='none';t.style.display=o?'none':'block';btn.textContent=o?'↗':'↙';})(this.querySelector('.expand-btn'),document.getElementById('sem-tab3-tbl-wrap'))">
+              <div class="card-body"><div class="card-title">📊 연구방법 구성 요소 — 개요 · 대상 · 중재 · 측정</div><div class="card-sub">재현 가능한 연구 방법 작성 4 요소</div></div>
+              <button class="expand-btn">↗</button>
+            </div>
+            <div id="sem-tab3-tbl-wrap" style="display:none;padding:8px 0 20px;">
+              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:10px;">
+                <table class="detail-table" style="min-width:700px;font-size:0.78rem;border-collapse:collapse;">
+                  <tr><th>요소</th><th>내용</th><th>포함 사항</th></tr><tr><td><b>연구 개요</b></td><td>전체 설계 요약</td><td>연구 질문 · 가설 · 연구 디자인 (RCT · Cohort · Cross-sectional 등)</td></tr><tr><td><b>연구 대상</b></td><td>표본 선정</td><td>모집단 · 표집 방법 · 포함·배제 기준 · 표본 크기 계산</td></tr><tr><td><b>중재 (Intervention)</b></td><td>실험군·대조군 처치</td><td>처치 내용·강도·빈도·기간 · 블라인딩</td></tr><tr><td><b>측정 (Measurement)</b></td><td>종속 변수</td><td>측정 도구·시점·담당자 · 신뢰도·타당도</td></tr><tr><td><tr style="background:rgba(167,139,250,0.20)"><td colspan="3" style="font-weight:700;color:#a78bfa;padding:6px 8px;">🟣 연구 디자인 비교</td></tr><tr><td><b>RCT</b></td><td>무작위 배정</td><td>최고 근거 수준 · 인과관계 검증</td></tr><tr><td><b>준실험</b></td><td>배정 통제 X</td><td>윤리적 제한 시 · RCT 불가능 시</td></tr><tr><td><b>코호트</b></td><td>전향적 추적</td><td>위험 요인 → 결과 발생</td></tr><tr><td><b>환자-대조군</b></td><td>후향적</td><td>결과 → 위험 요인 역추적</td></tr><tr><td><b>단면연구</b></td><td>특정 시점 스냅샷</td><td>유병률 · 상관관계</td></tr><tr><td><b>증례 보고</b></td><td>개별 사례</td><td>희귀 케이스 · 낮은 근거 수준</td></tr><tr style="background:rgba(56,189,248,0.13)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 8px;font-size:0.85em;">💡 재현 가능성 (Reproducibility) = 제3자가 같은 방법으로 유사 결과 얻어야 함</td></tr>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -296,7 +341,22 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
           <div class="carousel-label" id="ch1-carousel-label"></div>
           <button class="carousel-nav next" onclick="event.stopPropagation();carouselMove('ch1',1)">&#8250;</button>
         </div>
-        <div class="carousel-thumbs" id="ch1-carousel-thumbs"></div>
+        <div class="carousel-thumbs" id="ch1-carousel-thumbs">
+          <div style="grid-column:1/-1;">
+            <div class="card" style="width:100%;box-sizing:border-box;cursor:pointer;"
+              onclick="(function(btn,t){var o=t.style.display!=='none';t.style.display=o?'none':'block';btn.textContent=o?'↗':'↙';})(this.querySelector('.expand-btn'),document.getElementById('sem-tab4-tbl-wrap'))">
+              <div class="card-body"><div class="card-title">📊 연구 참여 동의서 — 필수 요소 + 피험자 권리</div><div class="card-sub">동의서 구성 · 참여자 권리 · 위험-이익</div></div>
+              <button class="expand-btn">↗</button>
+            </div>
+            <div id="sem-tab4-tbl-wrap" style="display:none;padding:8px 0 20px;">
+              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:10px;">
+                <table class="detail-table" style="min-width:700px;font-size:0.78rem;border-collapse:collapse;">
+                  <tr><th>항목</th><th>내용</th><th>핵심</th></tr><tr><td><tr style="background:rgba(56,189,248,0.20)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 8px;">🔵 동의서 필수 요소</td></tr><tr><td><b>연구 제목·목적</b></td><td>명확 기술</td><td>연구 내용 이해</td></tr><tr><td><b>연구 절차</b></td><td>참여자가 할 일</td><td>예상 시간·방법</td></tr><tr><td><b>예상 위험</b></td><td>모든 부작용</td><td>확률 + 심각성 명시</td></tr><tr><td><b>예상 이익</b></td><td>직접·간접</td><td>과대 포장 금지</td></tr><tr><td><b>비밀 보장</b></td><td>개인정보 보호</td><td>익명화 방법</td></tr><tr><td><b>보상</b></td><td>사례·경비</td><td>명확 금액</td></tr><tr><td><b>연구자 연락처</b></td><td>24시간 가능</td><td>응급 상황 대응</td></tr><tr><td><b>IRB 연락처</b></td><td>불만 제기</td><td>독립 심의 기관</td></tr><tr><td><tr style="background:rgba(167,139,250,0.20)"><td colspan="3" style="font-weight:700;color:#a78bfa;padding:6px 8px;">🟣 피험자 권리</td></tr><tr><td><b>설명 받을 권리</b></td><td>충분한 정보</td><td>이해 못하면 질문 가능</td></tr><tr><td><b>자유 참여·거부</b></td><td>강압 X</td><td>언제든 철회 가능 · 불이익 X</td></tr><tr><td><b>비밀 보장 권리</b></td><td>개인정보 보호</td><td>연구 종료 후 폐기</td></tr><tr><td><b>안전 받을 권리</b></td><td>위험 최소화</td><td>문제 발생 시 의료 지원</td></tr><tr><td><tr style="background:rgba(251,146,60,0.20)"><td colspan="3" style="font-weight:700;color:#fb923c;padding:6px 8px;">🟠 위험-이익 평가</td></tr><tr><td colspan="3" style="font-size:0.85em;padding:6px 10px;"><b>원칙:</b> 예상 이익 ≥ 예상 위험. 최소 위험 = 일상생활 또는 일반적 진료 수준의 위험.</td></tr></td></tr><tr style="background:rgba(56,189,248,0.13)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 8px;font-size:0.85em;">💡 동의서 = "충분한 정보 제공 후 자발적 동의" (Informed Consent). 헬싱키 선언 핵심.</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
