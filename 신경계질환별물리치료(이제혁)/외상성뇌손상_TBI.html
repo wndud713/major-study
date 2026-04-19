@@ -70,6 +70,7 @@ tr:nth-child(even) td{background:var(--bg3)}
   <button class="ch-btn" onclick="switchChapter(5,this)">🫁 전신계통 합병증</button>
   <button class="ch-btn" onclick="switchChapter(6,this)">📋 평가도구</button>
   <button class="ch-btn" onclick="switchChapter(7,this)">💊 중재</button>
+  <button class="ch-btn" onclick="switchChapter(8,this)">📊 종합표</button>
 </nav>
 
 <div class="layout">
@@ -1896,7 +1897,35 @@ const CHAPTERS = [
 <p>NG-Tube (Nasogastric intubation)</p>` }
     ]
   }
-];
+,
+  {
+    title: "📊 TBI 종합표",
+    sub: "GCS 분류 + 일차·이차 손상 통합",
+    imgs: [],
+    tabs: [{
+      label: "종합표",
+      cards: [
+        { icon:"📊", title:"TBI 종합표", desc:"GCS 4단계 + 일차/이차 손상 비교", tag:"종합" }
+      ],
+      detail: `
+<h3>📊 GCS 분류 + 일차/이차 손상 종합표</h3>
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;margin-top:12px;">
+  <tr style="background:rgba(56,189,248,0.20);"><th style="border:1px solid #2d3450;padding:8px;text-align:left;">GCS 점수</th><th style="border:1px solid #2d3450;padding:8px;text-align:left;">분류</th><th style="border:1px solid #2d3450;padding:8px;text-align:left;">의식소실</th><th style="border:1px solid #2d3450;padding:8px;text-align:left;">주요 특징</th></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>13~15</b></td><td style="border:1px solid #2d3450;padding:8px;">경도 (Mild) · 뇌진탕</td><td style="border:1px solid #2d3450;padding:8px;">없음 또는 ≤20분</td><td style="border:1px solid #2d3450;padding:8px;">가장 빈발 · CT 이상 X</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>9~12</b></td><td style="border:1px solid #2d3450;padding:8px;">중등도 (Moderate)</td><td style="border:1px solid #2d3450;padding:8px;">20분~6시간</td><td style="border:1px solid #2d3450;padding:8px;">기억상실 1~24시간 · ADL 가능</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>≤8</b></td><td style="border:1px solid #2d3450;padding:8px;">중증 (Severe)</td><td style="border:1px solid #2d3450;padding:8px;">≥6시간</td><td style="border:1px solid #2d3450;padding:8px;">전체 TBI 10% · 인지·언어 장애</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>≤5</b></td><td style="border:1px solid #2d3450;padding:8px;">식물인간 상태</td><td style="border:1px solid #2d3450;padding:8px;">계속 (각성 가능)</td><td style="border:1px solid #2d3450;padding:8px;">인지 X · 97%↑ 사망</td></tr>
+</table>
+<h3 style="margin-top:20px;">🟣 일차 vs 이차 손상</h3>
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;margin-top:8px;">
+  <tr style="background:rgba(167,139,250,0.20);"><th style="border:1px solid #2d3450;padding:8px;">구분</th><th style="border:1px solid #2d3450;padding:8px;">유형</th><th style="border:1px solid #2d3450;padding:8px;">시점</th><th style="border:1px solid #2d3450;padding:8px;">특징</th></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>일차</b></td><td style="border:1px solid #2d3450;padding:8px;">대뇌피질 좌상·열상 / DAI / 극성 뇌손상</td><td style="border:1px solid #2d3450;padding:8px;">외상 즉시</td><td style="border:1px solid #2d3450;padding:8px;">국소(좌상) · 광범위(DAI 뇌량·소뇌각) · 가속/감속(극단)</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>이차</b></td><td style="border:1px solid #2d3450;padding:8px;">두개내 혈종(EDH·SDH·ICH) / 뇌 팽윤·탈출·허혈·감염</td><td style="border:1px solid #2d3450;padding:8px;">외상 후 진행</td><td style="border:1px solid #2d3450;padding:8px;">천막·소뇌편도 탈출 · cerebral swelling vs edema · 혈관경련</td></tr>
+</table>
+<p style="font-size:0.85em;color:#888;margin-top:14px;">💡 가속·감속 손상: coup(충격부위) + countercoup(반대측). 공동화설(Cavitation) — 두개골 변형으로 손상.</p>
+`
+    }]
+  }];
 
 // ============================================================
 // CAROUSEL

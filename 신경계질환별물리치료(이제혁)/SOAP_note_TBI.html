@@ -71,6 +71,7 @@ body{background:var(--bg);color:var(--text);font-family:"Segoe UI",sans-serif;fo
   <button class="ch-btn" onclick="switchChapter(2,this)">⚡ O — 운동기능 평가</button>
   <button class="ch-btn" onclick="switchChapter(3,this)">📊 A — 평가</button>
   <button class="ch-btn" onclick="switchChapter(4,this)">🎯 P — 치료계획</button>
+  <button class="ch-btn" onclick="switchChapter(5,this)">📊 종합표</button>
 </nav>
 
 <div class="layout">
@@ -1520,7 +1521,38 @@ const CHAPTERS = [
 <p>동영상_standing1 동영상_standing2 동영상_standing3</p>` }
     ]
   }
-];
+,
+  {
+    title: "📊 환자 평가 종합표",
+    sub: "ROM · MMT · MMSE · MBI · BBS · FMA · VAS 통합",
+    imgs: [],
+    tabs: [{
+      label: "종합표",
+      cards: [
+        { icon:"📊", title:"환자 평가 종합표", desc:"ROM·MMT·MMSE-K·MBI·BBS·FMA 통합 + Problem List", tag:"평가" }
+      ],
+      detail: `
+<h3>📊 환자 종합 평가표</h3>
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;margin-top:12px;">
+  <tr style="background:rgba(56,189,248,0.20);"><th style="border:1px solid #2d3450;padding:8px;text-align:left;">평가 도구</th><th style="border:1px solid #2d3450;padding:8px;text-align:left;">점수</th><th style="border:1px solid #2d3450;padding:8px;text-align:left;">해석</th></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>의식 (Consciousness)</b></td><td style="border:1px solid #2d3450;padding:8px;">Confusion</td><td style="border:1px solid #2d3450;padding:8px;">Rancho Level IV — 혼돈, 도움 필요</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>주의력</b></td><td style="border:1px solid #2d3450;padding:8px;">Poor</td><td style="border:1px solid #2d3450;padding:8px;">집중 유지 어려움</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>MMSE-K</b></td><td style="border:1px solid #2d3450;padding:8px;">14/30</td><td style="border:1px solid #2d3450;padding:8px;">확정적 치매 수준</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>MBI</b></td><td style="border:1px solid #2d3450;padding:8px;">20/100</td><td style="border:1px solid #2d3450;padding:8px;">Severely Dependent — ADL 의존</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>BBS</b></td><td style="border:1px solid #2d3450;padding:8px;">0/56</td><td style="border:1px solid #2d3450;padding:8px;">독립 균형 불가 · 낙상 위험 최고</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>FMA 상지 (R/L)</b></td><td style="border:1px solid #2d3450;padding:8px;">62/62 / 66</td><td style="border:1px solid #2d3450;padding:8px;">경도 손상 · 공동운동 일부</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>FMA 하지 (R/L)</b></td><td style="border:1px solid #2d3450;padding:8px;">18/16 / 34</td><td style="border:1px solid #2d3450;padding:8px;">중등도~중증 · 기립 평가 불가</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>ROM 상지</b></td><td style="border:1px solid #2d3450;padding:8px;">대부분 정상</td><td style="border:1px solid #2d3450;padding:8px;">MMT F~F+ (3/5)</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>ROM 하지</b></td><td style="border:1px solid #2d3450;padding:8px;">전반 약화 P~F+</td><td style="border:1px solid #2d3450;padding:8px;">Lt.Hip LOM · Rt.Knee 30° 구축</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>MAS · 병리반사</b></td><td style="border:1px solid #2d3450;padding:8px;">G0 · 모두 음성</td><td style="border:1px solid #2d3450;padding:8px;">경직 X · 척수반사 정상</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>VAS (통증)</b></td><td style="border:1px solid #2d3450;padding:8px;">Rt.Knee 6 / Lt.Hip 7</td><td style="border:1px solid #2d3450;padding:8px;">중등도 통증 · Motivation Bad</td></tr>
+</table>
+<h3 style="margin-top:20px;">🟣 Problem List 5</h3>
+<p style="font-size:0.9em;">① 인지 ↓ &nbsp;&nbsp; ② 통증 (Hip·Knee) &nbsp;&nbsp; ③ 하지 약화 &nbsp;&nbsp; ④ 구축 (Rt.Knee 30°) &nbsp;&nbsp; ⑤ 균형 ↓ (BBS 0)</p>
+<p style="font-size:0.85em;color:#888;">💡 환자: 이OO · 59세 F · TBI d/t 교통사고 · Quadriplegia. 통합 재활 계획 필수.</p>
+`
+    }]
+  }];
 
 const carState = {};
 

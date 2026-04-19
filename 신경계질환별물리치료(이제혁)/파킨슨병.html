@@ -68,6 +68,7 @@ tr:nth-child(even) td{background:var(--bg3)}
   <button class="ch-btn" onclick="switchChapter(3,this)">🫀 부가·비운동 증상</button>
   <button class="ch-btn" onclick="switchChapter(4,this)">📋 평가도구</button>
   <button class="ch-btn" onclick="switchChapter(5,this)">💊 중재·치료</button>
+  <button class="ch-btn" onclick="switchChapter(6,this)">📊 종합표</button>
 </nav>
 
 <div class="layout">
@@ -1310,7 +1311,41 @@ const CHAPTERS = [
 <p> 단점: 시술 필요, 튜브가 빠지거나 감염 발생</p>` }
     ]
   }
-];
+,
+  {
+    title: "📊 파킨슨 종합표",
+    sub: "4대 증상 + Hoehn-Yahr 5단계 + 비특이 분류",
+    imgs: [],
+    tabs: [{
+      label: "종합표",
+      cards: [
+        { icon:"📊", title:"파킨슨 종합표", desc:"4대 증상 + Hoehn-Yahr 5단계 + MSA/PSP/CBS/DLB", tag:"종합" }
+      ],
+      detail: `
+<h3>📊 4대 증상 + Hoehn-Yahr 5단계 + 비특이 분류</h3>
+<table style="width:100%;border-collapse:collapse;font-size:0.85rem;margin-top:12px;">
+  <tr style="background:rgba(251,146,60,0.20);"><th style="border:1px solid #2d3450;padding:8px;text-align:left;">항목</th><th style="border:1px solid #2d3450;padding:8px;text-align:left;">내용</th><th style="border:1px solid #2d3450;padding:8px;text-align:left;">특징</th></tr>
+  <tr style="background:rgba(251,146,60,0.10);"><td colspan="3" style="border:1px solid #2d3450;padding:6px 8px;font-weight:700;color:#fb923c;">🟠 4대 핵심 증상</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>① 안정시 떨림</b></td><td style="border:1px solid #2d3450;padding:8px;">환자 50% · 손에서 시작</td><td style="border:1px solid #2d3450;padding:8px;">Pill rolling · 수의운동 시 사라짐</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>② 경축 (Rigidity)</b></td><td style="border:1px solid #2d3450;padding:8px;">톱니바퀴형 vs 납파이프형</td><td style="border:1px solid #2d3450;padding:8px;">관절가동범위 제한</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>③ 운동못함증·운동완만증</b></td><td style="border:1px solid #2d3450;padding:8px;">akinesia / bradykinesia</td><td style="border:1px solid #2d3450;padding:8px;">운동 계획 결함 · freezing</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>④ 자세 불안정성</b></td><td style="border:1px solid #2d3450;padding:8px;">고릴라 자세 · 보호반사 소실</td><td style="border:1px solid #2d3450;padding:8px;">낙상 위험 · 몸통폄근 약화</td></tr>
+  <tr style="background:rgba(167,139,250,0.10);"><td colspan="3" style="border:1px solid #2d3450;padding:6px 8px;font-weight:700;color:#a78bfa;">🟣 Hoehn-Yahr 5단계</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>Stage 1</b></td><td style="border:1px solid #2d3450;padding:8px;">편측성 (한쪽만 침범)</td><td style="border:1px solid #2d3450;padding:8px;">경미 · 일상생활 영향 미미</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>Stage 2</b></td><td style="border:1px solid #2d3450;padding:8px;">양측성 · 균형 정상</td><td style="border:1px solid #2d3450;padding:8px;">독립 보행 · 자세 약간 변화</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>Stage 3</b></td><td style="border:1px solid #2d3450;padding:8px;">경한 균형 장애 · 자세 반사 손상</td><td style="border:1px solid #2d3450;padding:8px;">독립 ADL 가능 · 보호반사 결함 시작</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>Stage 4</b></td><td style="border:1px solid #2d3450;padding:8px;">심한 장애 · 도움 필요</td><td style="border:1px solid #2d3450;padding:8px;">서기 가능 · 보행 도움 필요</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>Stage 5</b></td><td style="border:1px solid #2d3450;padding:8px;">휠체어/침상 의존</td><td style="border:1px solid #2d3450;padding:8px;">독립 활동 불가능</td></tr>
+  <tr style="background:rgba(56,189,248,0.10);"><td colspan="3" style="border:1px solid #2d3450;padding:6px 8px;font-weight:700;color:#0ea5e9;">🔵 비특이적 파킨슨증 감별</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>MSA</b></td><td style="border:1px solid #2d3450;padding:8px;">다계통 위축증</td><td style="border:1px solid #2d3450;padding:8px;">파킨슨 우세 or 소뇌실조 · 자율신경 장애 · 50대 중반</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>PSP</b></td><td style="border:1px solid #2d3450;padding:8px;">진행 핵상 마비</td><td style="border:1px solid #2d3450;padding:8px;">가장 흔한 비특이 · 초기 자주 넘어짐 · 60대 중반</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>CBS</b></td><td style="border:1px solid #2d3450;padding:8px;">겉질바닥핵증후군</td><td style="border:1px solid #2d3450;padding:8px;">비대칭 운동장애 · 실행증</td></tr>
+  <tr><td style="border:1px solid #2d3450;padding:8px;"><b>DLB</b></td><td style="border:1px solid #2d3450;padding:8px;">레비소체치매</td><td style="border:1px solid #2d3450;padding:8px;">인지장애 + 환시 + 파킨슨증</td></tr>
+</table>
+<p style="font-size:0.85em;color:#888;margin-top:14px;">💡 흑색질 신경세포 소실 → 도파민 부족. 75세 이상 100명당 1명. 가족력 10~15%.</p>
+`
+    }]
+  }];
 
 const carState = {};
 
