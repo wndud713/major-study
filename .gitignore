@@ -21,6 +21,15 @@ Thumbs.db
 *.log
 /tmp/
 
+# 정리된 폴더 (작업 임시 + archive)
+_scratch/
+_archive/
+**/.v1-archive/
+
+# 임시 텍스트 추출
+pdf_text.txt
+*.txt.tmp
+
 # 복원 백업
 *.master-backup
 *.before-restore
