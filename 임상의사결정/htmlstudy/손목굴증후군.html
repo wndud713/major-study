@@ -56,7 +56,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 .carousel-nav:hover{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 35%,transparent)}
 .carousel-nav.prev{left:8px}
 .carousel-nav.next{right:8px}
-.carousel-thumbs{flex-shrink:0;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;border-top:1px solid var(--border);background:#0d0f14}
+.carousel-thumbs{flex-shrink:0;display:flex;gap:6px;padding:8px 14px;overflow-x:auto;border-top:1px solid var(--border);background:#0d0f14}
 .carousel-thumb{width:64px;height:48px;object-fit:cover;border-radius:4px;border:2px solid transparent;cursor:pointer;flex-shrink:0;opacity:.65;transition:all .18s}
 .carousel-thumb.active{border-color:var(--ch-accent,#38bdf8);opacity:1}
 .carousel-label{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);color:var(--text);font-size:11px;padding:3px 10px;border-radius:10px;white-space:nowrap;pointer-events:none}
@@ -102,8 +102,8 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 .tag.red{color:var(--red);border-color:rgba(248,113,113,.3)}
 .tag.yellow{color:var(--yellow);border-color:rgba(251,191,36,.3)}
 .detail-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:6px}
-.detail-table th{background:var(--bg4);color:var(--ch-accent,#38bdf8);padding:6px 8px;text-align:left;font-weight:600;border-bottom:1px solid var(--border)}
-.detail-table td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.detail-table th{background:var(--bg4);color:var(--ch-accent,#38bdf8);padding:6px 14px;text-align:left;font-weight:600;border-bottom:1px solid var(--border)}
+.detail-table td{padding:6px 14px;border-bottom:1px solid var(--border);vertical-align:top}
 .detail-table tr:last-child td{border-bottom:none}
 .detail-table tr:hover td{background:var(--bg3)}
 .tip-box{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 8%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#38bdf8) 25%,transparent);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}
@@ -158,6 +158,27 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
   .lightbox{left:0;top:44px}
   .ch-header p{display:none}
 }
+
+.card-expand-wrap{display:none;background:var(--bg2);border-left:3px solid var(--ch-accent,#38bdf8);border-radius:6px;padding:18px 22px;margin:4px 16px 14px 16px;font-size:0.92rem;line-height:1.7;animation:fadeDown .25s ease}
+.card-expand-wrap h2{font-size:1.05rem;color:var(--ch-accent,#38bdf8);margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.card-expand-wrap h3{font-size:0.95rem;color:var(--ch-accent,#38bdf8);background:rgba(56,189,248,0.12);padding:6px 12px;border-radius:4px;margin:14px 0 8px;font-weight:600}
+.card-expand-wrap h4{font-size:0.88rem;color:var(--text-dim);margin:10px 0 4px}
+.card-expand-wrap p{margin:6px 0;color:var(--text-dim)}
+.card-expand-wrap ul{margin:6px 0;padding-left:20px}
+.card-expand-wrap li{margin:3px 0;color:var(--text-dim)}
+.card-expand-wrap .detail-section{margin-bottom:14px}
+.card-expand-wrap .detail-item{padding:6px 14px;margin:4px 0;border-radius:4px;background:rgba(255,255,255,0.03)}
+.card-expand-wrap .detail-item.accent{border-left:2px solid var(--ch-accent,#38bdf8)}
+.card-expand-wrap .detail-item.blue{border-left:2px solid #38bdf8}
+.card-expand-wrap .detail-item.green{border-left:2px solid #34d399}
+.card-expand-wrap .detail-item.yellow{border-left:2px solid #fbbf24}
+.card-expand-wrap .detail-item.red{border-left:2px solid #f87171}
+.card-expand-wrap .detail-table{width:100%;border-collapse:collapse;margin:8px 0;font-size:0.85rem}
+.card-expand-wrap .detail-table th{background:var(--bg3);padding:6px 14px;text-align:left;border:1px solid var(--border)}
+.card-expand-wrap .detail-table td{padding:6px 14px;border:1px solid var(--border)}
+.card-expand-wrap .tip-box{background:rgba(56,189,248,0.10);border-left:3px solid #38bdf8;padding:8px 14px;border-radius:4px;margin-top:10px;font-size:0.88em}
+.card.expanded{border-color:var(--ch-accent,#38bdf8);background:var(--bg3)}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -198,53 +219,53 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         <!-- 탭 1: 개요 및 해부 -->
         <div class="tab-content active" id="ch1-tab-overview">
           <div class="section-title">손목굴 증후군 기본 개요</div>
-          <div class="card" onclick="openDetail('ch1','cts_def')">
+          <div class="card" onclick="toggleCardExpand(this,'ch1','cts_def')">
             <div class="card-body">
               <div class="card-title">CTS 정의 및 원인</div>
               <div class="card-sub">정중신경(Median nerve) 압박 · 손목굴(Carpal tunnel) 내부</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','anatomy')">
+            </div>
+          <div class="card-expand-wrap" data-key="cts_def"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','anatomy')">
             <div class="card-body">
               <div class="card-title">해부학적 구조</div>
               <div class="card-sub">손목뼈 + 가로손목인대 → 터널 형성<br>정중신경 + 굴근 힘줄 통과</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','median_nerve')">
+            </div>
+          <div class="card-expand-wrap" data-key="anatomy"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','median_nerve')">
             <div class="card-body">
               <div class="card-title">정중신경 (Median Nerve)</div>
               <div class="card-sub">지배 영역: 엄지 · 검지 · 중지 · 손바닥 요측</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
+            </div>
+          <div class="card-expand-wrap" data-key="median_nerve"></div>
         </div>
 
         <!-- 탭 2: 증상 -->
         <div class="tab-content" id="ch1-tab-symptoms">
           <div class="section-title">손목굴 증후군 증상</div>
-          <div class="card" onclick="openDetail('ch1','sensory_sym')">
+          <div class="card" onclick="toggleCardExpand(this,'ch1','sensory_sym')">
             <div class="card-body">
               <div class="card-title">감각 증상</div>
               <div class="card-sub">엄지 · 검지 · 중지 저림 · 감각 저하<br>밤에 통증 심화</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','motor_sym')">
+            </div>
+          <div class="card-expand-wrap" data-key="sensory_sym"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','motor_sym')">
             <div class="card-body">
               <div class="card-title">운동 증상</div>
               <div class="card-sub">엄지두덩근(Thenar eminence) 위축<br>쥐는 힘 약화</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','night_pain')">
+            </div>
+          <div class="card-expand-wrap" data-key="motor_sym"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','night_pain')">
             <div class="card-body">
               <div class="card-title">야간 통증 특징</div>
               <div class="card-sub">밤에 심해짐 · 손목 굽힘 자세 수면 시 악화</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
+            </div>
+          <div class="card-expand-wrap" data-key="night_pain"></div>
         </div>
 
         <!-- 탭 3: 검사 및 측정 -->
@@ -311,100 +332,100 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
             </div>
           </div>
 
-          <div class="card" onclick="openDetail('ch1','tinel')">
+          <div class="card" onclick="toggleCardExpand(this,'ch1','tinel')">
             <div class="card-body">
               <div class="card-title">Tinel's Sign Test</div>
               <div class="card-sub">손목굴 위 두드리기 → 해당 영역 저림 = 양성</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','phalen')">
+            </div>
+          <div class="card-expand-wrap" data-key="tinel"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','phalen')">
             <div class="card-body">
               <div class="card-title">Phalen's Test</div>
               <div class="card-sub">손목 최대 굽힘 1분 유지 → 증상 악화 = 양성</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','pain_assessment')">
+            </div>
+          <div class="card-expand-wrap" data-key="phalen"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','pain_assessment')">
             <div class="card-body">
               <div class="card-title">통증 평가 상세</div>
               <div class="card-sub">VAS · 위치 · 유발자세 · 야간 각성 빈도</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','froment')">
+            </div>
+          <div class="card-expand-wrap" data-key="pain_assessment"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','froment')">
             <div class="card-body">
               <div class="card-title">Froment's Sign</div>
               <div class="card-sub">엄지+검지 종이 잡기 → 엄지 IP 굽힘 = 양성 (척골신경 마비)</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','other_tests')">
+            </div>
+          <div class="card-expand-wrap" data-key="froment"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','other_tests')">
             <div class="card-body">
               <div class="card-title">기타 검사</div>
               <div class="card-sub">MMT · 감각검사 · 통증평가</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
+            </div>
+          <div class="card-expand-wrap" data-key="other_tests"></div>
         </div>
 
         <!-- 탭 4: SOAP 사례 -->
         <div class="tab-content" id="ch1-tab-soap">
           <div class="section-title">환자 사례 — 51세 여성 / 59세 여성</div>
-          <div class="card" onclick="openDetail('ch1','case51_s')">
+          <div class="card" onclick="toggleCardExpand(this,'ch1','case51_s')">
             <div class="card-body">
               <div class="card-title">사례 1 (51세 여성) — S: Subjective</div>
               <div class="card-sub">엄지·검지·중지 저림 및 통증 호소<br>야간 통증으로 수면 방해</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','case51_o')">
+            </div>
+          <div class="card-expand-wrap" data-key="case51_s"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','case51_o')">
             <div class="card-body">
               <div class="card-title">사례 1 (51세 여성) — O: Objective</div>
               <div class="card-sub">MMT · 감각 · 통증 · Tinel's sign · Phalen's test</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','case51_ap')">
+            </div>
+          <div class="card-expand-wrap" data-key="case51_o"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','case51_ap')">
             <div class="card-body">
               <div class="card-title">사례 1 (51세 여성) — A/P: 평가 및 계획</div>
               <div class="card-sub">CTS 진단 · Median nerve gliding 중심 치료</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','case59')">
+            </div>
+          <div class="card-expand-wrap" data-key="case51_ap"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','case59')">
             <div class="card-body">
               <div class="card-title">사례 2 (59세 여성) — 임상 추론</div>
               <div class="card-sub">손 쥐는 힘 약화 · 엄지·검지·중지 감각 저하 → CTS 의심</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
+            </div>
+          <div class="card-expand-wrap" data-key="case59"></div>
         </div>
 
         <!-- 탭 5: 치료 -->
         <div class="tab-content" id="ch1-tab-treatment">
           <div class="section-title">치료 및 중재</div>
-          <div class="card" onclick="openDetail('ch1','nerve_gliding')">
+          <div class="card" onclick="toggleCardExpand(this,'ch1','nerve_gliding')">
             <div class="card-body">
               <div class="card-title">Median Nerve Gliding (정중신경 활주 운동)</div>
               <div class="card-sub">신경 가동성 회복 · 유착 방지 · 6단계 운동</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','splint')">
+            </div>
+          <div class="card-expand-wrap" data-key="nerve_gliding"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','splint')">
             <div class="card-body">
               <div class="card-title">보조기 (Splint) 착용</div>
               <div class="card-sub">손목 중립위 유지 · 야간 착용 권장</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','physio_tx')">
+            </div>
+          <div class="card-expand-wrap" data-key="splint"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','physio_tx')">
             <div class="card-body">
               <div class="card-title">물리치료 중재</div>
               <div class="card-sub">초음파 · TENS · 온열치료 · 관절가동술</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
+            </div>
+          <div class="card-expand-wrap" data-key="physio_tx"></div>
         </div>
 
         <!-- 탭 6: 국시문제 -->
@@ -417,8 +438,8 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
             </div>
             <div id="cts-summary-tbl" style="display:none;padding:8px 0 20px;">
               <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:10px;">
-                <table class="detail-table" style="min-width:740px;font-size:0.78rem;border-collapse:collapse;">
-                  <tr><th>항목</th><th>내용</th><th>핵심</th></tr><tr><td><tr style="background:rgba(56,189,248,0.20)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 8px;">🔵 해부 + 증상</td></tr><tr><td><b>해부</b></td><td>손목뼈 + 가로손목인대</td><td>터널 안 정중신경 + 9 힘줄</td></tr><tr><td><b>정중신경 영역</b></td><td>엄지·검지·중지·약지 요측</td><td>감각 + 엄지두덩근 운동</td></tr><tr><td><b>감각 증상</b></td><td>저림 · 감각 저하</td><td>엄지·검지·중지 끝</td></tr><tr><td><b>운동 증상</b></td><td>엄지두덩근 위축 (Thenar atrophy)</td><td>엄지 맞섬 약화</td></tr><tr><td><b>야간 통증</b></td><td>밤에 심해짐</td><td>손목 굽힘 자세 수면 시 악화</td></tr><tr><td><b>Flick sign</b></td><td>손 흔들면 호전</td><td>진단 보조</td></tr><tr><td><tr style="background:rgba(167,139,250,0.20)"><td colspan="3" style="font-weight:700;color:#a78bfa;padding:6px 8px;">🟣 진단 검사 4</td></tr><tr><td><b>Tinel sign</b></td><td>손목굴 위 두드리기</td><td>해당 영역 저림 = 양성</td></tr><tr><td><b>Phalen test</b></td><td>손목 최대 굽힘 1분</td><td>증상 악화 = 양성</td></tr><tr><td><b>Reverse Phalen</b></td><td>손목 최대 폄 1분</td><td>증상 악화 = 양성</td></tr><tr><td><b>Froment sign</b></td><td>엄지·검지 종이 잡기</td><td>엄지 IP 굽힘 = 자신경 손상 (CTS 감별)</td></tr><tr><td><tr style="background:rgba(251,146,60,0.20)"><td colspan="3" style="font-weight:700;color:#fb923c;padding:6px 8px;">🟠 치료 단계</td></tr><tr><td><b>① 보존</b></td><td>Splint · NSAID · 활동 변경</td><td>야간 손목 부목 (중립 위치)</td></tr><tr><td><b>② 물리치료</b></td><td>신경 가동화 · 초음파 · 스트레칭</td><td>Median Nerve Gliding</td></tr><tr><td><b>③ 주사</b></td><td>스테로이드 · LIPUS</td><td>단기 효과</td></tr><tr><td><b>④ 수술</b></td><td>가로손목인대 절개 (Carpal Tunnel Release)</td><td>심한 신경 손상 시</td></tr><tr><td><tr style="background:rgba(255,221,87,0.20)"><td colspan="3" style="font-weight:700;color:#eab308;padding:6px 8px;">🟡 위험 요인</td></tr><tr><td colspan="3" style="font-size:0.85em;padding:6px 10px;">반복 손 사용 · 진동 · 차가운 환경 · 임신 · 갑상선 기능저하 · 당뇨 · 류마티스</td></tr></td></tr><tr style="background:rgba(56,189,248,0.13)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 8px;font-size:0.85em;">💡 정중신경 압박 — 9 힘줄 + 정중신경이 좁은 터널 통과. 부종/긴장 시 신경 손상.</td></tr>
+                <table class="detail-table" style="min-width:740px;font-size:0.76rem;border-collapse:collapse;">
+                  <tr><th>항목</th><th>내용</th><th>핵심</th></tr><tr><td><tr style="background:rgba(56,189,248,0.20)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 14px;">🔵 해부 + 증상</td></tr><tr><td><b>해부</b></td><td>손목뼈 + 가로손목인대</td><td>터널 안 정중신경 + 9 힘줄</td></tr><tr><td><b>정중신경 영역</b></td><td>엄지·검지·중지·약지 요측</td><td>감각 + 엄지두덩근 운동</td></tr><tr><td><b>감각 증상</b></td><td>저림 · 감각 저하</td><td>엄지·검지·중지 끝</td></tr><tr><td><b>운동 증상</b></td><td>엄지두덩근 위축 (Thenar atrophy)</td><td>엄지 맞섬 약화</td></tr><tr><td><b>야간 통증</b></td><td>밤에 심해짐</td><td>손목 굽힘 자세 수면 시 악화</td></tr><tr><td><b>Flick sign</b></td><td>손 흔들면 호전</td><td>진단 보조</td></tr><tr><td><tr style="background:rgba(167,139,250,0.20)"><td colspan="3" style="font-weight:700;color:#a78bfa;padding:6px 14px;">🟣 진단 검사 4</td></tr><tr><td><b>Tinel sign</b></td><td>손목굴 위 두드리기</td><td>해당 영역 저림 = 양성</td></tr><tr><td><b>Phalen test</b></td><td>손목 최대 굽힘 1분</td><td>증상 악화 = 양성</td></tr><tr><td><b>Reverse Phalen</b></td><td>손목 최대 폄 1분</td><td>증상 악화 = 양성</td></tr><tr><td><b>Froment sign</b></td><td>엄지·검지 종이 잡기</td><td>엄지 IP 굽힘 = 자신경 손상 (CTS 감별)</td></tr><tr><td><tr style="background:rgba(251,146,60,0.20)"><td colspan="3" style="font-weight:700;color:#fb923c;padding:6px 14px;">🟠 치료 단계</td></tr><tr><td><b>① 보존</b></td><td>Splint · NSAID · 활동 변경</td><td>야간 손목 부목 (중립 위치)</td></tr><tr><td><b>② 물리치료</b></td><td>신경 가동화 · 초음파 · 스트레칭</td><td>Median Nerve Gliding</td></tr><tr><td><b>③ 주사</b></td><td>스테로이드 · LIPUS</td><td>단기 효과</td></tr><tr><td><b>④ 수술</b></td><td>가로손목인대 절개 (Carpal Tunnel Release)</td><td>심한 신경 손상 시</td></tr><tr><td><tr style="background:rgba(255,221,87,0.20)"><td colspan="3" style="font-weight:700;color:#eab308;padding:6px 14px;">🟡 위험 요인</td></tr><tr><td colspan="3" style="font-size:0.85em;padding:6px 14px;">반복 손 사용 · 진동 · 차가운 환경 · 임신 · 갑상선 기능저하 · 당뇨 · 류마티스</td></tr></td></tr><tr style="background:rgba(56,189,248,0.13)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 14px;font-size:0.85em;">💡 정중신경 압박 — 9 힘줄 + 정중신경이 좁은 터널 통과. 부종/긴장 시 신경 손상.</td></tr>
                 </table>
               </div>
             </div>
@@ -1108,6 +1129,30 @@ allDetailData['ch1'] = {
   <div class="detail-item green"><b>2019 9번</b> — ② 손목굴증후군</div>
 </div>`
 };
+function toggleCardExpand(cardEl, chid, key) {
+  const wrap = cardEl.nextElementSibling;
+  if (!wrap || !wrap.classList.contains("card-expand-wrap")) return;
+  const panel = document.getElementById(chid + "-detail-panel");
+  const inlineOpen = wrap.style.display === "block";
+  const sidebarOpen = panel && panel.classList.contains("open") && panel.dataset.currentKey === key;
+  if (!inlineOpen && !sidebarOpen) {
+    if (!wrap.dataset.loaded) {
+      wrap.innerHTML = (allDetailData[chid] || {})[key] || "<p>내용 준비 중</p>";
+      wrap.dataset.loaded = "1";
+    }
+    wrap.style.display = "block";
+    cardEl.classList.add("expanded");
+  } else if (inlineOpen && !sidebarOpen) {
+    wrap.style.display = "none";
+    cardEl.classList.remove("expanded");
+    openDetail(chid, key);
+    if (panel) panel.dataset.currentKey = key;
+  } else if (sidebarOpen) {
+    panel.classList.remove("open");
+  }
+}
+function moveToSidebar(cardEl, chid, key) { toggleCardExpand(cardEl, chid, key); }
+
 </script>
 </body>
 </html>
