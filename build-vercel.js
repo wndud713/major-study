@@ -347,13 +347,18 @@ function buildMainIndex() {
 function buildVercelConfig() {
   console.log('\n=== Phase D: vercel.json 생성 ===');
   const vercelJson = {
+    buildCommand: null,
+    outputDirectory: '.',
+    framework: null,
     cleanUrls: false,
     trailingSlash: false,
     headers: [
       {
         source: '/chapters/(.*)',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, max-age=0' },
+          { key: 'Pragma', value: 'no-cache' },
+          { key: 'Expires', value: '0' },
           { key: 'Content-Type', value: 'text/html; charset=utf-8' }
         ]
       },
