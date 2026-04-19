@@ -360,82 +360,137 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         >
           <div class="section-title">국가고시 기출 문제</div>
 
-          <div class="card" onclick="toggleCardExpand(this,'ch1','q2024_63')">
+          <div class="card" onclick="toggleCardExpand(this,'ch1','exam_answers')" style="background:linear-gradient(135deg,rgba(56,189,248,0.12),rgba(167,139,250,0.12));border:1.5px solid var(--ch-accent);">
             <div class="card-body">
-              <div class="card-title">2024 국가고시 63번</div>
-              <div class="card-sub">관절운동과 각도계 운동팔 배치 — 무릎관절폄의 운동팔</div>
+              <div class="card-title">🎯 국시문제 답 모음</div>
+              <div class="card-sub">9문항 전체 정답+해설 한눈에 보기</div>
             </div>
+            <button class="expand-btn">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="q2024_63"></div>
-          <hr class="q-divider">
+          <div class="card-expand-wrap" data-key="exam_answers"></div>
 
-          <div class="card" onclick="toggleCardExpand(this,'ch1','q2025_62')">
+          <div class="card" onclick="toggleCardExpand(this,'ch1','exam_answer_nums')" style="background:linear-gradient(135deg,rgba(52,211,153,0.12),rgba(79,209,197,0.12));border:1.5px solid var(--ch-accent);margin-top:10px;">
             <div class="card-body">
-              <div class="card-title">2025 국가고시 62번</div>
-              <div class="card-sub">아래팔 뒤침(supination) ROM 측정 시 각도계 위치</div>
+              <div class="card-title">🔢 정답 번호만 보기</div>
+              <div class="card-sub">문제 번호 + 정답(①~⑤)만 간단히</div>
             </div>
+            <button class="expand-btn">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="q2025_62"></div>
-          <hr class="q-divider">
+          <div class="card-expand-wrap" data-key="exam_answer_nums"></div>
 
-          <div class="card" onclick="toggleCardExpand(this,'ch1','q2025_63')">
-            <div class="card-body">
-              <div class="card-title">2025 국가고시 63번</div>
-              <div class="card-sub">어깨 90° 벌림, 팔꿉 90° 굽힘 · 축: 팔꿈치머리 · 운동팔: 자뼈 붓돌기 정중선</div>
-            </div>
-          </div>
-          <div class="card-expand-wrap" data-key="q2025_63"></div>
           <hr class="q-divider">
-
-          <div class="card" onclick="toggleCardExpand(this,'ch1','q2025_64')">
-            <div class="card-body">
-              <div class="card-title">2025 국가고시 64번</div>
-              <div class="card-sub">엉덩관절 벌림 ROM 측정 관련 설명 — 고정팔 위치</div>
+          <div class="exam-question-block" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px;">
+            <div style="font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:8px;">2024 국가고시 63번</div>
+            <div style="font-size:12.5px;color:var(--text);line-height:1.65;margin-bottom:10px;"><b>Q.</b> 관절의 운동과 각도계의 운동팔 배치가 옳게 연결된 것은?</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.8;padding-left:4px;">
+              ① 목돌림 – 코끝을 따라 평행 → 오답<br>
+              ③ 손목관절 노쪽치우침 – 둘째 손허리뼈 정중선 → 오답 (3번째)<br>
+              ④ 엉덩관절 모음 – 양쪽 ASIS 잇는 선과 평행 → 오답 (고정팔 설명)<br>
+              ⑤ 노자관절 엎침 – 손바닥쪽 붓돌기선 → 오답<br>
             </div>
+            <div style="margin-top:8px;font-size:11.5px;color:var(--text-dim);background:rgba(56,189,248,0.08);border-left:3px solid #38bdf8;padding:6px 10px;border-radius:4px;">💡 </div>
           </div>
-          <div class="card-expand-wrap" data-key="q2025_64"></div>
+          <hr class="q-divider">
+          <div class="exam-question-block" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px;">
+            <div style="font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:8px;">2025 국가고시 62번</div>
+            <div style="font-size:12.5px;color:var(--text);line-height:1.65;margin-bottom:10px;"><b>Q.</b> 아래팔 뒤침(supination) ROM 측정 시 각도계의 위치는?</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.8;padding-left:4px;">
+              ① 노뼈 붓돌기 손등면 → 오답<br>
+              ② 자뼈 붓돌기 손등면 → 오답<br>
+              ③ 노뼈 붓돌기 손바닥면 → 오답<br>
+              ④ 자뼈 붓돌기 손바닥면 <b style="color:#34d399;">✓</b><br>
+              ⑤ 손허리손가락관절 손등면 → 오답<br>
+            </div>
+            <div style="margin-top:8px;font-size:11.5px;color:var(--text-dim);background:rgba(56,189,248,0.08);border-left:3px solid #38bdf8;padding:6px 10px;border-radius:4px;">💡 </div>
+          </div>
+          <hr class="q-divider">
+          <div class="exam-question-block" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px;">
+            <div style="font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:8px;">2025 국가고시 63번</div>
+            <div style="font-size:12.5px;color:var(--text);line-height:1.65;margin-bottom:10px;"><b>Q.</b> 시작자세: 어깨관절 90° 벌림, 팔꿉관절 90° 굽힘 상태로 앉음 / 각도계 축: 팔꿈치 머리(olecranon) / 고정팔: 바닥과 수직 / 운동팔: 자뼈 붓돌기 정중선과 평행</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.8;padding-left:4px;">
+              ① 폄 ② 모음 ③ 굽힘 ④ 수평모음 ⑤ 안쪽돌림 <b style="color:#34d399;">✓</b><br>
+            </div>
+            <div style="margin-top:8px;font-size:11.5px;color:var(--text-dim);background:rgba(56,189,248,0.08);border-left:3px solid #38bdf8;padding:6px 10px;border-radius:4px;">💡 </div>
+          </div>
+          <hr class="q-divider">
+          <div class="exam-question-block" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px;">
+            <div style="font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:8px;">2025 국가고시 64번</div>
+            <div style="font-size:12.5px;color:var(--text);line-height:1.65;margin-bottom:10px;"><b>Q.</b> 엉덩관절 벌림 ROM 측정 관련 설명으로 옳은 것은?</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.8;padding-left:4px;">
+              ① 축은 넙다리 큰돌기이다 → 오답 (축은 ASIS)<br>
+              ② 정상ROM은 25도이다 → 오답 (40-55°)<br>
+              ③ 안쪽돌림 자세에서 측정한다 → 오답 (중립위)<br>
+              ④ 검사대에 걸터앉은 자세이다 → 오답 (바로 누운/옆으로 누운 자세)<br>
+              ⑤ 고정팔은 양쪽 앞위 엉덩뼈 가시(ASIS)를 잇는 가상의 연결선이다 <b style="color:#34d399;">✓</b><br>
+            </div>
+            <div style="margin-top:8px;font-size:11.5px;color:var(--text-dim);background:rgba(56,189,248,0.08);border-left:3px solid #38bdf8;padding:6px 10px;border-radius:4px;">💡 </div>
+          </div>
+          <hr class="q-divider">
+          <div class="exam-question-block" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px;">
+            <div style="font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:8px;">2020 국가고시 62번</div>
+            <div style="font-size:12.5px;color:var(--text);line-height:1.65;margin-bottom:10px;"><b>Q.</b> 어깨관절 굽힘의 관절운동범위 측정 시 각도계 축의 위치는?</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.8;padding-left:4px;">
+              ① 어깨뼈가시<br>
+              ② 복장뼈 앞면<br>
+              ③ 위팔뼈큰돌기 <b style="color:#34d399;">✓</b><br>
+              ④ 팔꿈치머리돌기<br>
+              ⑤ 봉우리돌기 가쪽면<br>
+            </div>
+            <div style="margin-top:8px;font-size:11.5px;color:var(--text-dim);background:rgba(56,189,248,0.08);border-left:3px solid #38bdf8;padding:6px 10px;border-radius:4px;">💡 어깨관절 굽힘 각도계 축 = 위팔뼈 큰돌기(greater tubercle)</div>
+          </div>
+          <hr class="q-divider">
+          <div class="exam-question-block" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px;">
+            <div style="font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:8px;">2021 국가고시 62번</div>
+            <div style="font-size:12.5px;color:var(--text);line-height:1.65;margin-bottom:10px;"><b>Q.</b> 엉덩관절 벌림의 관절운동범위 측정 시 각도계 축의 위치는?</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.8;padding-left:4px;">
+              ① 큰돌기<br>
+              ② 궁둥뼈가시<br>
+              ③ 위앞엉덩뼈가시 <b style="color:#34d399;">✓</b><br>
+              ④ 넙다리뼈 가쪽위관절융기<br>
+              ⑤ 넙다리뼈 안쪽위관절융기<br>
+            </div>
+            <div style="margin-top:8px;font-size:11.5px;color:var(--text-dim);background:rgba(56,189,248,0.08);border-left:3px solid #38bdf8;padding:6px 10px;border-radius:4px;">💡 엉덩관절 벌림 각도계 축 = ASIS(위앞엉덩뼈가시)</div>
+          </div>
+          <hr class="q-divider">
+          <div class="exam-question-block" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px;">
+            <div style="font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:8px;">2021 국가고시 64번</div>
+            <div style="font-size:12.5px;color:var(--text);line-height:1.65;margin-bottom:10px;"><b>Q.</b> 시작자세: 어깨관절 90° 벌림+팔꿉관절 90° 굽힘, 축: 자뼈 팔꿈치머리, 고정팔: 지면과 수직, 운동팔: 자뼈 정중선 평행. 측정 움직임은?</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.8;padding-left:4px;">
+              ① 폄<br>
+              ② 벌림<br>
+              ③ 엎침<br>
+              ④ 가쪽돌림 <b style="color:#34d399;">✓</b><br>
+              ⑤ 수평벌림<br>
+            </div>
+            <div style="margin-top:8px;font-size:11.5px;color:var(--text-dim);background:rgba(56,189,248,0.08);border-left:3px solid #38bdf8;padding:6px 10px;border-radius:4px;">💡 해당 세팅은 어깨관절 가쪽/안쪽돌림 측정 자세</div>
+          </div>
+          <hr class="q-divider">
+          <div class="exam-question-block" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px;">
+            <div style="font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:8px;">2022 국가고시 62번</div>
+            <div style="font-size:12.5px;color:var(--text);line-height:1.65;margin-bottom:10px;"><b>Q.</b> 어깨관절 벌림 관절운동범위 측정 시 각도계 축의 위치는?</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.8;padding-left:4px;">
+              ① 부리돌기<br>
+              ② 어깨뼈가시<br>
+              ③ 팔꿈치머리<br>
+              ④ 어깨뼈봉우리 <b style="color:#34d399;">✓</b><br>
+              ⑤ 결절사이고랑<br>
+            </div>
+            <div style="margin-top:8px;font-size:11.5px;color:var(--text-dim);background:rgba(56,189,248,0.08);border-left:3px solid #38bdf8;padding:6px 10px;border-radius:4px;">💡 어깨관절 벌림 각도계 축 = 앞쪽 어깨뼈봉우리(anterior acromion)</div>
+          </div>
+          <hr class="q-divider">
+          <div class="exam-question-block" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px;">
+            <div style="font-size:13.5px;font-weight:700;color:var(--text-bright);margin-bottom:8px;">2023 국가고시 63번</div>
+            <div style="font-size:12.5px;color:var(--text);line-height:1.65;margin-bottom:10px;"><b>Q.</b> 관절의 움직임과 관절각도계 축의 위치가 바르게 연결된 것은?</div>
+            <div style="font-size:12px;color:var(--text-dim);line-height:1.8;padding-left:4px;">
+              ① 팔꿉관절 폄 - 안쪽위관절융기<br>
+              ② 손목관절 노쪽치우침 - 알머리뼈 <b style="color:#34d399;">✓</b><br>
+              ③ 노자관절 뒤침 - 자뼈 붓돌기 손등면<br>
+              ④ 엉덩관절 안쪽돌림 - 위앞엉덩뼈가시<br>
+              ⑤ 어깨관절 수평벌림 - 팔꿈치머리<br>
+            </div>
+            <div style="margin-top:8px;font-size:11.5px;color:var(--text-dim);background:rgba(56,189,248,0.08);border-left:3px solid #38bdf8;padding:6px 10px;border-radius:4px;">💡 손목관절 노쪽/자쪽치우침 각도계 축 = 알머리뼈(capitate)</div>
+          </div>
         
-          <hr class="q-divider">
-          <div class="card" onclick="toggleCardExpand(this,'ch1','q2020_62')">
-            <div class="card-body">
-              <div class="card-title">2020 국가고시 62번 — 어깨관절 굽힘 각도계 축</div>
-              <div class="card-sub">어깨관절 굽힘의 관절운동범위 측정 시 각도계 축의 위치는?...</div>
-            </div>
-            </div>
-          <div class="card-expand-wrap" data-key="q2020_62"></div>
-          <div class="card-expand-wrap" data-key="q2024_63"></div>
-          <hr class="q-divider">
-          <div class="card" onclick="toggleCardExpand(this,'ch1','q2021_62')">
-            <div class="card-body">
-              <div class="card-title">2021 국가고시 62번 — 엉덩관절 벌림 각도계 축</div>
-              <div class="card-sub">엉덩관절 벌림의 관절운동범위 측정 시 각도계 축의 위치는?...</div>
-            </div>
-            </div>
-          <div class="card-expand-wrap" data-key="q2021_62"></div>
-          <hr class="q-divider">
-          <div class="card" onclick="toggleCardExpand(this,'ch1','q2021_64')">
-            <div class="card-body">
-              <div class="card-title">2021 국가고시 64번 — 어깨관절 움직임 측정 (자세 설명)</div>
-              <div class="card-sub">시작자세: 어깨관절 90° 벌림+팔꿉관절 90° 굽힘, 축: 자뼈 팔꿈치머리, 고정팔: 지면과 수직, 운동팔...</div>
-            </div>
-            </div>
-          <div class="card-expand-wrap" data-key="q2021_64"></div>
-          <hr class="q-divider">
-          <div class="card" onclick="toggleCardExpand(this,'ch1','q2022_62')">
-            <div class="card-body">
-              <div class="card-title">2022 국가고시 62번 — 어깨관절 벌림 각도계 축</div>
-              <div class="card-sub">어깨관절 벌림 관절운동범위 측정 시 각도계 축의 위치는?...</div>
-            </div>
-            </div>
-          <div class="card-expand-wrap" data-key="q2022_62"></div>
-          <hr class="q-divider">
-          <div class="card" onclick="toggleCardExpand(this,'ch1','q2023_63')">
-            <div class="card-body">
-              <div class="card-title">2023 국가고시 63번 — 관절 움직임과 각도계 축 연결</div>
-              <div class="card-sub">관절의 움직임과 관절각도계 축의 위치가 바르게 연결된 것은?...</div>
-            </div>
-            </div>
-          <div class="card-expand-wrap" data-key="q2023_63"></div>
         </div>
 
       </div><!-- /cards-area -->
@@ -874,6 +929,32 @@ allDetailData['ch1'] = {
   <div class="detail-item red">⑤ 어깨관절 수평벌림 - 팔꿈치머리</div>
 </div>
 <div class="tip-box">💡 <b>해설:</b> 손목관절 노쪽/자쪽치우침 각도계 축 = 알머리뼈(capitate)</div>`
+,
+  exam_answers: `<h2>🎯 국시문제 답 모음</h2>
+<div class="detail-section">
+  <div class="detail-item accent"><b>2024 국가고시 63번:</b> ? ?<br><span style="color:var(--text-dim);font-size:0.9em;">💡 </span></div>
+  <div class="detail-item accent"><b>2025 국가고시 62번:</b> ④ 자뼈 붓돌기 손바닥면<br><span style="color:var(--text-dim);font-size:0.9em;">💡 </span></div>
+  <div class="detail-item accent"><b>2025 국가고시 63번:</b> ① 폄 ② 모음 ③ 굽힘 ④ 수평모음 ⑤ 안쪽돌림<br><span style="color:var(--text-dim);font-size:0.9em;">💡 </span></div>
+  <div class="detail-item accent"><b>2025 국가고시 64번:</b> ⑤ 고정팔은 양쪽 앞위 엉덩뼈 가시(ASIS)를 잇는 가상의 연결선이다<br><span style="color:var(--text-dim);font-size:0.9em;">💡 </span></div>
+  <div class="detail-item accent"><b>2020 국가고시 62번:</b> ③ 위팔뼈큰돌기<br><span style="color:var(--text-dim);font-size:0.9em;">💡 어깨관절 굽힘 각도계 축 = 위팔뼈 큰돌기(greater tubercle)</span></div>
+  <div class="detail-item accent"><b>2021 국가고시 62번:</b> ③ 위앞엉덩뼈가시<br><span style="color:var(--text-dim);font-size:0.9em;">💡 엉덩관절 벌림 각도계 축 = ASIS(위앞엉덩뼈가시)</span></div>
+  <div class="detail-item accent"><b>2021 국가고시 64번:</b> ④ 가쪽돌림<br><span style="color:var(--text-dim);font-size:0.9em;">💡 해당 세팅은 어깨관절 가쪽/안쪽돌림 측정 자세</span></div>
+  <div class="detail-item accent"><b>2022 국가고시 62번:</b> ④ 어깨뼈봉우리<br><span style="color:var(--text-dim);font-size:0.9em;">💡 어깨관절 벌림 각도계 축 = 앞쪽 어깨뼈봉우리(anterior acromion)</span></div>
+  <div class="detail-item accent"><b>2023 국가고시 63번:</b> ② 손목관절 노쪽치우침 - 알머리뼈<br><span style="color:var(--text-dim);font-size:0.9em;">💡 손목관절 노쪽/자쪽치우침 각도계 축 = 알머리뼈(capitate)</span></div>
+</div>`,
+  exam_answer_nums: `<h2>🔢 정답 번호 모음</h2>
+<div class="detail-section">
+  <div class="detail-item"><b>2024 국가고시 63번:</b> ?</div>
+  <div class="detail-item"><b>2025 국가고시 62번:</b> ④</div>
+  <div class="detail-item"><b>2025 국가고시 63번:</b> ①</div>
+  <div class="detail-item"><b>2025 국가고시 64번:</b> ⑤</div>
+  <div class="detail-item"><b>2020 국가고시 62번:</b> ③</div>
+  <div class="detail-item"><b>2021 국가고시 62번:</b> ③</div>
+  <div class="detail-item"><b>2021 국가고시 64번:</b> ④</div>
+  <div class="detail-item"><b>2022 국가고시 62번:</b> ④</div>
+  <div class="detail-item"><b>2023 국가고시 63번:</b> ②</div>
+</div>`
+
 };
 function toggleCardExpand(cardEl, chid, key) {
   const wrap = cardEl.nextElementSibling;
