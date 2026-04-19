@@ -305,6 +305,32 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 
         <!-- ── TAB 5: 검사·평가 ── -->
         <div class="tab-content" id="ch1-tab-t5">
+          <div style="grid-column:1/-1;">
+            <div class="card" style="width:100%;box-sizing:border-box;cursor:pointer;"
+              onclick="(function(btn,t){var o=t.style.display!=='none';t.style.display=o?'none':'block';btn.textContent=o?'↗':'↙';})(this.querySelector('.expand-btn'),document.getElementById('cere-tests-tbl'))">
+              <div class="card-body"><div class="card-title">📊 소뇌 검사 종합표 — 협조성·균형·평가척도</div><div class="card-sub">5 협조성 검사 + 균형 검사 + 표준 평가척도</div></div>
+              <button class="expand-btn">↗</button>
+            </div>
+            <div id="cere-tests-tbl" style="display:none;padding:4px 0 10px;">
+              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:4px;">
+                <table class="detail-table" style="min-width:600px;font-size:0.76rem;border-collapse:collapse;">
+                  <tr><th>검사</th><th>방법</th><th>이상 소견</th><th>의의</th></tr>
+                  <tr style="background:rgba(167,139,250,0.18)"><td colspan="4" style="font-weight:700;color:#a78bfa;padding:6px 14px;">🟣 협조성 검사 (5종)</td></tr>
+                  <tr><td><b>① Finger-to-Nose</b></td><td>치료사 손가락 → 본인 코</td><td>측정이상 (Dysmetria) · 의도떨림</td><td>상지 협조성 · 거리 조절</td></tr>
+                  <tr><td><b>② Heel-to-Shin</b></td><td>한쪽 발꿈치로 반대편 정강이 따라 내림</td><td>경로 이탈 · 떨림</td><td>하지 협조성</td></tr>
+                  <tr><td><b>③ 빠른 교대 운동</b><br><span style="color:var(--text-dim);font-size:0.85em;">Diadochokinesis</span></td><td>손바닥 ↔ 손등 빠른 교대</td><td>Dysdiadochokinesia (느림·서툼)</td><td>교대 운동 능력</td></tr>
+                  <tr><td><b>④ Romberg 검사</b></td><td>발 모으고 눈 감기</td><td>흔들림·넘어짐</td><td>고유수용 · 전정 의존도</td></tr>
+                  <tr><td><b>⑤ 단족 직립</b></td><td>한 발로 서기 (눈 뜨고/감고)</td><td>균형 소실</td><td>동적 균형</td></tr>
+                  <tr style="background:rgba(56,189,248,0.18)"><td colspan="4" style="font-weight:700;color:#38bdf8;padding:6px 14px;">🔵 표준 평가척도</td></tr>
+                  <tr><td><b>SARA</b></td><td>8개 항목 (보행·자세·언어 등) — 0~40점</td><td>높을수록 중증</td><td>실조 중증도 평가</td></tr>
+                  <tr><td><b>ICARS</b></td><td>4 영역 19개 항목 — 0~100점</td><td>높을수록 중증</td><td>국제 표준 척도</td></tr>
+                  <tr><td><b>BBS</b></td><td>14개 균형 과제 — 0~56점</td><td>낮을수록 균형 저하</td><td>균형·낙상 위험 평가</td></tr>
+                  <tr style="background:rgba(56,189,248,0.13)"><td colspan="4" style="font-weight:700;color:#0ea5e9;padding:6px 14px;font-size:0.85em;">💡 협조성 검사 = 부위별 손상 추정. SARA·ICARS = 종단 추적·치료 효과 평가.</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
           <div class="section-title">협조성 검사 5가지</div>
           <div class="card" onclick="toggleCardExpand(this,'ch1','coord_tests')">
             <div class="card-body">
@@ -366,6 +392,31 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 
         <!-- ── TAB 7: 운동치료 ── -->
         <div class="tab-content" id="ch1-tab-t7">
+          <div style="grid-column:1/-1;">
+            <div class="card" style="width:100%;box-sizing:border-box;cursor:pointer;"
+              onclick="(function(btn,t){var o=t.style.display!=='none';t.style.display=o?'none':'block';btn.textContent=o?'↗':'↙';})(this.querySelector('.expand-btn'),document.getElementById('cere-tx-tbl'))">
+              <div class="card-body"><div class="card-title">📊 소뇌실조 치료 종합표 — 신경근·균형·기능 + 보조</div><div class="card-sub">3 운동치료 목표 + 보조도구·물리적 인자 통합</div></div>
+              <button class="expand-btn">↗</button>
+            </div>
+            <div id="cere-tx-tbl" style="display:none;padding:4px 0 10px;">
+              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:4px;">
+                <table class="detail-table" style="min-width:600px;font-size:0.76rem;border-collapse:collapse;">
+                  <tr><th>영역</th><th>목표</th><th>주요 기법</th><th>적용 단계</th></tr>
+                  <tr style="background:rgba(167,139,250,0.18)"><td colspan="4" style="font-weight:700;color:#a78bfa;padding:6px 14px;">🟣 운동치료 3 목표</td></tr>
+                  <tr><td><b>① 신경근 재훈련</b></td><td>근활성·협응 회복</td><td>PNF · 율동적 안정화 · 등척성 → 등장성</td><td>초기·중기</td></tr>
+                  <tr><td><b>② 균형 훈련</b></td><td>정적·동적 균형</td><td>BAPS · 미니트램폴린 · 외부 perturbation</td><td>중기·후기</td></tr>
+                  <tr><td><b>③ 기능적 보행</b></td><td>일상 보행·과제 수행</td><td>과제지향 훈련 · 트레드밀 · 장애물 통과</td><td>후기</td></tr>
+                  <tr style="background:rgba(56,189,248,0.18)"><td colspan="4" style="font-weight:700;color:#38bdf8;padding:6px 14px;">🔵 보조도구 · 물리적 인자</td></tr>
+                  <tr><td><b>보조도구</b></td><td>안전·독립 보행</td><td>지팡이 · 보행기 · 휠체어 (중증)</td><td>전 단계</td></tr>
+                  <tr><td><b>가중치</b></td><td>떨림 감소 (일시적)</td><td>손목 가중치 · 배트 가중치</td><td>증상 심할 때</td></tr>
+                  <tr><td><b>전기 자극</b></td><td>비침습 뇌자극</td><td>TMS · tDCS — 소뇌 변조</td><td>실험적·연구</td></tr>
+                  <tr><td><b>한랭치료</b></td><td>경직 동반 시 완화</td><td>아이스팩 · 냉각 마사지</td><td>증상 따라</td></tr>
+                  <tr style="background:rgba(56,189,248,0.13)"><td colspan="4" style="font-weight:700;color:#0ea5e9;padding:6px 14px;font-size:0.85em;">💡 소뇌실조 = 진행성·완치 X. 기능 유지 + 낙상 예방 + 삶의 질 = 핵심 목표.</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
           <div class="section-title">운동치료 3가지 목표</div>
           <div class="card" onclick="toggleCardExpand(this,'ch1','nm_retraining')">
             <div class="card-body">
