@@ -42,7 +42,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 .carousel-nav:hover{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 35%,transparent)}
 .carousel-nav.prev{left:8px}
 .carousel-nav.next{right:8px}
-.carousel-thumbs{flex-shrink:0;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;border-top:1px solid var(--border);background:#0d0f14}
+.carousel-thumbs{flex-shrink:0;display:flex;gap:6px;padding:6px 14px;overflow-x:auto;border-top:1px solid var(--border);background:#0d0f14}
 .carousel-thumb{width:64px;height:48px;object-fit:cover;border-radius:4px;border:2px solid transparent;cursor:pointer;flex-shrink:0;opacity:.65;transition:all .18s}
 .carousel-thumb.active{border-color:var(--ch-accent,#38bdf8);opacity:1}
 .carousel-label{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);color:var(--text);font-size:11px;padding:3px 10px;border-radius:10px;white-space:nowrap;pointer-events:none}
@@ -80,8 +80,8 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 .tag.red{color:var(--red);border-color:rgba(248,113,113,.3)}
 .tag.yellow{color:var(--yellow);border-color:rgba(251,191,36,.3)}
 .detail-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:6px}
-.detail-table th{background:var(--bg4);color:var(--ch-accent,#38bdf8);padding:6px 8px;text-align:left;font-weight:600;border-bottom:1px solid var(--border)}
-.detail-table td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.detail-table th{background:var(--bg4);color:var(--ch-accent,#38bdf8);padding:6px 14px;text-align:left;font-weight:600;border-bottom:1px solid var(--border)}
+.detail-table td{padding:6px 14px;border-bottom:1px solid var(--border);vertical-align:top}
 .detail-table tr:last-child td{border-bottom:none}
 .detail-table tr:hover td{background:var(--bg3)}
 .tip-box{background:color-mix(in srgb,var(--ch-accent,#38bdf8) 8%,transparent);border:1px solid color-mix(in srgb,var(--ch-accent,#38bdf8) 25%,transparent);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--text);margin-top:8px}
@@ -117,6 +117,30 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
   .lightbox{left:0;top:44px}
   .ch-header p{display:none}
 }
+
+.card-expand-wrap{display:none;background:var(--bg2);border-left:3px solid var(--ch-accent,#fb923c);border-radius:6px;padding:18px 22px;margin:4px 16px 14px 16px;font-size:0.92rem;line-height:1.7;animation:fadeDown .25s ease}
+.card-expand-wrap h2{font-size:1.05rem;color:var(--ch-accent,#fb923c);margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.card-expand-wrap h3{font-size:0.95rem;color:var(--ch-accent,#fb923c);background:rgba(251,146,60,0.12);padding:6px 12px;border-radius:4px;margin:14px 0 8px;font-weight:600}
+.card-expand-wrap h4{font-size:0.76rem;color:var(--text-dim);margin:10px 0 4px}
+.card-expand-wrap p{margin:6px 0;color:var(--text-dim)}
+.card-expand-wrap ul{margin:6px 0;padding-left:20px}
+.card-expand-wrap li{margin:3px 0;color:var(--text-dim)}
+.card-expand-wrap .detail-section{margin-bottom:14px}
+.card-expand-wrap .detail-item{padding:6px 14px;margin:4px 0;border-radius:4px;background:rgba(255,255,255,0.03)}
+.card-expand-wrap .detail-item.accent{border-left:2px solid var(--ch-accent,#fb923c)}
+.card-expand-wrap .detail-item.blue{border-left:2px solid #38bdf8}
+.card-expand-wrap .detail-item.green{border-left:2px solid #34d399}
+.card-expand-wrap .detail-item.yellow{border-left:2px solid #fbbf24}
+.card-expand-wrap .detail-item.red{border-left:2px solid #f87171}
+.card-expand-wrap .detail-table{width:100%;border-collapse:collapse;margin:8px 0;font-size:0.76rem}
+.card-expand-wrap .detail-table th{background:var(--bg3);padding:6px 14px;text-align:left;border:1px solid var(--border)}
+.card-expand-wrap .detail-table td{padding:6px 14px;border:1px solid var(--border)}
+.card-expand-wrap .tip-box{background:rgba(56,189,248,0.10);border-left:3px solid #38bdf8;padding:6px 14px;border-radius:4px;margin-top:10px;font-size:0.88em}
+.card-expand-wrap .warn-box{background:rgba(248,113,113,0.10);border-left:3px solid #f87171;padding:6px 14px;border-radius:4px;margin-top:10px;font-size:0.88em}
+.card.expanded{border-color:var(--ch-accent,#fb923c);background:var(--bg3)}
+.card.expanded .expand-btn{transform:rotate(180deg)}
+.expand-btn{transition:transform .2s ease}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -158,133 +182,159 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         <!-- 탭1: 재활팀·철학 -->
         <div class="tab-content active" id="ch1-tab-team">
           <div class="section-title">재활팀 구성 · 역할</div>
-          <div class="card" onclick="openDetail('ch1','team_member')">
+          <div class="card" onclick="toggleCardExpand(this,'ch1','team_member')">
             <div class="card-body">
               <div class="card-title">재활팀 구성원</div>
               <div class="card-sub">선수트레이너 · 팀닥터 · 코치 · 체력전문가 · 선수 · 가족</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','trainer_role')">
+            </div>
+          <div class="card-expand-wrap" data-key="team_member"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','trainer_role')">
             <div class="card-body">
               <div class="card-title">선수트레이너의 역할</div>
               <div class="card-sub">예방 · 평가 · 즉각처치 · 재활관리 · 치료·재활·재조정</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','philosophy')">
+            </div>
+          <div class="card-expand-wrap" data-key="trainer_role"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','philosophy')">
             <div class="card-body">
               <div class="card-title">스포츠 재활의 철학</div>
               <div class="card-sub">가능한 한 빨리 안전하게 팀 복귀 · 공격적 재활</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
+            </div>
+          <div class="card-expand-wrap" data-key="philosophy"></div>
         </div>
 
         <!-- 탭2: 치유·역학·운동사슬 -->
         <div class="tab-content" id="ch1-tab-understand">
           <div class="section-title">이해의 3요소</div>
-          <div class="card" onclick="openDetail('ch1','said')">
+          <div class="card" onclick="toggleCardExpand(this,'ch1','said')">
             <div class="card-body">
               <div class="card-title">치유과정의 이해 — SAID 원리</div>
               <div class="card-sub">Specific Adaptation to Imposed Demand · 강도·빈도·시간·부위</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','mental')">
+            </div>
+          <div class="card-expand-wrap" data-key="said"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','mental')">
             <div class="card-body">
               <div class="card-title">재활의 정신적 측면</div>
               <div class="card-sub">통증역치 · 동기부여 · 시각화 · 자기최면 · 이완기법</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','biomech')">
+            </div>
+          <div class="card-expand-wrap" data-key="mental"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','biomech')">
             <div class="card-body">
               <div class="card-title">상해의 병적 역학</div>
               <div class="card-sub">관절 상해 → 생체역학 문제 → 적응 변화 → 역학 변형</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','kinetic')">
+            </div>
+          <div class="card-expand-wrap" data-key="biomech"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','kinetic')">
             <div class="card-body">
               <div class="card-title">운동사슬 개념</div>
               <div class="card-sub">근육·힘줄·신경·근막·관절·인대 · 길이-장력 관계 · 힘쌍</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
+            </div>
+          <div class="card-expand-wrap" data-key="kinetic"></div>
         </div>
 
         <!-- 탭3: 목표설정·PRICE -->
         <div class="tab-content" id="ch1-tab-goal">
           <div class="section-title">재활 목표 · 초기 처치</div>
-          <div class="card" onclick="openDetail('ch1','goals')">
+          <div class="card" onclick="toggleCardExpand(this,'ch1','goals')">
             <div class="card-body">
               <div class="card-title">재활프로그램 장·단기 목표</div>
               <div class="card-sub">단기 9가지 · 장기: 경기 복귀</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','price')">
+            </div>
+          <div class="card-expand-wrap" data-key="goals"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','price')">
             <div class="card-body">
               <div class="card-title">PRICE 원칙</div>
               <div class="card-sub">Protection · Restricted activity · Ice · Compression · Elevation</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','swelling')">
+            </div>
+          <div class="card-expand-wrap" data-key="price"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','swelling')">
             <div class="card-body">
               <div class="card-title">종창(부종) 관리</div>
               <div class="card-sub">72시간 지속 · 통증↑ · 신경근 억제 · 근수축 약화</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','modality')">
+            </div>
+          <div class="card-expand-wrap" data-key="swelling"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','modality')">
             <div class="card-body">
               <div class="card-title">재활 도구 · 치료적 접근</div>
               <div class="card-sub">물리치료 기기 · 도수치료 · 치료적 운동 · 약물</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
+            </div>
+          <div class="card-expand-wrap" data-key="modality"></div>
         </div>
 
         <!-- 탭4: 기능회복 단계 -->
         <div class="tab-content" id="ch1-tab-rehab">
+          <div style="grid-column:1/-1;">
+            <div class="card" style="width:100%;box-sizing:border-box;cursor:pointer;"
+              onclick="(function(btn,t){var o=t.style.display!=='none';t.style.display=o?'none':'block';btn.textContent=o?'↗':'↙';})(this.querySelector('.expand-btn'),document.getElementById('ch1-rehab-tbl'))">
+              <div class="card-body"><div class="card-title">📊 기능회복 단계 종합표 — 6 구성요소</div><div class="card-sub">가동범위 · 근력 · 신경근조절 · 기능 3단계 · 심폐 · 종창</div></div>
+              <button class="expand-btn">↗</button>
+            </div>
+            <div id="ch1-rehab-tbl" style="display:none;padding:4px 0 10px;">
+              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:4px;">
+                <table class="detail-table" style="min-width:600px;font-size:0.76rem;border-collapse:collapse;">
+                  <tr><th>구성요소</th><th>방법·운동</th><th>회복 단계</th></tr>
+                  <tr style="background:rgba(56,189,248,0.18)"><td colspan="3" style="font-weight:700;color:#38bdf8;padding:6px 14px;">🔵 회복 초기 (PWB·NWB)</td></tr>
+                  <tr><td><b>종창 관리</b></td><td>PRICE · 압박 · 거상 · 림프 마사지</td><td>0~3일 · 염증기</td></tr>
+                  <tr><td><b>가동범위</b></td><td>수동→자가 보조→능동 ROM · CPM</td><td>3일~2주</td></tr>
+                  <tr style="background:rgba(167,139,250,0.18)"><td colspan="3" style="font-weight:700;color:#a78bfa;padding:6px 14px;">🟣 회복 중기 (FWB)</td></tr>
+                  <tr><td><b>근력</b></td><td>등척성 → 등장성 → 등속성 · 폐쇄사슬 (CKC)</td><td>2~6주</td></tr>
+                  <tr><td><b>지구력·순발력</b></td><td>고반복 저강도 → 점진적 부하 · 인터벌</td><td>4~8주</td></tr>
+                  <tr style="background:rgba(52,211,153,0.18)"><td colspan="3" style="font-weight:700;color:#34d399;padding:6px 14px;">🟢 회복 후기 (스포츠 준비)</td></tr>
+                  <tr><td><b>신경근 조절·균형</b></td><td>BAPS · 미니트램폴린 · 율동적 안정화</td><td>6~12주</td></tr>
+                  <tr><td><b>기능적 회복 3단계</b></td><td>① 일반 동작 → ② 스포츠 동작 → ③ 경기 시뮬레이션</td><td>8~16주</td></tr>
+                  <tr><td><b>심폐 유지</b></td><td>전 단계 — 자전거 · 수영 · 상지 ergo</td><td>전 기간</td></tr>
+                  <tr style="background:rgba(56,189,248,0.13)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 14px;font-size:0.85em;">💡 단계 동시 적용 — 한 단계 끝나야 다음 시작 X. 환자 상태 따라 중첩 진행.</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
           <div class="section-title">기능회복 구성요소</div>
-          <div class="card" onclick="openDetail('ch1','rom')">
+          <div class="card" onclick="toggleCardExpand(this,'ch1','rom')">
             <div class="card-body">
               <div class="card-title">가동범위 회복</div>
               <div class="card-sub">근건 단위 · 결합조직 수축 · 스트레칭 · 관절가동화</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','strength')">
+            </div>
+          <div class="card-expand-wrap" data-key="rom"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','strength')">
             <div class="card-body">
               <div class="card-title">근력·지구력·순발력 회복</div>
               <div class="card-sub">등척성 → PRE → 등속성 → 플라이오메트릭 · OKC/CKC</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','neuro')">
+            </div>
+          <div class="card-expand-wrap" data-key="strength"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','neuro')">
             <div class="card-body">
               <div class="card-title">신경근 조절 · 균형</div>
               <div class="card-sub">고유수용감각 · 기계적 수용기 · 재상해 예방</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','func_stage')">
+            </div>
+          <div class="card-expand-wrap" data-key="neuro"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','func_stage')">
             <div class="card-body">
               <div class="card-title">기능적 회복 3단계</div>
               <div class="card-sub">안정화 단계 → 근력 단계 → 순발력 단계</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','cardio')">
+            </div>
+          <div class="card-expand-wrap" data-key="func_stage"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','cardio')">
             <div class="card-body">
               <div class="card-title">심폐기능 유지</div>
               <div class="card-sub">가장 소홀하기 쉬운 요소 · 수영·자전거 대체 운동</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
+            </div>
+          <div class="card-expand-wrap" data-key="cardio"></div>
         </div>
 
         <!-- 탭5: 복귀 기준 -->
@@ -295,44 +345,44 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
               <div class="card-body"><div class="card-title">📊 재활프로그램 종합표 — 팀 + SAID + 9 단기 목표</div><div class="card-sub">재활팀 6 구성 · SAID 원리 · 단·장기 목표</div></div>
               <button class="expand-btn">↗</button>
             </div>
-            <div id="sp1-summary-tbl" style="display:none;padding:8px 0 20px;">
-              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:10px;">
-                <table class="detail-table" style="min-width:740px;font-size:0.78rem;border-collapse:collapse;">
-                  <tr><th>항목</th><th>구분</th><th>핵심</th></tr><tr><td><tr style="background:rgba(56,189,248,0.20)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 8px;">🔵 재활팀 6 구성원</td></tr><tr><td><b>선수트레이너</b></td><td>예방·평가·즉처치·재활·재조정</td><td>5 핵심 역할</td></tr><tr><td><b>팀닥터·코치</b></td><td>의사결정·전술</td><td>의료/전술 책임</td></tr><tr><td><b>체력전문가</b></td><td>컨디셔닝</td><td>근력·지구력·복귀 훈련</td></tr><tr><td><b>선수·가족</b></td><td>본인·심리적 지원</td><td>동기·복귀 의지</td></tr><tr><td><tr style="background:rgba(167,139,250,0.20)"><td colspan="3" style="font-weight:700;color:#a78bfa;padding:6px 8px;">🟣 SAID 원리 (Specific Adaptation to Imposed Demand)</td></tr><tr><td><b>강도</b></td><td>점진 증가</td><td>과부하 원리</td></tr><tr><td><b>빈도·시간·부위</b></td><td>특이성</td><td>훈련 = 회복 메커니즘</td></tr><tr><td><tr style="background:rgba(251,146,60,0.20)"><td colspan="3" style="font-weight:700;color:#fb923c;padding:6px 8px;">🟠 단기 9 목표</td></tr><tr><td colspan="3" style="font-size:0.85em;">① 통증·부종↓ ② 정상 ROM ③ 근력 회복 ④ 신경근 조절 ⑤ 고유수용감각 ⑥ 균형 ⑦ 심혈관 ⑧ 기능적 동작 ⑨ 스포츠 특이 동작</td></tr></td></tr><tr><td><b>장기 목표</b></td><td>경기 복귀</td><td>안전한 풀 컨택트</td></tr><tr style="background:rgba(56,189,248,0.13)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 8px;font-size:0.85em;">💡 운동사슬 = 근육·힘줄·신경·근막·관절·인대 통합. 길이-장력 + 힘쌍.</td></tr>
+            <div id="sp1-summary-tbl" style="display:none;padding:4px 0 10px;">
+              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:4px;">
+                <table class="detail-table" style="min-width:580px;font-size:0.76rem;border-collapse:collapse;">
+                  <tr><th>항목</th><th>구분</th><th>핵심</th></tr><tr><td><tr style="background:rgba(56,189,248,0.20)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 14px;">🔵 재활팀 6 구성원</td></tr><tr><td><b>선수트레이너</b></td><td>예방·평가·즉처치·재활·재조정</td><td>5 핵심 역할</td></tr><tr><td><b>팀닥터·코치</b></td><td>의사결정·전술</td><td>의료/전술 책임</td></tr><tr><td><b>체력전문가</b></td><td>컨디셔닝</td><td>근력·지구력·복귀 훈련</td></tr><tr><td><b>선수·가족</b></td><td>본인·심리적 지원</td><td>동기·복귀 의지</td></tr><tr><td><tr style="background:rgba(167,139,250,0.20)"><td colspan="3" style="font-weight:700;color:#a78bfa;padding:6px 14px;">🟣 SAID 원리 (Specific Adaptation to Imposed Demand)</td></tr><tr><td><b>강도</b></td><td>점진 증가</td><td>과부하 원리</td></tr><tr><td><b>빈도·시간·부위</b></td><td>특이성</td><td>훈련 = 회복 메커니즘</td></tr><tr><td><tr style="background:rgba(251,146,60,0.20)"><td colspan="3" style="font-weight:700;color:#fb923c;padding:6px 14px;">🟠 단기 9 목표</td></tr><tr><td colspan="3" style="font-size:0.85em;">① 통증·부종↓ ② 정상 ROM ③ 근력 회복 ④ 신경근 조절 ⑤ 고유수용감각 ⑥ 균형 ⑦ 심혈관 ⑧ 기능적 동작 ⑨ 스포츠 특이 동작</td></tr></td></tr><tr><td><b>장기 목표</b></td><td>경기 복귀</td><td>안전한 풀 컨택트</td></tr><tr style="background:rgba(56,189,248,0.13)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 14px;font-size:0.85em;">💡 운동사슬 = 근육·힘줄·신경·근막·관절·인대 통합. 길이-장력 + 힘쌍.</td></tr>
                 </table>
               </div>
             </div>
           </div>
         >
           <div class="section-title">활동 복귀 판단 기준</div>
-          <div class="card" onclick="openDetail('ch1','full_recovery')">
+          <div class="card" onclick="toggleCardExpand(this,'ch1','full_recovery')">
             <div class="card-body">
               <div class="card-title">완전 회복의 수준</div>
               <div class="card-sub">ROM · 근력 · 신경근 조절 · 심폐기능 · 종목별 특수기능</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','return_criteria')">
+            </div>
+          <div class="card-expand-wrap" data-key="full_recovery"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','return_criteria')">
             <div class="card-body">
               <div class="card-title">복귀 시 중점 확인사항</div>
               <div class="card-sub">생리적 치유 · 통증 · 종창 · ROM · 근력 · 신경근 · 심폐 · 기능검사</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','func_test')">
+            </div>
+          <div class="card-expand-wrap" data-key="return_criteria"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','func_test')">
             <div class="card-body">
               <div class="card-title">기능검사 (Functional Testing)</div>
               <div class="card-sub">8자달리기 · 왕복달리기 · 카리오카 · 수직도약 · 동시수축검사</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
-          <div class="card" onclick="openDetail('ch1','record')">
+            </div>
+          <div class="card-expand-wrap" data-key="func_test"></div>
+          <div class="card" onclick="toggleCardExpand(this,'ch1','record')">
             <div class="card-body">
               <div class="card-title">재활 기록</div>
               <div class="card-sub">정확성 · 공정성 · 간결성 · 의료 과실 소송 자료</div>
             </div>
-            <button class="expand-btn">↗</button>
-          </div>
+            </div>
+          <div class="card-expand-wrap" data-key="record"></div>
         </div>
 
       </div><!-- /cards-area -->
@@ -798,6 +848,32 @@ record: `<h2>재활 기록</h2>
 <div class="warn-box"><b>⚠️ 법적 중요성:</b> 의료 과실 소송에서 중요한 자료로 활용됨</div>`,
 
 };
+function toggleCardExpand(cardEl, chid, key) {
+  const wrap = cardEl.nextElementSibling;
+  if (!wrap || !wrap.classList.contains("card-expand-wrap")) return;
+  const panel = document.getElementById(chid + "-detail-panel");
+  const inlineOpen = wrap.style.display === "block";
+  const sidebarOpen = panel && panel.classList.contains("open") && panel.dataset.currentKey === key;
+  if (!inlineOpen && !sidebarOpen) {
+    if (!wrap.dataset.loaded) {
+      wrap.innerHTML = (allDetailData[chid] || {})[key] || "<p>내용 준비 중</p>";
+      wrap.dataset.loaded = "1";
+    }
+    wrap.style.display = "block";
+    cardEl.classList.add("expanded");
+  } else if (inlineOpen && !sidebarOpen) {
+    wrap.style.display = "none";
+    cardEl.classList.remove("expanded");
+    openDetail(chid, key);
+    if (panel) panel.dataset.currentKey = key;
+  } else if (sidebarOpen) {
+    panel.classList.remove("open");
+  }
+}
+function moveToSidebar(cardEl, chid, key) {
+  toggleCardExpand(cardEl, chid, key);
+}
+
 </script>
 </body>
 </html>
