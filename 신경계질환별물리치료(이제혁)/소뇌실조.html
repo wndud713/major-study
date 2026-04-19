@@ -370,7 +370,22 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         </div>
 
         <!-- ── TAB 8: 의학적·관리 ── -->
-        <div class="tab-content" id="ch1-tab-t8">
+        <div class="tab-content" id="ch1-tab-t8"
+          <div style="grid-column:1/-1;">
+            <div class="card" style="width:100%;box-sizing:border-box;cursor:pointer;"
+              onclick="(function(btn,t){var o=t.style.display!=='none';t.style.display=o?'none':'block';btn.textContent=o?'↗':'↙';})(this.querySelector('.expand-btn'),document.getElementById('ataxia-summary-tbl'))">
+              <div class="card-body"><div class="card-title">📊 소뇌실조 종합표 — 3 부위 + 4 유전성 + 4 증상</div><div class="card-sub">안뜰·척수·대뇌 소뇌 · SCA·EA·FA·AT · 4대 증상</div></div>
+              <button class="expand-btn">↗</button>
+            </div>
+            <div id="ataxia-summary-tbl" style="display:none;padding:8px 0 20px;">
+              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:10px;">
+                <table class="detail-table" style="min-width:740px;font-size:0.78rem;border-collapse:collapse;">
+                  <tr><th>항목</th><th>특징</th><th>임상 / 유전</th></tr><tr><td><tr style="background:rgba(56,189,248,0.20)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 8px;">🔵 소뇌 3 부위</td></tr><tr><td><b>① 안뜰소뇌</b></td><td>원시소뇌 (Archicerebellum)</td><td>균형·안구운동 · 술 취한 듯 보행 · 안구진탕</td></tr><tr><td><b>② 척수소뇌</b></td><td>옛 소뇌 (Paleocerebellum)</td><td>항중력근 조절 · 넓은 기저면 + 활동떨림 보행</td></tr><tr><td><b>③ 대뇌소뇌</b></td><td>새 소뇌 (Neocerebellum)</td><td>수의적 움직임 · 겨냥이상 · 어눌한 말 (scanning speech)</td></tr><tr><td><tr style="background:rgba(167,139,250,0.20)"><td colspan="3" style="font-weight:700;color:#a78bfa;padding:6px 8px;">🟣 유전성 실조 4 종류</td></tr><tr><td><b>SCA</b></td><td>상염색체 우성 · 28유형</td><td>20세 이상 · 진행성 보행조정장애</td></tr><tr><td><b>EA</b></td><td>상염색체 우성</td><td>비퇴행성 · 운동/스트레스 유발 · EA1~4</td></tr><tr><td><b>FA (Friedreich)</b></td><td>상염색체 열성 · GAA 반복</td><td>20세 이전 · 심근병증 · 척추측만증</td></tr><tr><td><b>AT</b></td><td>상염색체 열성 · ATM 유전자</td><td>면역결핍 · 암 위험 · 소아기</td></tr><tr><td><tr style="background:rgba(251,146,60,0.20)"><td colspan="3" style="font-weight:700;color:#fb923c;padding:6px 8px;">🟠 4대 증상</td></tr><tr><td><b>① 근긴장저하</b></td><td>Hypotonia</td><td>관절 과가동성 · 자세 유지 어려움</td></tr><tr><td><b>② 활동떨림</b></td><td>Action tremor</td><td>의도적 운동 시 떨림</td></tr><tr><td><b>③ 조화운동불능</b></td><td>Dysmetria</td><td>겨냥이상 · 손가락-코 검사 양성</td></tr><tr><td><b>④ 평형/보행장애</b></td><td>Ataxic gait</td><td>넓은 기저면 · 비틀거리는 보행</td></tr><tr style="background:rgba(56,189,248,0.13)"><td colspan="3" style="font-weight:700;color:#0ea5e9;padding:6px 8px;font-size:0.85em;">💡 소뇌 = 의식하 운동조절 비교기. 입력:출력 = 40:1. 후천성: 뇌졸중·외상·알코올·퇴행성</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        >
           <div class="section-title">의학적 치료 & 장기 관리</div>
           <div class="card" onclick="openDetail('ch1','meds')">
             <div class="card-body">
