@@ -20,3 +20,7 @@ Thumbs.db
 *.tmp
 *.log
 /tmp/
+
+# 복원 백업
+*.master-backup
+*.before-restore
