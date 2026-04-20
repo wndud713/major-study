@@ -249,6 +249,15 @@ function buildChapterNavHtml(currentSubjectId, currentChapterFile) {
   .detail-item{word-break:break-word;overflow-wrap:anywhere}
   .chapter-nav{flex-wrap:wrap}
 }
+/* === HKA variant carousel-item fix (파킨슨·TBI·SOAP: JS adds .active but no CSS hides non-active) === */
+.carousel-item{display:none}
+.carousel-item.active{display:block}
+/* === Deployed 전 챕터: 과목명(top nav)↔챕터명(ch-header) 여백 축소 === */
+.chapter-nav{display:none!important}
+.ch-header{padding:4px 22px 4px!important}
+/* html,body 동시 padding-top → double 방지: html은 0, body만 44px */
+html{padding-top:0!important}
+body{padding-top:44px!important}
 </style>
 <nav class="vc-top-nav">
   <a class="vc-home-btn" href="/" title="전체 인덱스">🏠</a>
@@ -283,11 +292,11 @@ function injectChapterFeatures(html, subjectId, chapterFile) {
   // 1. nav를 <body> 직후 삽입
   html = html.replace(/<body([^>]*)>/, `<body$1>${navBlock}`);
 
-  // 2. body padding-top 보정 (기존 body 스타일에 padding-top:44px)
-  html = html.replace(
-    /body\{background:var\(--bg\);color:var\(--text\);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1\.65;display:flex;flex-direction:column\}/,
-    `body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.65;display:flex;flex-direction:column;padding-top:44px}`
-  );
+  // 2. body padding-top 보정 — 모든 body 스타일 변형 대응 (standard / HKA / legacy)
+  html = html.replace(/body\s*\{([^}]*)\}/, function(match, inner) {
+    if (/padding-top\s*:/.test(inner)) return match;
+    return `body{${inner};padding-top:44px}`;
+  });
 
   // 3. 편집 기능 주입 (lib/merge-engine.js의 injectEditFeatures 재사용)
   try {
