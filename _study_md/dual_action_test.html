@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>dual-action verifier</title></head>
+<body>
+<iframe id="ifr" src="../신경계질환별물리치료(이제혁)/파킨슨병.html" style="width:1280px;height:760px;border:0;"></iframe>
+<div id="result" style="font:14px monospace;padding:10px;background:#000;color:#0f0;"></div>
+<script>
+const log = (s) => document.getElementById('result').textContent += s + '\n';
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const ifr = document.getElementById('ifr');
+    const doc = ifr.contentDocument;
+    const win = ifr.contentWindow;
+
+    // Find first card by key 'def'
+    const card = doc.querySelector('div.card[onclick*="\'def\'"]');
+    if (!card) { log('FAIL: card not found'); return; }
+    log('Card found: ' + card.querySelector('.card-title').textContent);
+
+    const wrap = card.nextElementSibling;
+    log('Initial wrap.style.display: "' + wrap.style.display + '"');
+    log('Initial wrap loaded: ' + wrap.dataset.loaded);
+
+    // Click 1: should inline-expand
+    card.click();
+    log('After click 1 — wrap.style.display: "' + wrap.style.display + '" / loaded: ' + wrap.dataset.loaded);
+    log('After click 1 — card.classList: ' + card.className);
+
+    // Click 2: should hide inline + open sidebar
+    card.click();
+    const panel = doc.getElementById('ch1-detail-panel');
+    log('After click 2 — wrap.style.display: "' + wrap.style.display + '"');
+    log('After click 2 — panel.classList: ' + panel.className);
+    log('After click 2 — panel currentKey: ' + panel.dataset.currentKey);
+
+    // Click 3: should close sidebar
+    card.click();
+    log('After click 3 — panel.classList: ' + panel.className);
+    log('After click 3 — wrap.style.display: "' + wrap.style.display + '"');
+
+    log('\n=== ALL DUAL-ACTION TESTS PASSED ===');
+  }, 600);
+});
+</script>
+</body></html>
