@@ -1,0 +1,1296 @@
+{
+  "parkinson": {
+    "1": {
+      "status": "KEEP",
+      "reason": "cover",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 11,
+      "textHead": "4장 파킨슨병 이제혁"
+    },
+    "2": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 125,
+      "textHead": "소뇌의 손상  균형조절과 눈의 움직임 들을 조절하는 기능, 신체의 위치 변화에 따른 평형유지를 가능하게 해 주는 기능  항중력 근육 조절, 서있거나 걸을 때의 평형을 위한 근육의 긴장도를 유지  수의적 움직임을"
+    },
+    "3": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 241,
+      "textHead": "자세와 보행장애  선자세: 다리 사이의 폭이 넓고, 다리가 뻣뻣, 양팔은 약간 옆으로 벌림(상실된 근육긴장 보상)  보행 시 자세: 양발 사이를 크게 벌림, 걸음의 간격이 불규칙, 보폭이 짧음  보행 주기  "
+    },
+    "4": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 131,
+      "textHead": "활동 떨림  활동 떨림  반복적이고 다소 규칙적인 떨림이 불수의적으로 일어남  떨림 자체는 불수의적인 운동(involuntary movement)  활동 떨림(intension tremor)은 수의적으로 목표"
+    },
+    "5": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 91,
+      "textHead": "협조성 검사 ① 손가락 맞대기, 손가락 코 검사 ② 발꿈치 정강이 검사 ③ 반동 검사 ④ 빠른교대움직임을 위한 검사 ⑤ 지시검사(past pointing test)"
+    },
+    "6": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 41,
+      "textHead": " 프렌켈 운동(Frenkel exercise) 을 이용한 물리치료를 실시"
+    },
+    "7": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 7,
+      "textHead": "4장 파킨슨병"
+    },
+    "8": {
+      "status": "KEEP",
+      "reason": "large-img(2)",
+      "imgs": 2,
+      "largeImgs": 2,
+      "textLen": 239,
+      "textHead": "파킨슨병  1817년 영국의 의사 제임스 파킨슨(James Parkinson)에 의하여 처음 명명  바닥핵(basal ganglia)의 중간뇌 흑색질(substantia nigra)의 신경세포의 소실  중추신경"
+    },
+    "9": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 135,
+      "textHead": "파킨슨병  정확한 원인은 불명  바닥핵을 구성하는 선조체(striatum)의 손상 또는  흑색질(substantia nigra)에서 바닥핵의 기능을 조절하기 위하여 분비되는 도파민(dopamine) 부족하면 나"
+    },
+    "10": {
+      "status": "KEEP",
+      "reason": "large-img(2)",
+      "imgs": 2,
+      "largeImgs": 2,
+      "textLen": 4,
+      "textHead": "파킨슨병"
+    },
+    "11": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 18,
+      "textHead": "파킨슨병  파킨슨병의 조기 징후"
+    },
+    "12": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 112,
+      "textHead": "바닥핵 병변 질환  곰지락, 느린비틀림 운동(athetosis), https://youtu.be/J_wIDm1_ax4  무도병(chorea): 빠르고 불규칙하고 목적 없이 춤추고 있는 듯한 운동장애"
+    },
+    "13": {
+      "status": "KEEP",
+      "reason": "large-img(2)",
+      "imgs": 2,
+      "largeImgs": 2,
+      "textLen": 254,
+      "textHead": "바닥핵 병변 질환  반무도병(Hemiballism)  sudden onset  격렬하고, 뒤틀리고, involuntary movements  The movements are continuous and ofte"
+    },
+    "14": {
+      "status": "KEEP",
+      "reason": "sparse-text(2)",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 2,
+      "textHead": "원인"
+    },
+    "15": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 84,
+      "textHead": "1) 유전적 요인  일부에서 가족력  50대 이전 젊은 나이에 파킨슨병이 발병한 경우 유전적 원인  파킨슨병의 사례의 10~15%만이 유전적 형태"
+    },
+    "16": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 156,
+      "textHead": "2) 환경적 요인  파킨슨병의 가장 큰 위험요인은 나이  유전적 요인을 가진 사람이 의식수준의 변화가 있는 정도의 외상성 머리손상 이후 발 생빈도가 높다  신체적으로 활동성이 높은 경우 발병 비율이 낮다.  "
+    },
+    "17": {
+      "status": "KEEP",
+      "reason": "sparse-text(2)",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 2,
+      "textHead": "분류"
+    },
+    "18": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 156,
+      "textHead": "1) 특발성 또는 전형적 파킨슨병  특발성 파킨슨병(idiopathic or typical Parkinson disease, PD):  파킨슨병이 가지는 징후와 증상을 나타내는 것을 파킨슨증 이라고 한다.  파"
+    },
+    "19": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 118,
+      "textHead": "2) 젊은발병 파킨슨병  젊은 발병 파킨슨병(young-onset Parkinson disease, YOPD):  50세 미만의 젊은 나이에 발병  전형적인 파킨슨병과 같은 증상  대부분 높은 유전적 요인"
+    },
+    "20": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 171,
+      "textHead": "3) 비특이적 파킨슨증  약 15% 정도에서 파킨슨증을 가지는 비특이성 질환  운동완만, 경축, 안정 시 떨림, 자세 불안정성과 같은 증상을 하나 이상 갖는다. (1) 다계통 위축증 (2) 진행 핵상 마비 (3)"
+    },
+    "21": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 183,
+      "textHead": "3) 비특이적 파킨슨증 (1) 다계통 위축증  다양한 퇴행성신경장애를 포괄하는 다계통 위축증(multiple system atrophy, MSA)  파킨슨증이 우세한 경우  소뇌 운동실조증이 우세한 경우  평"
+    },
+    "22": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 196,
+      "textHead": "3) 비특이적 파킨슨증 (2) 진행 핵상 마비(progressive supra nuclear palsy, PSP)  가장 흔한 퇴행성 비특이적 파킨슨증  평균발병 연령은 60대 중반, 일반적 파킨슨병보다 빠른 병"
+    },
+    "23": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 194,
+      "textHead": "3) 비특이적 파킨슨증 (3) 겉질 바닥핵 증후군(corticobasal syndrome, CBS)  비특이적 파킨슨증의 가장 드문 형태  평균발병 연령은 60대 중반, 일반적 파킨슨병보다 빠른 병의 진행  한"
+    },
+    "24": {
+      "status": "KEEP",
+      "reason": "large-img(2)",
+      "imgs": 2,
+      "largeImgs": 2,
+      "textLen": 178,
+      "textHead": "3) 비특이적 파킨슨증 (4) 레비소체 치매(dementia with Lewy bodies, DLB)  비정상적 단백질이 뇌의 여러 부분에 축적  진행성 퇴행성 신경 질환  알츠하이머 치매 다음으로 많음  치"
+    },
+    "25": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 208,
+      "textHead": "3) 비특이적 파킨슨증 (5) 약물 유발 파킨슨증  이차적인 파킨슨증의 가장 일반적인 형태  뇌의 도파민 수치에 영향을 미치는 항정신성(Antipsychotic) 약물이나 항우울제 등의 부작용 원인  일반적 파"
+    },
+    "26": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 139,
+      "textHead": "3) 비특이적 파킨슨증 (6) 혈관성 파킨슨증  뇌의 주요 부위의 다발적인 뇌졸중이 원인  뇌졸중이 발생한 직후 파킨슨증의 증상이 심하게 나타남  1년에 걸쳐 점차적으로 증상이 발생  병의 초기부터 인지의 문"
+    },
+    "27": {
+      "status": "KEEP",
+      "reason": "sparse-text(4)",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 4,
+      "textHead": "임상증상"
+    },
+    "28": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 177,
+      "textHead": "1) 주요 운동관련 4대 증상 (1) 안정시 떨림  안정시 떨림(resting tremor)은 파킨슨병의 주요 증상  환자의 50% 정도에서 나타남  수의적 운동을 하고 있지 않을 때 나타남  수의적 운동을 "
+    },
+    "29": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 228,
+      "textHead": "1) 주요 운동관련 4대 증상 (2) 경축 (rigidity)  관절가동범위 제한의 원인  톱니 바퀴형 경축 (cogwheel type)  관절의 수동운동 시 불규칙적인 저항과 근육이 교대로 수축과 이완이 일어"
+    },
+    "30": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 180,
+      "textHead": "1) 주요 운동관련 4대 증상 (3) 운동못함증과 운동완만증 ① 운동못함증(akinesia): 운동을 시작하는 것이 어려움, 갑자기 멈추는 특징 ② 운동완만증(bradykinesia): 움직임이 느리고 유지하기 어려"
+    },
+    "31": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 187,
+      "textHead": "1) 주요 운동관련 4대 증상 (4) 자세 불안정성(postural instability)  역동적인 신체활동(기능적인 손 뻗기, 걷거나 방향 전환) 어려움  보호반사나 바로서기 반사의 감소 또는 소실  좁은 "
+    },
+    "32": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 132,
+      "textHead": "1) 주요 운동관련 4대 증상 (4) 자세 불안정성(postural instability)  몸통 폄 근육 약화  머리는 앞으로 이동  몸통, 엉덩관절, 무릎의 증가된 굽힘 구부정한 자세  팔은 약간 옆으로 "
+    },
+    "33": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 193,
+      "textHead": "2) 운동관련 부가적인 증상 (1) 보행장애  전형적인 속도의 감소, 짧은 스텝(short step)  주저하는 듯한 보행  몸통과 엉덩이의 움직임 감소  팔 흔들기가 줄어들며 발을 끌기도(shuffle ga"
+    },
+    "34": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 124,
+      "textHead": "2) 운동관련 부가적인 증상 (2) 운동이상  얼굴이나 팔, 다리, 몸통 불수의적인 이상한 몸부림(erratic writhing)이 나타날 수 있음 (3) 작은글씨증  운동완만과 관련하여 글씨체가 작고 글자간격이"
+    },
+    "35": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 178,
+      "textHead": "2) 운동관련 부가적인 증상 (4) 가면얼굴(masked face): 얼굴표정근의 경축으로 얼굴이 무표정 (5) 언어장애  환자의 50~73%  말이 어눌, 톤이 낮으며 쉰 목소리  왜곡된 발음, 조절되지 않은"
+    },
+    "36": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 252,
+      "textHead": "3) 비운동관련 증상  우울증, 불안 및 과민반응과 같은 기분 장애(mood disorder)  인지 변화, 생각의 둔화, 언어 및 기억장애, 성격 변화, 치매  환각(hallucinations)과 망상(del"
+    },
+    "37": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 138,
+      "textHead": "3) 비운동관련 증상  감각이 없거나 타는 듯하고 따끔따끔한 통증 등의 이상감각 증상  복시(겹보임), 깜박임이 없어 건조한 눈, 약물로 인한 흐린 시력과 같은 시력 문제  후각의 상실  피로  빈뇨와 요실"
+    },
+    "38": {
+      "status": "KEEP",
+      "reason": "sparse-text(7)",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 7,
+      "textHead": "검사 및 평가"
+    },
+    "39": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 190,
+      "textHead": "1) 물리치료적 검사 (1) Hoehn & Yahr 척도  1967년 개발 파킨슨병의 진행상황을 5단계로 구분  2002년에 1.5와 2.5단계가 추가된 8단계의 수정된 HY 척도 (modified Hoehn &"
+    },
+    "40": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 228,
+      "textHead": "1) 물리치료적 검사 (2) Schwab & England 일상생활척도  파킨슨병 환자의 일상생활활동 능력 평가하기 위하여 1956년 개발된 도구로서 1987년에 수정  1987년 수정된 Schwab & Engl"
+    },
+    "41": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 175,
+      "textHead": "1) 물리치료적 검사 (3) 파킨슨병 설문  파킨슨병 설문(36-item Parkinson’s disease questionnaire, PDQ-39)  삶의 질을 평가하는 설문지 형태  이동성, ADL, 타인의"
+    },
+    "42": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 181,
+      "textHead": "1) 물리치료적 검사 (4) 단일화된 파킨슨병 등급척도(unified Parkinson’s disease rating scale, UPDRS)  파킨슨병 환자의 임상 연구에 가장 일반적으로 사용되는 척도  총 4"
+    },
+    "43": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 200,
+      "textHead": "2) 의학적 검사  파킨슨병의 확진은 병리학적 소견과 여러 가지 임상적 증상으로 진단  추가로 인지장애, 자율신경계 증상, 수면장애 등에 대한 검사  뇌자기공명영상(brain MRI): 파킨슨 증상을 일으킬 수"
+    },
+    "44": {
+      "status": "KEEP",
+      "reason": "sparse-text(2)",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 2,
+      "textHead": "중재"
+    },
+    "45": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 168,
+      "textHead": "1) 물리적 인자치료 (1) 전기치료  병의 진행으로 인한 관절이나 근육의 뻣뻣함과 통증을 완화  표면열 핫팩과 심부투열 단파, 극초단파, 초음파를 이용하여 이완 및 유연성 운동에 도움  통증부위 저주파치료 "
+    },
+    "46": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 127,
+      "textHead": "1) 물리적 인자치료 (2) 보조도구  질병이 진행됨에 따라 보행에 도움이 될 수 있는 보조도구 사용  보행기(walker) 사용  처음 사용하는 경우 더 느려지고 얼어붙는 현상  계속적인 훈련 보행속도 증가"
+    },
+    "47": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 170,
+      "textHead": "2) 운동치료 (1) 이완  파킨슨병 환자의 이완(relaxation)은 경축(rigidity)에 대한 중요한 치료적 중재  이완 기법 적용 할 때 팔다리와 몸통 부드럽고 천천히 흔 들거나 돌림 시키며 신체분절의"
+    },
+    "48": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 136,
+      "textHead": "2) 운동치료 (2) 유연성운동(flexibility exercises)  가동범위 유연성 유지 위해 실시  일상생활 동안 필요한 관절 가동 범위  수동 관절 가동범위 운동, 가동성 기술을 사용 목, 몸통, 가"
+    },
+    "49": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 101,
+      "textHead": "2) 운동치료 (3) 균형, 협조운동  자세 조절을 위해 시각 청각을 통해 적절한 협력반응(synergy response)을 사용하도록 환자에 게 자세 조절 요구에 맞는 과제 제시"
+    },
+    "50": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 105,
+      "textHead": "2) 운동치료 (3) 균형, 협조운동  자세 조절 치료를 위해 시각과 청각을 통해 적절한 협력반응(synergy response)을 사용하도록 환자에게 자세 조절 요구에 맞는 과제를 제시"
+    },
+    "51": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 104,
+      "textHead": "2) 운동치료 (3) 균형, 협조운동  운동협응과 자동적이고 선행적인 자세조절을 강조하는 과제 지향적인 치료를 시행  협응운동을 위하여 프렌켈운동(Frenkel exercise) 적용"
+    },
+    "52": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 250,
+      "textHead": "2) 운동치료 (4) 유산소운동(aerobic exercise)  증상악화, 지구력 감소, 피로의 증가가 있는 경우 적용  대부분의 연구에서 트레드밀, 자전거 타기, 삶의 질과 안전성에서 긍정적  유산소운동 도"
+    },
+    "53": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 197,
+      "textHead": "2) 운동치료 (5) 근력강화운동  파킨슨병 환자에게 근력강화는 매우 중요  중등도 이하의 파킨슨병 환자를 대상으로 한 연구  8주간 저항훈련을 실시한 결과 근력 뿐만 아니라 걸음걸이, 보행속도, 자세 향상 "
+    },
+    "54": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 173,
+      "textHead": "2) 운동치료 (6) 보행과 이동운동  파킨슨 환자 다양한 환경에서 보행, 이동운동(gait and locomotion exercise)  보행운동은 환자가 거주하는 환경과 유사할 때 더 효과적  보행훈련: 짧"
+    },
+    "55": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 109,
+      "textHead": "2) 운동치료 (6) 보행과 이동운동  보행훈련: 장애물을 이용한 다리 들면서 걷기 운동  시각적 정보와 박수나 음악 등 청각 정보를 통하여 박자 맞추어 발걸음 내딛을 때 크게 내딛는 것 강조"
+    },
+    "56": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 84,
+      "textHead": "2) 운동치료 (6) 보행과 이동운동  보행훈련: 팔 흔들기를 위해 두 개의 막대를 잡고 치료사가 앞이나 뒤에서 함께 잡고 걷게 하 는 방법도 유용함"
+    },
+    "57": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 63,
+      "textHead": "2) 운동치료 (6) 보행과 이동운동  보행훈련: 방향 전환 훈련을 위해 의자 2개를 이용하여 8자 형태로 걷게"
+    },
+    "58": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 267,
+      "textHead": "2) 운동치료 (7) 일상생활활동 훈련(activities of daily living exercise)  파킨슨병 환자에게 필수  옷 입기, 씻기, 계단 오르기  보조도구사용, 전화 사용 같은 일상적인 기능적"
+    },
+    "59": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 220,
+      "textHead": "3) 의학적 치료 (1) 약물치료  도파민 생성과 관련된 세포에 신경전달물질을 보충, 퇴행과 변성을 막고 예방 목적  레보도파(levodopa)와 같은 도파민 전구물질(dopamine precursors)  셀"
+    },
+    "60": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 126,
+      "textHead": "3) 의학적 치료 (2) 수술적 처치  약물 반응 없는 환자  안정 시 떨림 심한 환자  심한 운동장애 환자  약물 부작용 환자  심부 뇌 자극술(deep brain stimulation, DBS)  Du"
+    },
+    "61": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 97,
+      "textHead": "3) 의학적 치료 (2) 수술적 처치 ① 심부뇌자극술  머리에 전기자극을 줄 수 있는 전극 설치  배터리는 쇄골 근처에 설치  시술 초기 부작용: 감염, 뇌졸중, 뇌출혈"
+    },
+    "62": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 161,
+      "textHead": "3) 의학적 치료 (2) 수술적 처치 ① 심부뇌자극술  손떨림을 줄이고, 경직성을 낮추고 느릿느릿한 움직임에 효과  장점: 레보도파에 의해서 발생하는 부작용을 줄이며 약물의 농도 안정화  한계점:  수술 이후"
+    },
+    "63": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 116,
+      "textHead": "3) 의학적 치료 (2) 수술적 처치 ② Duopa 치료  FDA에서 주사제인 두오파(Duopa)라는 약을 승인  주사제의 성분은 레버도파와 카비도파로 구성  영양 공급 튜브로 소장에 젤형태로 직접 주입"
+    },
+    "64": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 152,
+      "textHead": "3) 의학적 치료 (2) 수술적 처치 ② Duopa 치료  소장으로 직접 약을 투여  두 약의 혈중 농도 일정하게 유지 장점  경구 투여 시 혈중 농도가 일정하게 유지되지 않아 변동이 심한 환자에게 도움(on-"
+    },
+    "65": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 194,
+      "textHead": "4) 예방 및 관리  지속적으로 진행하는 뇌의 퇴행성 질환  적절한 약물 치료와 규칙적 운동을 통해 환자의 근력을 유지하면 진행을 늦추는데 도움  운동의 강도가 강할수록 좋다  특히 병의 초기단계 환자들에게는"
+    }
+  },
+  "tbi": {
+    "1": {
+      "status": "KEEP",
+      "reason": "cover",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 14,
+      "textHead": "외상성 뇌손상 환자의 분류"
+    },
+    "2": {
+      "status": "KEEP",
+      "reason": "sparse-text(16)",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 16,
+      "textHead": "1. 뇌손상 기전에 따른 분류"
+    },
+    "3": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 246,
+      "textHead": "1. 뇌손상 기전에 따른 분류 (1) 일차적 뇌손상(Primary injury): 충격 당시에 발생하는 뇌손상 1) 대뇌 피질 좌상 및 열상(cortical contusions and lacerations) - 국소"
+    },
+    "4": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 260,
+      "textHead": "1. 뇌손상 기전에 따른 분류 (1) 일차적 뇌손상(Primary injury): 충격 당시에 발생하는 뇌손상 2) 범발성 백질 병변; 미만성 축삭 손상(diffuse white matter lesions; diff"
+    },
+    "5": {
+      "status": "KEEP",
+      "reason": "large-img(3)",
+      "imgs": 3,
+      "largeImgs": 3,
+      "textLen": 256,
+      "textHead": "1. 뇌손상 기전에 따른 분류 (1) 일차적 뇌손상(Primary injury): 충격 당시에 발생하는 뇌손상 2) 범발성 백질 병변; 미만성 축삭 손상(diffuse white matter lesions; diff"
+    },
+    "6": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 263,
+      "textHead": "1. 뇌손상 기전에 따른 분류 (1) 일차적 뇌손상(Primary injury): 충격 당시에 발생하는 뇌손상 3) 극성 뇌손상(polar brain damage): 감속과 가속으로 머리가 흔들 릴 때 발생  호발"
+    },
+    "7": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 235,
+      "textHead": "1. 뇌손상 기전에 따른 분류 (2) 이차적 뇌손상(secondary brain injury): 일차적 뇌손상에 의해 이차적 병태생리학적인 변화가 일어나 환자의 상태를 악화 1) 두개내 혈종(intracranial "
+    },
+    "8": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 259,
+      "textHead": "1. 뇌손상 기전에 따른 분류 (2) 이차적 뇌손상(secondary brain injury): 일차적 뇌손상에 의해 이차적 병태생리학적인 변화가 일어나 환자의 상태를 악화 1) 두개내 혈종(intracranial "
+    },
+    "9": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 265,
+      "textHead": "1. 뇌손상 기전에 따른 분류 (2) 이차적 뇌손상(secondary brain injury): 일차적 뇌손상에 의해 이차적 병태생리학적인 변화가 일어나 환자의 상태를 악화 2) 뇌 팽윤(cerebral swelli"
+    },
+    "10": {
+      "status": "BORDER",
+      "reason": "small-img(1)",
+      "imgs": 1,
+      "largeImgs": 0,
+      "textLen": 159,
+      "textHead": "1. 뇌손상 기전에 따른 분류 (2) 이차적 뇌손상(secondary brain injury): 일차적 뇌손상에 의해 이차적 병태생리학적인 변화가 일어나 환자의 상태를 악화 2) 뇌 팽윤(cerebral swelli"
+    },
+    "11": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 0,
+      "textHead": ""
+    },
+    "12": {
+      "status": "KEEP",
+      "reason": "large-img(2)",
+      "imgs": 2,
+      "largeImgs": 2,
+      "textLen": 227,
+      "textHead": "1. 뇌손상 기전에 따른 분류 (2) 이차적 뇌손상(secondary brain injury): 일차적 뇌손상에 의해 이차적 병태생리학적인 변화가 일어나 환자의 상태를 악화 3) 천막 및 편도 탈출(tentorial"
+    },
+    "13": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 319,
+      "textHead": "1. 뇌손상 기전에 따른 분류 (2) 이차적 뇌손상(secondary brain injury): 일차적 뇌손상에 의해 이차적 병태생리학적인 변화가 일어나 환자의 상태를 악화 3) 천막 및 편도 탈출(tentorial"
+    },
+    "14": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 250,
+      "textHead": "1. 뇌손상 기전에 따른 분류 (2) 이차적 뇌손상(secondary brain injury): 일차적 뇌손상에 의해 이차적 병태생리학적인 변화가 일어나 환자의 상태를 악화 4) 뇌허혈(cerebral ischemi"
+    },
+    "15": {
+      "status": "KEEP",
+      "reason": "large-img(2)",
+      "imgs": 2,
+      "largeImgs": 2,
+      "textLen": 185,
+      "textHead": "1. 뇌손상 기전에 따른 분류 (2) 이차적 뇌손상(secondary brain injury): 일차적 뇌손상에 의해 이차적 병태생리학적인 변화가 일어나 환자의 상태를 악화 5) 뇌 감염(cerebral infect"
+    },
+    "16": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 241,
+      "textHead": "1. 뇌손상 기전에 따른 분류 (2) 이차적 뇌손상(secondary brain injury): 일차적 뇌손상에 의해 이차적 병태생리학적인 변화가 일어나 환자의 상태를 악화 6) 그밖의 이차적인 손상  외상 후 간"
+    },
+    "17": {
+      "status": "KEEP",
+      "reason": "sparse-text(15)",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 15,
+      "textHead": "2. 손상 정도에 따른 분류"
+    },
+    "18": {
+      "status": "KEEP",
+      "reason": "large-img(3)",
+      "imgs": 3,
+      "largeImgs": 3,
+      "textLen": 96,
+      "textHead": "2. 손상 정도에 따른 분류  눈뜨기, 운동반응, 언어반응의 의식 수준을 평가  손상의 정도를 글래스고 혼수척도(Glasgow coma scale, GCS)에 따라 분류"
+    },
+    "19": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 249,
+      "textHead": "2. 손상 정도에 따른 분류 (1) 경도 뇌 손상(mild brain injury): 글래스고 혼수척도 13점에서 15점 사이  뇌진탕(cerebral concussion)  뇌손상 중 가장 발생 빈도가 많은 손"
+    },
+    "20": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 164,
+      "textHead": "2. 손상 정도에 따른 분류 (2) 중등도 뇌 손상(moderate brain injury): 글래스고 혼수척도는 9점에서 12점 사이  경도 뇌손상과 중증 뇌 손상 사이의 중간  기억상실이 1~24시간 정도 지"
+    },
+    "21": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 194,
+      "textHead": "2. 손상 정도에 따른 분류 (3) 중증 뇌 손상(severe brain injury): 글래스고 혼수척도는 8점 이하  의식은 회복되었지만 명확한 장애가 나타나고 있는 상태  6시간 이상의 의식 소실이 있는 경"
+    },
+    "22": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 199,
+      "textHead": "2. 손상 정도에 따른 분류 (4) 식물인간 상태(vegetative state): 글래스고 혼수척도는 5점 이하  각성 자체는 가능, 인지능력은 없는 상태  호흡, 소화, 배설 등의 식물적 기능만 남음  하품"
+    },
+    "23": {
+      "status": "KEEP",
+      "reason": "sparse-text(17)",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 17,
+      "textHead": "3. 외상성 뇌손상 환자의 병리"
+    },
+    "24": {
+      "status": "BORDER",
+      "reason": "small-img(2)",
+      "imgs": 2,
+      "largeImgs": 0,
+      "textLen": 296,
+      "textHead": "3. 외상성 뇌손상 환자의 병리 1. 가속과 감속  가속손상(acceleration injury)  머리가 자유로이 움직일 수 있는 상태에서 타격이 가해져 일어나는 손상  타격이 가해진 쪽과 손상이 일어난 쪽이"
+    },
+    "25": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 27,
+      "textHead": "3. 외상성 뇌손상 환자의 병리 1. 가속과 감속"
+    },
+    "26": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 181,
+      "textHead": "3. 외상성 뇌손상 환자의 병리 2. 공동화설  충격 받은 쪽의 두개골이 변형을 일으켰다가 원형으로 회복되면서 내면의 뇌는 충격 공동화를 나타내고, 충격 반대편의 뇌는 음압이 생기면서 기포화, 공동화가 나타난다. "
+    },
+    "27": {
+      "status": "KEEP",
+      "reason": "large-img(2)",
+      "imgs": 2,
+      "largeImgs": 2,
+      "textLen": 121,
+      "textHead": "3. 외상성 뇌손상 환자의 병리 3. 뇌신경의 단절  두개강 내의 뇌의 이동으로 뇌 뿐만 아니라, 각종 뇌신경 즉, 후신경, 시신경이 파열 또는 단절될 수 있으며, 시신경은 시 신경공의 골절과 함께 손상될 수 있다"
+    },
+    "28": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 173,
+      "textHead": "3. 외상성 뇌손상 환자의 병리 4. 뇌경막 충격에 의한 손상  뇌의 이동으로 중뇌나, 양측 측두엽의 내면인 구(uncus)가 밀려나가면서 천막 절흔(incisura)에 눌리게 되면 뇌간(brain stem)의 손"
+    },
+    "29": {
+      "status": "KEEP",
+      "reason": "sparse-text(19)",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 19,
+      "textHead": "4. 외상성 뇌손상 환자의 임상증상"
+    },
+    "30": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 102,
+      "textHead": "4. 외상성 뇌손상 환자의 임상증상 ① 머리덮개뼈 손상: 표피 박리, 열상, 좌상등이 발생 ② 머리바닥뼈 손상: 함몰골절, 머리뼈 바닥 골절 ③ 뇌손상: 국소성 뇌손상, 광범위 뇌손상"
+    },
+    "31": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 47,
+      "textHead": "4. 외상성 뇌손상 환자의 임상증상 ② 머리바닥뼈 손상: 함몰골절, 머리뼈 바닥 골절"
+    },
+    "32": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 264,
+      "textHead": "4. 외상성 뇌손상 환자의 임상증상 1) 신경계 문제  중등도에서 중증 뇌손상 환자는 원시반사와 근육긴장의 손상, 운동조절 및 협조 운동의 소실 및 저하, 근력 또는 근지구력의 감소, 비정상적인 자세 결함(post"
+    },
+    "33": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 198,
+      "textHead": "4. 외상성 뇌손상 환자의 임상증상 1) 신경계 문제 (2) 의식수준의 변화 ① 외상 후 기억상실 ② 급성 혼동 ③ 혼수 (3) 기타 신경계 문제  언어장애, 구음장애 등의 의사소통문제  발작, 구토나 메스꺼움 "
+    },
+    "34": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 199,
+      "textHead": "4. 외상성 뇌손상 환자의 임상증상 2) 호흡계 문제  공기 가슴증(기흉, pneumothorax)과 같은 외상에 의한 직접적인 손상  외상성 뇌손상 후 동반되는 폐렴은 손상후 7일 이내에 환자의 80% 발생 "
+    },
+    "35": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 257,
+      "textHead": "4. 외상성 뇌손상 환자의 임상증상 3) 소화기 및 영양장애 (1) 삼킴곤란(dysphagia)  삼킴중추의 손상  탈수증과 영양실조의 합병증  흡인성 폐렴, 기도를 막는 경우 질식을 일으켜 사망 (2) 영양장"
+    },
+    "36": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 228,
+      "textHead": "4. 외상성 뇌손상 환자의 임상증상 3) 소화기 및 영양장애 (3) 배변장애  변비나 변 실금과 같은 배변장애  뇌손상 후 인지 기능 장애가 있는 경우 대변 실금 (4) 위장출혈  급성기 동안 스트레스 궤양에 "
+    },
+    "37": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 181,
+      "textHead": "4. 외상성 뇌손상 환자의 임상증상 4) 심혈관계 문제  심부정맥혈전증(deep vein thrombosis)이 약 40~54% 발생  고정, 근약증, 직접적인 혈관손상, 정맥 카테터 삽입 등에 의해 발생  8"
+    },
+    "38": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 236,
+      "textHead": "4. 외상성 뇌손상 환자의 임상증상 5) 근육뼈대계 문제  딴곳 뼈되기(heterotopic ossification): 뼈가 연부조직과 관절 주위 조 직에 생성  1개월 이상 장기간의 혼수상태 ‧ 부동상태 ‧ 강"
+    },
+    "39": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 147,
+      "textHead": "4. 외상성 뇌손상 환자의 임상증상 6) 비뇨생식계 문제  요실금(urinary incontinence)과 요로감염(infection of urinary tract)  비억제성의 부적절한 성적행동을 나타내는 경향"
+    },
+    "40": {
+      "status": "KEEP",
+      "reason": "sparse-text(22)",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 22,
+      "textHead": "5. 외상성 뇌손상 환자의 검사 및 평가"
+    },
+    "41": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 72,
+      "textHead": "5. 외상성 뇌손상 환자의 검사 및 평가 1) 물리치료적 검사 (1) 의식수준(level of consciousness, LOC)"
+    },
+    "42": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 203,
+      "textHead": "5. 외상성 뇌손상 환자의 검사 및 평가 1) 물리치료적 검사 (2) 글래스고 결과등급 척도(Glasgow outcome scale, GOS)  예후 지수, 글래스고 혼수척도를 수정 보완  외상성 뇌손상 이후 일"
+    },
+    "43": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 189,
+      "textHead": "5. 외상성 뇌손상 환자의 검사 및 평가 1) 물리치료적 검사 (3) 란초로스 아미고스 인지기능 수준(Rancho Los Amigos level of cognitive functioning, LOCF)  외상성 뇌"
+    },
+    "44": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 74,
+      "textHead": "란초로스 아미고스 인지기능 수준 (Rancho Los Amigos level of cognitive functioning, LOCF)"
+    },
+    "45": {
+      "status": "KEEP",
+      "reason": "large-img(3)",
+      "imgs": 3,
+      "largeImgs": 3,
+      "textLen": 116,
+      "textHead": "5. 외상성 뇌손상 환자의 검사 및 평가 1) 물리치료적 검사 (4) 글래스고 혼수 척도(Glasgow Coma Scale, GCS)  의식손상 정도를 조기에 판단  환자의 예후를 판단  가장 널리 사용"
+    },
+    "46": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 228,
+      "textHead": "5. 외상성 뇌손상 환자의 검사 및 평가 1) 물리치료적 검사 (5) 갈베스톤 지남력 및 기억상실 검사 (Galveston orientation and amnesia test, GOAT)  지남력 혼동과 외상 후 "
+    },
+    "47": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 65,
+      "textHead": "갈베스톤 지남력 및 기억상실 검사 (Galveston orientation and amnesia test, GOAT)"
+    },
+    "48": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 124,
+      "textHead": "5. 외상성 뇌손상 환자의 검사 및 평가 1) 물리치료적 검사 (6) 라파포트 장애 등급 척도(Rappaport’s disability rating scale)  기능적 회복단계를 기술  기능적인 영역을 광범위하"
+    },
+    "49": {
+      "status": "KEEP",
+      "reason": "large-img(2)",
+      "imgs": 2,
+      "largeImgs": 2,
+      "textLen": 169,
+      "textHead": "5. 외상성 뇌손상 환자의 검사 및 평가 2) 의학적 검사  일반적인 신경학적 검사  컴퓨터 단층 촬영법(computed tomography, CT)  자기공명 영상법(magnetic resonance imag"
+    },
+    "50": {
+      "status": "KEEP",
+      "reason": "sparse-text(17)",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 17,
+      "textHead": "6. 외상성 뇌손상 환자의 중재"
+    },
+    "51": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 216,
+      "textHead": "6. 외상성 뇌손상 환자의 중재 1) 물리적 인자치료 (1) 신경근육 전기자극(neuromuscular electrical stimulation, NMES)  뼈대근육의 활성을 증가, 근수축력의 증대, 근재교육을 "
+    },
+    "52": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 160,
+      "textHead": "6. 외상성 뇌손상 환자의 중재 1) 물리적 인자치료 (3) 보조기  합병증을 예방, 정렬된 자세 유지  아래팔과 손의 과긴장에 따른 변형을 방지하기 위한 아래팔보조기 적용  발처짐과 무릎의 과다폄을 방지하기 "
+    },
+    "53": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 202,
+      "textHead": "6. 외상성 뇌손상 환자의 중재 2) 운동치료 (1) 란초로스 아미고스 Ⅰ, Ⅱ, Ⅲ 수준의 중재(Lower level) 치료 방법  반응이 감소되고, 의미 있는 행동이나, 환경에 대한 상호작용을 하지 못하는 단계"
+    },
+    "54": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 442,
+      "textHead": "6. 외상성 뇌손상 환자의 중재 2) 운동치료 (1) 란초로스 아미고스 Ⅰ, Ⅱ, Ⅲ 수준의 중재(Lower level) 치료 방법 1. 감각자극을 통한 각성의 증진  Auditory stimulation: 치료사"
+    },
+    "55": {
+      "status": "KEEP",
+      "reason": "large-img(4)",
+      "imgs": 4,
+      "largeImgs": 4,
+      "textLen": 162,
+      "textHead": "6. 외상성 뇌손상 환자의 중재 2) 운동치료 (1) 란초로스 아미고스 Ⅰ, Ⅱ, Ⅲ 수준의 중재(Lower level) 치료 방법 2. Positioning  정상 감각을 경험 하는 것이 목적  적절한 몸의 정"
+    },
+    "56": {
+      "status": "KEEP",
+      "reason": "large-img(2)",
+      "imgs": 2,
+      "largeImgs": 2,
+      "textLen": 87,
+      "textHead": "6. 외상성 뇌손상 환자의 중재 2) 운동치료 (2) 란초로스 아미고스 Ⅳ, Ⅴ, Ⅵ 수준의 중재(Middle level) 치료 방법 ① 기능적 운동성 훈련"
+    },
+    "57": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 82,
+      "textHead": "6. 외상성 뇌손상 환자의 중재 2) 운동치료 (2) 란초로스 아미고스 Ⅳ, Ⅴ, Ⅵ 수준의 중재(Middle level) 치료 방법 ② 인지 훈련"
+    },
+    "58": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 148,
+      "textHead": "6. 외상성 뇌손상 환자의 중재 2) 운동치료 (3) 란초로스 아미고스 Ⅶ, Ⅷ, Ⅸ, Ⅹ 수준의 중재(High level) 치료 방법  일상생활에서 필요한 신체, 인지, 감정기능을 통합할 수 있는 훈련  판단력"
+    },
+    "59": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 38,
+      "textHead": "6. 외상성 뇌손상 환자의 중재 3) 의학적 치료 (1) 물뇌증 수술"
+    },
+    "60": {
+      "status": "KEEP",
+      "reason": "large-img(4)",
+      "imgs": 4,
+      "largeImgs": 4,
+      "textLen": 38,
+      "textHead": "6. 외상성 뇌손상 환자의 중재 3) 의학적 치료 (1) 물뇌증 수술"
+    },
+    "61": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 37,
+      "textHead": "6. 외상성 뇌손상 환자의 중재 3) 의학적 치료 (2) 기관절개술"
+    },
+    "62": {
+      "status": "KEEP",
+      "reason": "large-img(3)",
+      "imgs": 3,
+      "largeImgs": 3,
+      "textLen": 12,
+      "textHead": "Tracheostomy"
+    },
+    "63": {
+      "status": "KEEP",
+      "reason": "large-img(10)",
+      "imgs": 10,
+      "largeImgs": 10,
+      "textLen": 0,
+      "textHead": ""
+    },
+    "64": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 38,
+      "textHead": "6. 외상성 뇌손상 환자의 중재 3) 의학적 치료 (3) 영양관 삽입"
+    },
+    "65": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 9,
+      "largeImgs": 1,
+      "textLen": 100,
+      "textHead": "NG-Tube (Nasogastric intubation) LEVIN'S TUBE (L-Tube) - Dr. Levin 1921’ -  위내용물 흡인, 세척  위속으로 영양공급"
+    },
+    "66": {
+      "status": "KEEP",
+      "reason": "large-img(3)",
+      "imgs": 3,
+      "largeImgs": 3,
+      "textLen": 32,
+      "textHead": "NG-Tube (Nasogastric intubation)"
+    },
+    "67": {
+      "status": "KEEP",
+      "reason": "large-img(3)",
+      "imgs": 3,
+      "largeImgs": 3,
+      "textLen": 0,
+      "textHead": ""
+    },
+    "68": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 136,
+      "textHead": "6. 외상성 뇌손상 환자의 중재 4) 예방 및 관리  의료적 처치에서 제일 중요한 것은 소생술  의학적 처치에서 고려사항  호흡부전, 심혈관 문제, 두개 내 압력증가의 치료를 위한 약리적, 기계적, 수술적 절차"
+    }
+  },
+  "soap": {
+    "1": {
+      "status": "KEEP",
+      "reason": "cover",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 38,
+      "textHead": "SOAP note Traumatic Brain Injury (TBI)"
+    },
+    "2": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 455,
+      "textHead": "Subjective information Name 이OO Age 59 Sex F On set 2010.07.22 Eval. 2010.07.10 Quadriplegia d/t TBI. Lt. Femoral Fx. in"
+    },
+    "3": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 326,
+      "textHead": "Objective information A. Visual analogue scale (VAS) U/E VAS 2 (Both Shoulder) L/E VAS 6 (Rt. Knee) VAS 7 (Lt. Hip) B. M"
+    },
+    "4": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 455,
+      "textHead": "Objective information OT평가) Mini-Mental State Examination-Korea (MMSE-K) 대분류 점수 소분류 문항 점수 1 오늘은 몇 년도입니까? 0 1 몇월 0 1 시간 몇"
+    },
+    "5": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 425,
+      "textHead": "Objective information 2 이름맞추기 이것을 무엇이라고 합니까? (연필, 시계) 2 “제가 지금 말씀 드리는 것을 잘 들으시고 말씀드린 대로 해보 세요.” 3 3단계 명령 3 언어기능 “오른손으로 종"
+    },
+    "6": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 471,
+      "textHead": "Objective information OT평가) Modified Barthel Index (MBI) Item 수행불가 상당한 도움필요 중간 정도의 도움필요 최소한의 도움필요 완전히 독립적 음식물 섭취 0 2 5 8"
+    },
+    "7": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 451,
+      "textHead": "Objective information C. ROM&MMT Right U/E Left AROM PROM MMT AROM PROM MMT 160 160 F+ Shoulder Flexion (0-180) 160 160 "
+    },
+    "8": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 424,
+      "textHead": "Objective information Right L/E Left AROM PROM MMT AROM PROM MMT 80 120 F- Hip Flexion (0-120) 30 100 P 5 20 P Extension"
+    },
+    "9": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 230,
+      "textHead": "Objective information D. Spasticity(MAS) Lt. Rt. U/E G0 G0 L/E G0 G0 E. Pathologic reflex Ankle Clonus (-) Babinski sign"
+    },
+    "10": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 79,
+      "textHead": "Objective information https://youtu.be/BBsL1DRy8ZE https://youtu.be/GJ-Q2ibYAHs"
+    },
+    "11": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 469,
+      "textHead": "Objective information G. Berg-Balance Test 1. Sitting to standing 0 8. Reaching forward with outstretched arm 0 2. Stand"
+    },
+    "12": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 514,
+      "textHead": "Objective information • Fugl-Meyer Assessment (U/E) Score Position Test Scoring Criteria Rt. Lt. Biceps brachii 2 2 Shou"
+    },
+    "13": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 1302,
+      "textHead": "Objective information Score Position Test Scoring Criteria Rt. Lt. Ⅲ-Movement combining Synergies A. Hand to lumbar spin"
+    },
+    "14": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 1295,
+      "textHead": "Objective information Score Position Test Scoring Criteria Rt. Lt. Biceps brachii 0-세 가지 phasic reflexes 중 두 가지 이상 Ⅴ- Sh"
+    },
+    "15": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 1179,
+      "textHead": "Score Position Test Scoring Criteria Rt. Lt. 0-손가락이 flexion 불가능 Ⅶ – A. Finger mass flexion 1-손가락이 약간 flexion 가능 2 2 <elb"
+    },
+    "16": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 473,
+      "textHead": "Objective information H. Fugl-Meyer Assessment (L/E) Score Position Test Scoring Criteria Rt. Lt. Patella tendon 1 1 0-반"
+    },
+    "17": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 529,
+      "textHead": "Objective information Score Position Test Scoring Criteria Rt. Lt. Ⅲ-Movement combining synergies 0-능동적 움직임이 없다 A. Knee "
+    },
+    "18": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 493,
+      "textHead": "Objective information Score Position Test Scoring Criteria Rt. Lt. Hamstrings 0-3반사 중 2가지 이상 과활동 1 1 Ⅴ-Normal Flexors 1-"
+    },
+    "19": {
+      "status": "KEEP",
+      "reason": "large-img(2)",
+      "imgs": 2,
+      "largeImgs": 2,
+      "textLen": 259,
+      "textHead": "Assessment A. Problem list 1) Decrease of Attention 2) Pain – VAS 6 (Rt. Knee), VAS 7 (Lt. Hip) 3) L/E의 MMT가 P~F+로 전반적으로"
+    },
+    "20": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 3,
+      "largeImgs": 1,
+      "textLen": 97,
+      "textHead": "Assessment 5) Decrease of Sitting balance Decrease of W/B to Rt. side 동영상_평상시 sitting 자세 Lt. side"
+    },
+    "21": {
+      "status": "DROP",
+      "reason": "text-only",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 296,
+      "textHead": "Assessment B. Goal setting 1) LTG (~6months) - Supine to sit (independent) - Standing시, 3min. 이상 상체의 uprighting을 유지할 수 있"
+    },
+    "22": {
+      "status": "KEEP",
+      "reason": "large-img(3)",
+      "imgs": 3,
+      "largeImgs": 3,
+      "textLen": 117,
+      "textHead": "Plan Treatment plan 1) Pain control (especially, Rt. Knee & Lt. Hip) : Hot pack 10min., Ultra sound 5min., ICT 15min."
+    },
+    "23": {
+      "status": "KEEP",
+      "reason": "large-img(2)",
+      "imgs": 2,
+      "largeImgs": 2,
+      "textLen": 60,
+      "textHead": "Plan 2) PROM & AROM ex. 동영상_U/E 동영상_L/E 3) Strengthening ex."
+    },
+    "24": {
+      "status": "KEEP",
+      "reason": "large-img(1)",
+      "imgs": 1,
+      "largeImgs": 1,
+      "textLen": 99,
+      "textHead": "Plan 4) Sitting balance : W/B to Rt. Side 오른쪽으로 WB을 계속 가져가며 환자가 따라오도록 유도한다. Rt. 동영상_sitting balance"
+    },
+    "25": {
+      "status": "KEEP",
+      "reason": "large-img(2)",
+      "imgs": 2,
+      "largeImgs": 2,
+      "textLen": 27,
+      "textHead": "Plan 5) Rolling 동영상_Rolling"
+    },
+    "26": {
+      "status": "KEEP",
+      "reason": "large-img(3)",
+      "imgs": 3,
+      "largeImgs": 3,
+      "textLen": 39,
+      "textHead": "Plan 6) Supine to Sit 동영상_supine to sit"
+    },
+    "27": {
+      "status": "KEEP",
+      "reason": "large-img(3)",
+      "imgs": 3,
+      "largeImgs": 3,
+      "textLen": 58,
+      "textHead": "Plan 6) Standing 동영상_standing1 동영상_standing2 동영상_standing3"
+    },
+    "28": {
+      "status": "KEEP",
+      "reason": "sparse-text(9)",
+      "imgs": 0,
+      "largeImgs": 0,
+      "textLen": 9,
+      "textHead": "Thank you"
+    }
+  }
+}
