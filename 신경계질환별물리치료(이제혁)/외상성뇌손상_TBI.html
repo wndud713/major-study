@@ -221,6 +221,32 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
       <div class="cards-area" id="ch1-cards-area">
 
         <div class="tab-content active" id="ch1-tab-mech">
+          <div style="grid-column:1/-1;">
+            <div class="card" style="width:100%;box-sizing:border-box;cursor:pointer;"
+              onclick="(function(btn,t){var o=t.style.display!=='none';t.style.display=o?'none':'block';btn.textContent=o?'↗':'↙';})(this.querySelector('.expand-btn'),document.getElementById('tbi-mech-tbl'))">
+              <div class="card-body"><div class="card-title">📊 일차 vs 이차 손상 종합표</div><div class="card-sub">일차 3종 · 이차 6종 — 기전·호발 매트릭스</div></div>
+              <button class="expand-btn">↗</button>
+            </div>
+            <div id="tbi-mech-tbl" style="display:none;padding:4px 0 10px;">
+              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:4px;">
+                <table class="detail-table" style="min-width:700px;font-size:0.76rem;border-collapse:collapse;">
+                  <tr><th>구분</th><th>종류</th><th>기전</th><th>호발 / 특징</th></tr>
+                  <tr style="background:rgba(52,211,153,0.18)"><td colspan="4" style="font-weight:700;color:#34d399;padding:6px 14px;">🟢 일차 손상 (충격 시, 3종)</td></tr>
+                  <tr><td rowspan="3"><b>일차</b></td><td>대뇌피질 좌상·열상</td><td>국소 · mild~severe</td><td>전두엽·측두엽 · 이차 부종 유발</td></tr>
+                  <tr><td>미만성 축삭손상 DAI</td><td>축삭 파괴·찢어짐</td><td>뇌량·상부 소뇌각 · 혼수 44%</td></tr>
+                  <tr><td>극성 뇌손상</td><td>가속·감속 흔들림</td><td>측두엽·전두엽 극단 · mass effect</td></tr>
+                  <tr style="background:rgba(167,139,250,0.18)"><td colspan="4" style="font-weight:700;color:#a78bfa;padding:6px 14px;">🟣 이차 손상 (병태생리, 6종)</td></tr>
+                  <tr><td rowspan="6"><b>이차</b></td><td>두개내 혈종</td><td>EDH · SDH · ICH</td><td>편위 → 천막 → 편도 탈출</td></tr>
+                  <tr><td>뇌 팽윤 swelling</td><td>혈관확장 · 세포부종</td><td>혈종 유무 모두 발생</td></tr>
+                  <tr><td>천막·편도 탈출</td><td>Subfalcial·Uncal·Central·Tonsillar</td><td>편도형 → 뇌간 압박 위험</td></tr>
+                  <tr><td>뇌허혈</td><td>저산소증 · CPP ↓</td><td>혈관 압박·파열 → ICP ↑</td></tr>
+                  <tr><td>뇌 감염</td><td>개방성 골절 · 경막 손상</td><td>어느 시기에나 발병</td></tr>
+                  <tr><td>기타</td><td>외상 후 간질 · 혈관경련 · 수두증</td><td>장기 합병증</td></tr>
+                  <tr style="background:rgba(56,189,248,0.13)"><td colspan="4" style="font-weight:700;color:#0ea5e9;padding:6px 14px;font-size:0.85em;">💡 핵심: 이차의 핵심 연쇄 = <b>혈종 → 편위 → 탈출 → 허혈</b> · 일차는 외력, 이차는 수분~수일 경과 중 발생.</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
           <div class="section-title">기전에 따른 분류 (일차·이차)</div>
           <div class="card" onclick="toggleCardExpand(this,'ch1','primary-cortical')">
             <div class="card-body">
@@ -297,6 +323,28 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         </div>
 
         <div class="tab-content" id="ch1-tab-severity">
+          <div style="grid-column:1/-1;">
+            <div class="card" style="width:100%;box-sizing:border-box;cursor:pointer;"
+              onclick="(function(btn,t){var o=t.style.display!=='none';t.style.display=o?'none':'block';btn.textContent=o?'↗':'↙';})(this.querySelector('.expand-btn'),document.getElementById('tbi-gcs-tbl'))">
+              <div class="card-body"><div class="card-title">📊 GCS 중증도 종합표 — 경도·중등도·중증·식물인간</div><div class="card-sub">GCS 점수·의식소실·빈도·CT 매트릭스</div></div>
+              <button class="expand-btn">↗</button>
+            </div>
+            <div id="tbi-gcs-tbl" style="display:none;padding:4px 0 10px;">
+              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:4px;">
+                <table class="detail-table" style="min-width:600px;font-size:0.76rem;border-collapse:collapse;">
+                  <tr><th>분류</th><th>GCS</th><th>의식소실</th><th>빈도 · 특징</th><th>CT</th></tr>
+                  <tr style="background:rgba(52,211,153,0.18)"><td colspan="5" style="font-weight:700;color:#34d399;padding:6px 14px;">🟢 경도</td></tr>
+                  <tr><td><b>경도</b> (concussion)</td><td>13~15</td><td>없음~20분</td><td>가장 흔함 · 두통·현기증·기억상실</td><td>이상 無</td></tr>
+                  <tr style="background:rgba(251,191,36,0.18)"><td colspan="5" style="font-weight:700;color:#fbbf24;padding:6px 14px;">🟡 중등도</td></tr>
+                  <tr><td><b>중등도</b></td><td>9~12</td><td>—</td><td>기억상실 1~24h · ADL 독립 가능</td><td>—</td></tr>
+                  <tr style="background:rgba(248,113,113,0.18)"><td colspan="5" style="font-weight:700;color:#f87171;padding:6px 14px;">🔴 중증 · 식물인간</td></tr>
+                  <tr><td><b>중증</b></td><td>≤8</td><td>≥6시간</td><td>전체 10% · 인지·언어·행동 장애</td><td>—</td></tr>
+                  <tr><td><b>식물인간</b></td><td>≤5</td><td>—</td><td>각성만 가능 · 인지 無 · <b>97% 사망</b></td><td>—</td></tr>
+                  <tr style="background:rgba(56,189,248,0.13)"><td colspan="5" style="font-weight:700;color:#0ea5e9;padding:6px 14px;font-size:0.85em;">💡 기억할 숫자: 15 → 13 → 12 → 9 → 8 → 5 · 3단계 경계(13/9/5)가 핵심 분기점.</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
           <div class="section-title">손상 정도 분류 (GCS 기반)</div>
           <div class="card" onclick="toggleCardExpand(this,'ch1','gcs-overview')">
             <div class="card-body">
@@ -377,6 +425,30 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         </div>
 
         <div class="tab-content" id="ch1-tab-clinical">
+          <div style="grid-column:1/-1;">
+            <div class="card" style="width:100%;box-sizing:border-box;cursor:pointer;"
+              onclick="(function(btn,t){var o=t.style.display!=='none';t.style.display=o?'none':'block';btn.textContent=o?'↗':'↙';})(this.querySelector('.expand-btn'),document.getElementById('tbi-clinical-tbl'))">
+              <div class="card-body"><div class="card-title">📊 6계통 합병증 종합표 — 신경·호흡·소화·심혈관·근골격·비뇨</div><div class="card-sub">주요 문제·빈도 수치·핵심 관리 요약</div></div>
+              <button class="expand-btn">↗</button>
+            </div>
+            <div id="tbi-clinical-tbl" style="display:none;padding:4px 0 10px;">
+              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:4px;">
+                <table class="detail-table" style="min-width:700px;font-size:0.76rem;border-collapse:collapse;">
+                  <tr><th>계통</th><th>주요 문제</th><th>빈도 · 수치</th><th>핵심 관리</th></tr>
+                  <tr style="background:rgba(248,113,113,0.18)"><td colspan="4" style="font-weight:700;color:#f87171;padding:6px 14px;">🔴 생명 위협 — 호흡·심혈관</td></tr>
+                  <tr><td><b>2) 호흡계</b></td><td>기흉 · 폐렴</td><td>손상 후 7일내 80%</td><td>GCS≤5·삽관·suction·삼킴곤란 고위험</td></tr>
+                  <tr><td><b>4) 심혈관</b></td><td>DVT · 폐색전</td><td>DVT 40~54% · PE 1%</td><td>조기 mobilization · 항응고</td></tr>
+                  <tr style="background:rgba(167,139,250,0.18)"><td colspan="4" style="font-weight:700;color:#a78bfa;padding:6px 14px;">🟣 신경·운동 — PT 핵심 대상</td></tr>
+                  <tr><td><b>1) 신경계</b></td><td>강직 · 의식변화 · 자율신경</td><td>—</td><td>원시반사·근긴장 평가, LOCF 단계별</td></tr>
+                  <tr><td><b>5) 근육뼈대</b></td><td>딴곳뼈되기 HO</td><td>11~76% · 10~20% ROM 제한</td><td>엉덩관절 호발 · 1개월+ 혼수 고위험</td></tr>
+                  <tr style="background:rgba(251,191,36,0.18)"><td colspan="4" style="font-weight:700;color:#fbbf24;padding:6px 14px;">🟡 영양·배뇨 — 만성 관리</td></tr>
+                  <tr><td><b>3) 소화기·영양</b></td><td>삼킴곤란 · 과혈당 · 배변 · 위장출혈</td><td>—</td><td>장관영양 조기 개시</td></tr>
+                  <tr><td><b>6) 비뇨생식</b></td><td>요실금 · UTI · 성기능 변화</td><td>—</td><td>카테터 관리 · 행동 중재</td></tr>
+                  <tr style="background:rgba(56,189,248,0.13)"><td colspan="4" style="font-weight:700;color:#0ea5e9;padding:6px 14px;font-size:0.85em;">💡 급성기 생명 위협 상위 3: <b>두개내 탈출(편도형) · 폐색전 · 흡인성 폐렴</b>.</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
           <div class="section-title">임상증상 — 6개 계통</div>
           <div class="card" onclick="toggleCardExpand(this,'ch1','clinical-skull')">
             <div class="card-body">
@@ -437,6 +509,30 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         </div>
 
         <div class="tab-content" id="ch1-tab-eval">
+          <div style="grid-column:1/-1;">
+            <div class="card" style="width:100%;box-sizing:border-box;cursor:pointer;"
+              onclick="(function(btn,t){var o=t.style.display!=='none';t.style.display=o?'none':'block';btn.textContent=o?'↗':'↙';})(this.querySelector('.expand-btn'),document.getElementById('tbi-eval-tbl'))">
+              <div class="card-body"><div class="card-title">📊 평가도구 6종 종합표 — LOC·GCS·GOS·LOCF·GOAT·DRS</div><div class="card-sub">급성기→회복기 평가도구 매트릭스</div></div>
+              <button class="expand-btn">↗</button>
+            </div>
+            <div id="tbi-eval-tbl" style="display:none;padding:4px 0 10px;">
+              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:4px;">
+                <table class="detail-table" style="min-width:700px;font-size:0.76rem;border-collapse:collapse;">
+                  <tr><th>도구</th><th>측정 대상</th><th>구성</th><th>특징</th></tr>
+                  <tr style="background:rgba(56,189,248,0.18)"><td colspan="4" style="font-weight:700;color:#38bdf8;padding:6px 14px;">🔵 급성기 (의식 · 예후)</td></tr>
+                  <tr><td><b>LOC</b></td><td>의식수준</td><td>단일 평가</td><td>급성기 출발점</td></tr>
+                  <tr><td><b>GCS</b></td><td>의식 손상 정도</td><td>E4·V5·M6 (총 3~15)</td><td>가장 널리 사용 · 조기 예후</td></tr>
+                  <tr><td><b>GOS</b></td><td>예후 수치화</td><td>5단계 (사망~좋은 회복)</td><td>GCS 수정 보완 · 연구용</td></tr>
+                  <tr style="background:rgba(52,211,153,0.18)"><td colspan="4" style="font-weight:700;color:#34d399;padding:6px 14px;">🟢 각성 이행기 (인지 · PTA)</td></tr>
+                  <tr><td><b>LOCF</b> (Rancho)</td><td>인지·행동 회복</td><td>10단계 (Lower·Middle·High)</td><td>중재계획 기초</td></tr>
+                  <tr><td><b>GOAT</b></td><td>지남력 · PTA</td><td>사람·장소·시간 + 사건 상기</td><td>외상 후 기억상실 측정</td></tr>
+                  <tr style="background:rgba(251,146,60,0.18)"><td colspan="4" style="font-weight:700;color:#fb923c;padding:6px 14px;">🟠 회복기 (기능 · 장애)</td></tr>
+                  <tr><td><b>DRS</b> (Rappaport)</td><td>기능적 회복 · 장애</td><td>다영역 광범위</td><td>장기 추적 · 회복 단계 기술</td></tr>
+                  <tr style="background:rgba(56,189,248,0.13)"><td colspan="4" style="font-weight:700;color:#0ea5e9;padding:6px 14px;font-size:0.85em;">💡 사용 시기: 급성기(GCS·LOC) → 각성 이행기(LOCF·GOAT) → 회복기(GOS·DRS).</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
           <div class="section-title">평가 및 검사 도구</div>
           <div class="card" onclick="toggleCardExpand(this,'ch1','eval-loc')">
             <div class="card-body">
@@ -497,6 +593,34 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         </div>
 
         <div class="tab-content" id="ch1-tab-tx">
+          <div style="grid-column:1/-1;">
+            <div class="card" style="width:100%;box-sizing:border-box;cursor:pointer;"
+              onclick="(function(btn,t){var o=t.style.display!=='none';t.style.display=o?'none':'block';btn.textContent=o?'↗':'↙';})(this.querySelector('.expand-btn'),document.getElementById('tbi-locf-tx-tbl'))">
+              <div class="card-body"><div class="card-title">📊 LOCF 단계별 PT 중재표 — Lower · Middle · High</div><div class="card-sub">Rancho Ⅰ~Ⅹ 단계별 물리치료 중재 매핑</div></div>
+              <button class="expand-btn">↗</button>
+            </div>
+            <div id="tbi-locf-tx-tbl" style="display:none;padding:4px 0 10px;">
+              <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:4px;">
+                <table class="detail-table" style="min-width:700px;font-size:0.76rem;border-collapse:collapse;">
+                  <tr><th>레벨</th><th>단계</th><th>환자 상태</th><th>물리치료 중재</th></tr>
+                  <tr style="background:rgba(248,113,113,0.18)"><td colspan="4" style="font-weight:700;color:#f87171;padding:6px 14px;">🔴 Lower (Ⅰ~Ⅲ) — 감각자극 중심</td></tr>
+                  <tr><td rowspan="3"><b>Lower</b><br>Ⅰ~Ⅲ</td><td>Ⅰ No Response</td><td>완전 무반응</td><td rowspan="3"><b>감각자극 Sensory Stim (15~30분)</b><br>Auditory·Visual·Olfactory·Gustatory·Tactile·Vestibular<br><b>Positioning</b> (정렬·피부보호)</td></tr>
+                  <tr><td>Ⅱ Generalized</td><td>비특이적 반응</td></tr>
+                  <tr><td>Ⅲ Localized</td><td>일관된 반응 시작</td></tr>
+                  <tr style="background:rgba(251,191,36,0.18)"><td colspan="4" style="font-weight:700;color:#fbbf24;padding:6px 14px;">🟡 Middle (Ⅳ~Ⅵ) — 기능·인지 과제</td></tr>
+                  <tr><td rowspan="3"><b>Middle</b><br>Ⅳ~Ⅵ</td><td>Ⅳ Confused-Agitated</td><td>혼돈·동요</td><td rowspan="3"><b>① 기능적 운동성 훈련</b><br><b>② 인지 훈련</b></td></tr>
+                  <tr><td>Ⅴ Confused-Inappropriate</td><td>혼돈·부적절</td></tr>
+                  <tr><td>Ⅵ Confused-Appropriate</td><td>혼돈·목표지향</td></tr>
+                  <tr style="background:rgba(52,211,153,0.18)"><td colspan="4" style="font-weight:700;color:#34d399;padding:6px 14px;">🟢 High (Ⅶ~Ⅹ) — 통합·자립</td></tr>
+                  <tr><td rowspan="4"><b>High</b><br>Ⅶ~Ⅹ</td><td>Ⅶ Automatic</td><td>자동적 일상</td><td rowspan="4">판단·문제해결·계획·자기인식·사회 상호작용<br>통합적 기능 훈련</td></tr>
+                  <tr><td>Ⅷ Purposeful</td><td>학습·해결</td></tr>
+                  <tr><td>Ⅸ w/ Standby</td><td>복잡 과제 독립</td></tr>
+                  <tr><td>Ⅹ Modified Indep</td><td>보조 이용 독립</td></tr>
+                  <tr style="background:rgba(56,189,248,0.13)"><td colspan="4" style="font-weight:700;color:#0ea5e9;padding:6px 14px;font-size:0.85em;">💡 Lower = 자극 · Middle = 과제 · High = 통합 — 환자의 인지 반응 단계가 치료 강도·복잡성을 결정.</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
           <div class="section-title">중재 및 치료</div>
           <div class="card" onclick="toggleCardExpand(this,'ch1','tx-nmes')">
             <div class="card-body">
