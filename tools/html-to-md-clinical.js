@@ -134,7 +134,7 @@ function convertFile(srcPath, dstPath, title) {
   const lines = [];
   lines.push(`# ${title}`);
   lines.push('');
-  lines.push(`> 자동 추출 마크다운 · 총 카드 ${cards.length}개 · 탭 ${tabs.length}개`);
+  lines.push(`> 서술형 시험 대비 · 탭1 논문 작성법 + 탭2 IRB 연구윤리만 포함`);
   lines.push('');
   lines.push('---');
   lines.push('');
@@ -150,6 +150,8 @@ function convertFile(srcPath, dstPath, title) {
     tabBoundaries.push({ tabid: tbm[1], offset: tbm.index });
   }
   // 각 탭의 end = 다음 탭 offset 또는 html.length
+  // 시험 대비용 MD: tab1 (논문 작성법) + tab2 (IRB) 만 포함
+  const INCLUDE_TABS = new Set(['tab1', 'tab2']);
   const tabBlocks = tabBoundaries.map((tb, i) => {
     const end = i + 1 < tabBoundaries.length ? tabBoundaries[i+1].offset : html.length;
     const tabObj = tabs.find(t => t.tabid === tb.tabid);
@@ -160,7 +162,7 @@ function convertFile(srcPath, dstPath, title) {
       label: tabObj?.label || tb.tabid,
       cards: tabCards,
     };
-  });
+  }).filter(tb => INCLUDE_TABS.has(tb.tabid));
 
   for (const tab of tabBlocks) {
     lines.push(`## ${tab.group ? '[' + tab.group + '] ' : ''}${tab.label}`);
