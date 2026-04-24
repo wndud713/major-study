@@ -90,3 +90,35 @@ sed -i 's|</body>|<script>setTimeout(()=>{var c=document.querySelector(".card[on
 8 시도 = nesting depth tracer → 1분 내 발견.
 
 → **layout 깨짐 = nesting 먼저, 캐시는 마지막.**
+
+## 2026-04-24 업데이트
+
+### SLIDES_DATA md5 보존 검증
+SLIDES_DATA 건드리지 말아야 할 작업 (카드 재배치·종합표 추가·아코디언 통합) 에서 **md5 동일성** 으로 보존 검증:
+```bash
+# precardmerge vs 현재 SLIDES_DATA md5 비교
+node tools/qa-slides-diff.js
+```
+md5 불변 = 바이트 정확 보존 증명. diff stat 만으론 부족 (순서 바뀌면 md5 달라짐).
+
+### 아코디언 동작 검증 (신경계 3파일 표준)
+1. `.accordion-parent` / `.ap-head` / `.accordion-children` / `.chev` CSS 존재
+2. `toggleAccordion()` 함수 정의 + 단일 확장 정책 (`:scope > .accordion-parent.expanded` 형제 해제)
+3. 자식 카드 `event.stopPropagation()` 포함 (부모 토글 충돌 방지)
+4. Edge headless 로 부모 click → 자식 가시성 + 형제 접힘 확인
+
+### card-expand-wrap 검증
+카드 in-place 확장 패턴:
+- `<div class="card" onclick="toggleCardExpand(...)">` 직후 `<div class="card-expand-wrap" data-key="KEY"></div>`
+- data-key 와 allDetailData key 1:1 매칭 필수 (orphan 0)
+
+### IIFE 종합표 마스터 카드 검증
+```html
+onclick="(function(btn,t){var o=t.style.display!=='none';t.style.display=o?'none':'block';})(this.querySelector('.expand-btn'),document.getElementById('...-tbl'))"
+```
+- detail-table inline style: `font-size:0.76rem`, `padding:6px 14px` 표준 준수
+- openDetail 아닌 자체 toggle 확인
+
+### 참조 패턴
+- `feedback_neuro_layout_standard.md` — 4 계층 표준
+- 모범 파일: 파킨슨·외상성뇌손상_TBI·SOAP_note_TBI (신경계질환별물리치료)

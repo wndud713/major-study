@@ -96,3 +96,45 @@ curl -sI "https://major-study.vercel.app/chapters/PATH/FILE.html?v=$(date +%s)" 
 - public (legacy): `public-pi-bice.vercel.app` ← 사용 X
 
 `cat public/.vercel/project.json` → `projectName="major-study"` 필수.
+
+## 2026-04-24 업데이트
+
+### `build-vercel.js` 가 public/.vercel 삭제함
+**사건**: 2026-04-24 배포 시 `build-vercel.js` 실행 후 `public/.vercel/` 폴더 사라짐 → `cd public && npx vercel --prod` 가 디렉토리 이름으로 "public" 프로젝트 자동 link → legacy 에 배포됨.
+
+**매 배포 전 재링크 필수**:
+```bash
+node build-vercel.js
+cd public
+npx vercel link --yes --project major-study   # 항상 실행
+cat .vercel/project.json   # projectName="major-study" 확인
+npx vercel --prod --yes
+```
+
+### 절대 허위 보고 금지
+이전 "배포 READY dpl_XXX" 보고가 실은 미배포 상태였던 사건 발생. 반드시 **실제 HTTP 응답으로 검증**:
+```bash
+curl -s -I "https://major-study.vercel.app/chapters/..." | grep -E "HTTP|Content-Length|Last-Modified"
+# Last-Modified 당일 시각 확인 필수
+```
+
+그리고 base64 이미지 수까지 확인:
+```bash
+curl -s "URL" | grep -oE "data:image/[a-z]+;base64" | wc -l
+```
+
+### Permission 제약
+deployer 에이전트 환경에 `npx vercel` / `curl` 권한 없을 수 있음. 권한 차단 시 즉시 보고하고 main Claude 가 직접 실행하도록 경로 요청.
+
+### Git 커밋 메시지 표준
+```
+<type>: 신경계질환 3파일 <핵심 변경>
+
+- 파일별 변경 (slide 수·카드 수·종합표 수)
+- detail key 보존 여부 명시
+- 레이아웃 규칙 준수 (HKA·아코디언·stopPropagation)
+```
+타입: `fix` (버그/복원), `feat` (구조 개선), `refactor`. PR 우회 이슈 없으면 master direct push OK (개인 학습 레포 패턴).
+
+### 참조
+- `reference_vercel_main_project.md` — major-study 유일 원칙

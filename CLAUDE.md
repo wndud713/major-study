@@ -101,7 +101,40 @@ html-parser.js    →→→   html-parser.js  →→→   builder.js
 
 - **PDF 1개 = chapter-nav 버튼 1개** — 챕터 분리 필요 시만 2개 이상
 - 캐러셀 엔진 함수 **수정 금지** (호출은 가능): `initCarousel`, `goTo`, `carouselMove`, `toggleCarousel`, `openLightbox`, `closeLightbox`, `switchChapter`, `switchTab`, `openDetail`, `closeDetail`
-- `shell_template_v2.html` **수정 금지**
+- `shell_template_v2.html` **수정 금지** (legacy 참조용)
+- `shell_template_v3.html` = **현행 표준** (신규 PDF 변환·리팩토링 기본) — 수정 시 신중히, 기존 파일에 영향
+
+### v3 = v2 + 누적 패턴 (2026-04-24 생성)
+
+v3 에 기본 내장:
+- 아코디언 부모-자식 (`accordion-parent` + `toggleAccordion`)
+- HKA 종합표 (`detail-table` font 0.76rem, padding 6px 14px)
+- 카드 in-place 확장 (`card-expand-wrap` + `toggleCardExpand`)
+- IIFE 종합표 마스터 카드
+- Tip/warn box + detail-item 색상 variants
+- 국시 패턴 (`exam-question-block`·`exam-grid`·`details.q-reveal`)
+- 편집 CSS 변수 + resize 핸들
+- 캐러셀 카운터 UI
+
+### 표준 레이아웃 4 계층 (사용자 승인 2026-04-24)
+
+1. 탭 최상단 `📊 종합표 마스터 카드` (IIFE toggle)
+2. **부모 아코디언** (3 개 이상 유사 카드 시)
+3. 자식 카드 (부모 안, `event.stopPropagation()`)
+4. 단독 카드 (고유 개념)
+
+상세: memory `feedback_neuro_layout_standard.md`
+
+### 슬라이드 이미지 = pdfimages (≥150×150)
+
+`pdftoppm` 전체 래스터 금지 — 텍스트·배경까지 이미지화 됨 (2026-04-24 신경계 3파일 사건).
+SmartArt·벡터 다이어그램 보강은 `pdftoppm -r 50` + Vision 교차 검증.
+상세: memory `feedback_slide_image_filtering.md`
+
+### Vercel 재배포 주의
+
+`build-vercel.js` 가 `public/.vercel/` 삭제 → 매 배포 전 `npx vercel link --yes --project major-study` 재실행 필수.
+허위 "배포 완료" 금지 — 반드시 curl 로 CDN 응답 (HTTP 200 + Last-Modified + base64 수) 검증.
 
 ---
 

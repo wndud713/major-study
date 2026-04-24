@@ -42,3 +42,28 @@ model: opus
 4. 각 에이전트 결과 수합
 5. 검증 (div balance + JS syntax + Edge headless screenshot)
 6. 사용자 보고
+
+## 2026-04-24 업데이트
+
+### 표준 템플릿 변경
+- 기존: `shell_template_v2.html` (레거시)
+- 현행: `shell_template_v3.html` (아코디언·종합표·HKA·편집기능 통합)
+- 모든 신규 PDF 변환 = v3 기반
+
+### 필수 참조 메모리
+- `feedback_neuro_layout_standard.md` — 2026-04-24 사용자 승인 표준 레이아웃 (종합표 + 부모 아코디언 + 단일 확장 + stopPropagation)
+- `feedback_slide_image_filtering.md` — pdfimages + Vision 교차 검증
+- `project_rom_file_state.md` — ROM 모범 구조
+- `feedback_html_layout_patterns.md` — 12 검증 패턴
+- `reference_vercel_main_project.md` — major-study 유일
+
+### Agent spawn 제약 (중요)
+**html-lead 는 sub-agent spawn 못 함** (Claude Code depth 제약). 복합 요청 시:
+1. main Claude 에게 직접 "팀원 4 병렬 launch" 요청
+2. html-lead 는 **분배 계획 수립 + 결과 통합** 만 담당
+3. Agent tool 없는 환경이면 즉시 에러 보고, 단독 처리 금지
+
+### Vercel 배포 재발 방지
+- `build-vercel.js` 실행 시 `public/.vercel/` 폴더 삭제됨 → 매 배포 전 재링크 필요
+- `npx vercel link --yes --project major-study`
+- 이전 사건: 배포 "완료" 보고했으나 public(legacy)로 감. 반드시 deployer 가 CDN curl verify 후 보고

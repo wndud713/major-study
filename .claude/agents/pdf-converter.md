@@ -1,6 +1,6 @@
 ---
 name: pdf-converter
-description: PDF 슬라이드 → 인터랙티브 HTML 스터디 파일 변환 전문. shell_template_v2.html 기반 + pdf-to-html skill 활용. 카드·탭·종합표·디테일·캐러셀 모두 포함된 완성 HTML 출력. recommended-for development.
+description: PDF 슬라이드 → 인터랙티브 HTML 스터디 파일 변환 전문. shell_template_v3.html 기반 + pdf-to-html skill 활용. 카드·탭·종합표·디테일·캐러셀·아코디언 모두 포함된 완성 HTML 출력. recommended-for development.
 model: opus
 ---
 
@@ -58,5 +58,36 @@ POPPLER="$LOCALAPPDATA/Microsoft/WinGet/Packages/oschwartz10612.Poppler_Microsof
 
 ## 참조
 - pdf-to-html skill: `C:/Users/wndud/.claude/skills/pdf-to-html/SKILL.md`
-- 템플릿: `shell_template_v2.html`
+- 템플릿: `shell_template_v3.html` (v2 = legacy)
 - 빌드 도구: `merge-html.js`, `lib/`, `tools/`
+
+## 2026-04-24 업데이트
+
+### 슬라이드 이미지 = pdfimages 우선 (pdftoppm 절대 금지)
+**2026-04-24 신경계 3파일 사건**: `pdftoppm` 으로 전 페이지 래스터화 → 텍스트·배경·제목 전부 이미지화 (108 KB 거대 파일). 뇌졸중1 같은 정상 파일은 pdfimages 임베디드 14.9 KB 도식만.
+
+표준 절차:
+1. `pdfimages -list` 로 임베디드 이미지 목록 (width≥150 AND height≥150 필터)
+2. `pdfimages -png` 추출
+3. **벡터 다이어그램 (SmartArt·PPT 화살표·박스) 은 pdfimages 가 놓침** → `pdftoppm -r 50 -png` 저해상도 렌더 + Read(Vision) 스팟 체크
+4. 경계 케이스 (pdfimages 0 or 작은 아이콘만 + Vision 이 다이어그램 확인) = KEEP 보수적 판정
+
+참조: `feedback_slide_image_filtering.md` · `tools/filter-slides.js` · `tools/rebuild-neuro-slides.js`
+
+### 표준 레이아웃 (사용자 승인 2026-04-24)
+**4 계층 구조** (memory: `feedback_neuro_layout_standard.md`):
+
+1. **탭 최상단 종합표 마스터 카드** — `📊 X 종합표` IIFE toggle (openDetail 아님)
+2. **부모 아코디언** — 3 개 이상 유사 카드 그룹화 (`accordion-parent` + `toggleAccordion`)
+3. **자식 카드** — 부모 안, `event.stopPropagation()` 필수
+4. **단독 카드** — 고유 개념
+
+### 템플릿 변경
+- v2 (`shell_template_v2.html`) = legacy 참조용
+- **v3 (`shell_template_v3.html`)** = 현행. 아코디언·HKA 표·카드 확장·편집기능·Tip/warn box·국시 패턴 통합
+
+### 콘텐츠 압축 절대 금지
+사용자 "압축·생략 말고 원문 그대로" 다수 강조:
+- allDetailData wholesale 치환 금지 (memory 패턴 6) — merge 방식 사용
+- PDF 불릿 N 개 = detail-item N 개 (memory 패턴 12)
+- 서술형 시험 대비 파일 = 정의·이유·관계·예시 전부 살림
