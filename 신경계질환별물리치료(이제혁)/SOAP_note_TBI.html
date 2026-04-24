@@ -177,6 +177,20 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 .card-expand-wrap .summary-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .card.expanded{border-color:var(--ch-accent,#34d399);background:var(--bg3)}
 @keyframes fadeDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+/* ---- Accordion parent-child pattern ---- */
+.accordion-parent{border:1.5px solid var(--border);border-radius:10px;background:var(--bg2);margin:0;overflow:hidden;transition:border-color .18s}
+.accordion-parent.expanded{border-color:var(--ch-accent,#34d399)}
+.accordion-parent .ap-head{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;user-select:none}
+.accordion-parent .ap-head:hover{background:var(--bg3)}
+.accordion-parent .ap-icon{font-size:18px;flex-shrink:0}
+.accordion-parent .ap-body{flex:1;min-width:0}
+.accordion-parent .ap-title{font-size:13.5px;font-weight:600;color:var(--text)}
+.accordion-parent .ap-sub{font-size:11.5px;color:var(--text-dim);margin-top:2px}
+.accordion-parent .chev{flex-shrink:0;color:var(--text-dim);transition:transform .22s ease;font-size:14px}
+.accordion-parent.expanded .chev{transform:rotate(90deg);color:var(--ch-accent,#34d399)}
+.accordion-children{max-height:0;overflow:hidden;transition:max-height .32s ease-out;display:flex;flex-direction:column;gap:10px}
+.accordion-parent.expanded .accordion-children{max-height:4000px;padding:4px 12px 14px;border-top:1px solid var(--border)}
+.accordion-children .card{margin:0}
 </style>
 </head>
 <body>
@@ -367,22 +381,34 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
             </div>
           </div>
           <div class="section-title">인지 · ADL (MMSE-K · MBI)</div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','mmse-k')">
-            <div class="card-body">
-              <div class="card-title">MMSE-K 상세 (총 14/30점)</div>
-              <div class="card-sub">지남력 0 · 기억등록 3 · 기억회상 0 · 계산 4 · 언어 5 · 이해판단 1 · 반복 1</div>
+          <div class="accordion-parent" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)">
+            <div class="ap-head">
+              <span class="ap-icon">🧠</span>
+              <div class="ap-body">
+                <div class="ap-title">MMSE-K 평가 2종 — 상세 점수 · 해석 기준</div>
+                <div class="ap-sub">본 사례 14/30 → 확정적 치매 수준</div>
+              </div>
+              <span class="chev">▶</span>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','mmse-k')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="mmse-k"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','mmse-interp')">
-            <div class="card-body">
-              <div class="card-title">MMSE 해석 기준</div>
-              <div class="card-sub">24↑ 정상 · 20~23 치매 의심 · 19↓ 확정적 치매</div>
+            <div class="accordion-children">
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','mmse-k')">
+                <div class="card-body">
+                  <div class="card-title">MMSE-K 상세 (총 14/30점)</div>
+                  <div class="card-sub">지남력 0 · 기억등록 3 · 기억회상 0 · 계산 4 · 언어 5 · 이해판단 1 · 반복 1</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','mmse-k')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="mmse-k"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','mmse-interp')">
+                <div class="card-body">
+                  <div class="card-title">MMSE 해석 기준</div>
+                  <div class="card-sub">24↑ 정상 · 20~23 치매 의심 · 19↓ 확정적 치매</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','mmse-interp')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="mmse-interp"></div>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','mmse-interp')">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="mmse-interp"></div>
           <div class="card" onclick="toggleCardExpand(this,'ch1','mbi')">
             <div class="card-body">
               <div class="card-title">MBI — Modified Barthel Index (20/100)</div>
@@ -395,22 +421,34 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 
         <div class="tab-content" id="ch1-tab-romMmt">
           <div class="section-title">ROM · MMT · 기타 검사</div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','rom-ue')">
-            <div class="card-body">
-              <div class="card-title">C-1. ROM & MMT — U/E (상지)</div>
-              <div class="card-sub">Shoulder·Elbow·Wrist — 대체로 F~F+ 수준</div>
+          <div class="accordion-parent" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)">
+            <div class="ap-head">
+              <span class="ap-icon">💪</span>
+              <div class="ap-body">
+                <div class="ap-title">C. ROM & MMT 2종 — U/E · L/E</div>
+                <div class="ap-sub">상지 F~F+ · 하지 Lt.Hip Fx. → MMT P~P+ · Rt.Knee ext -30°</div>
+              </div>
+              <span class="chev">▶</span>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','rom-ue')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="rom-ue"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','rom-le')">
-            <div class="card-body">
-              <div class="card-title">C-2. ROM & MMT — L/E (하지)</div>
-              <div class="card-sub">Hip·Knee·Ankle — Lt.Hip Fx. 후 MMT P~P+ · Rt.Knee ext -30° contracture</div>
+            <div class="accordion-children">
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','rom-ue')">
+                <div class="card-body">
+                  <div class="card-title">C-1. ROM & MMT — U/E (상지)</div>
+                  <div class="card-sub">Shoulder·Elbow·Wrist — 대체로 F~F+ 수준</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','rom-ue')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="rom-ue"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','rom-le')">
+                <div class="card-body">
+                  <div class="card-title">C-2. ROM & MMT — L/E (하지)</div>
+                  <div class="card-sub">Hip·Knee·Ankle — Lt.Hip Fx. 후 MMT P~P+ · Rt.Knee ext -30° contracture</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','rom-le')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="rom-le"></div>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','rom-le')">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="rom-le"></div>
           <div class="card" onclick="toggleCardExpand(this,'ch1','spasticity')">
             <div class="card-body">
               <div class="card-title">D. Spasticity (MAS)</div>
@@ -439,22 +477,34 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
             <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','bbs')">↗</button>
           </div>
           <div class="card-expand-wrap" data-key="bbs"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','fma-ue')">
-            <div class="card-body">
-              <div class="card-title">H. Fugl-Meyer U/E (62/66, Rt·Lt)</div>
-              <div class="card-sub">Reflex·Synergy·Combining·Out of synergy·Normal reflex·Wrist·Hand·Coordination</div>
+          <div class="accordion-parent" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)">
+            <div class="ap-head">
+              <span class="ap-icon">🎯</span>
+              <div class="ap-body">
+                <div class="ap-title">Fugl-Meyer 2종 — U/E (62/66) · L/E (Rt.18 · Lt.16 /34)</div>
+                <div class="ap-sub">Synergy·Combining·Coordination — 상지 거의 정상 · 하지 큰 결손</div>
+              </div>
+              <span class="chev">▶</span>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','fma-ue')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="fma-ue"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','fma-le')">
-            <div class="card-body">
-              <div class="card-title">I. Fugl-Meyer L/E (Rt. 18·Lt. 16 /34)</div>
-              <div class="card-sub">Reflex·Synergy·Combining·Out of synergy·Normal reflex·Coordination</div>
+            <div class="accordion-children">
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','fma-ue')">
+                <div class="card-body">
+                  <div class="card-title">H. Fugl-Meyer U/E (62/66, Rt·Lt)</div>
+                  <div class="card-sub">Reflex·Synergy·Combining·Out of synergy·Normal reflex·Wrist·Hand·Coordination</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','fma-ue')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="fma-ue"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','fma-le')">
+                <div class="card-body">
+                  <div class="card-title">I. Fugl-Meyer L/E (Rt. 18·Lt. 16 /34)</div>
+                  <div class="card-sub">Reflex·Synergy·Combining·Out of synergy·Normal reflex·Coordination</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','fma-le')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="fma-le"></div>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','fma-le')">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="fma-le"></div>
         </div>
 
         <div class="tab-content" id="ch1-tab-assess">
@@ -499,30 +549,42 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 
         <div class="tab-content" id="ch1-tab-plan">
           <div class="section-title">Plan — 치료 계획</div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','plan-pain')">
-            <div class="card-body">
-              <div class="card-title">1) Pain control (Rt.Knee · Lt.Hip)</div>
-              <div class="card-sub">Hot pack 10min · Ultrasound 5min · ICT 15min</div>
+          <div class="accordion-parent" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)">
+            <div class="ap-head">
+              <span class="ap-icon">💊</span>
+              <div class="ap-body">
+                <div class="ap-title">Plan 3단계 — 통증조절 · ROM/근력 · 기능적 운동</div>
+                <div class="ap-sub">①Pain → ②PROM/Strength → ③Balance·Rolling·기립</div>
+              </div>
+              <span class="chev">▶</span>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','plan-pain')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="plan-pain"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','plan-rom-str')">
-            <div class="card-body">
-              <div class="card-title">2~3) PROM·AROM · Strengthening ex.</div>
-              <div class="card-sub">U/E·L/E 가동범위 회복 및 근력 강화</div>
+            <div class="accordion-children">
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','plan-pain')">
+                <div class="card-body">
+                  <div class="card-title">1) Pain control (Rt.Knee · Lt.Hip)</div>
+                  <div class="card-sub">Hot pack 10min · Ultrasound 5min · ICT 15min</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','plan-pain')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="plan-pain"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','plan-rom-str')">
+                <div class="card-body">
+                  <div class="card-title">2~3) PROM·AROM · Strengthening ex.</div>
+                  <div class="card-sub">U/E·L/E 가동범위 회복 및 근력 강화</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','plan-rom-str')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="plan-rom-str"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','plan-functional')">
+                <div class="card-body">
+                  <div class="card-title">4~6) Balance · Rolling · Supine→Sit · Standing</div>
+                  <div class="card-sub">W/B to Rt. · Rolling 유도 · 기립 단계별 훈련</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','plan-functional')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="plan-functional"></div>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','plan-rom-str')">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="plan-rom-str"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','plan-functional')">
-            <div class="card-body">
-              <div class="card-title">4~6) Balance · Rolling · Supine→Sit · Standing</div>
-              <div class="card-sub">W/B to Rt. · Rolling 유도 · 기립 단계별 훈련</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','plan-functional')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="plan-functional"></div>
         </div>
 
         <div class="tab-content" id="ch1-tab-summary">
@@ -690,6 +752,18 @@ function switchChapter(chid) {
   document.querySelector(`.ch-btn[data-ch="${chid}"]`).classList.add('active');
   document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
 }
+function toggleAccordion(el) {
+  var expanded = el.classList.contains('expanded');
+  var parent = el.parentElement;
+  if (parent) {
+    parent.querySelectorAll(':scope > .accordion-parent.expanded').forEach(function(sib){
+      if (sib !== el) { sib.classList.remove('expanded'); sib.setAttribute('aria-expanded','false'); }
+    });
+  }
+  if (expanded) { el.classList.remove('expanded'); el.setAttribute('aria-expanded','false'); }
+  else { el.classList.add('expanded'); el.setAttribute('aria-expanded','true'); }
+}
+
 function switchTab(chid, tabId, btn) {
   const ch = document.getElementById(chid);
   ch.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));

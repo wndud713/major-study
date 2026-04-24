@@ -179,6 +179,20 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 .card-expand-wrap .summary-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .card.expanded{border-color:var(--ch-accent,#34d399);background:var(--bg3)}
 @keyframes fadeDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+/* ---- Accordion parent-child pattern ---- */
+.accordion-parent{border:1.5px solid var(--border);border-radius:10px;background:var(--bg2);margin:0;overflow:hidden;transition:border-color .18s}
+.accordion-parent.expanded{border-color:var(--ch-accent,#34d399)}
+.accordion-parent .ap-head{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;user-select:none}
+.accordion-parent .ap-head:hover{background:var(--bg3)}
+.accordion-parent .ap-icon{font-size:18px;flex-shrink:0}
+.accordion-parent .ap-body{flex:1;min-width:0}
+.accordion-parent .ap-title{font-size:13.5px;font-weight:600;color:var(--text)}
+.accordion-parent .ap-sub{font-size:11.5px;color:var(--text-dim);margin-top:2px}
+.accordion-parent .chev{flex-shrink:0;color:var(--text-dim);transition:transform .22s ease;font-size:14px}
+.accordion-parent.expanded .chev{transform:rotate(90deg);color:var(--ch-accent,#34d399)}
+.accordion-children{max-height:0;overflow:hidden;transition:max-height .32s ease-out;display:flex;flex-direction:column;gap:10px}
+.accordion-parent.expanded .accordion-children{max-height:4000px;padding:4px 12px 14px;border-top:1px solid var(--border)}
+.accordion-children .card{margin:0}
 </style>
 </head>
 <body>
@@ -248,78 +262,102 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
             </div>
           </div>
           <div class="section-title">기전에 따른 분류 (일차·이차)</div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','primary-cortical')">
-            <div class="card-body">
-              <div class="card-title">일차 (1) 대뇌피질 좌상·열상</div>
-              <div class="card-sub">국소 뇌손상 · 전두엽·측두엽 · 이차 부종 유발</div>
+          <div class="accordion-parent" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)">
+            <div class="ap-head">
+              <span class="ap-icon">🔵</span>
+              <div class="ap-body">
+                <div class="ap-title">일차 손상 3종 — 대뇌피질 좌상·열상 · DAI · 극성 뇌손상</div>
+                <div class="ap-sub">외력 순간 발생 · 즉각적 구조 파괴</div>
+              </div>
+              <span class="chev">▶</span>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','primary-cortical')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="primary-cortical"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','primary-dai')">
-            <div class="card-body">
-              <div class="card-title">일차 (2) 미만성 축삭손상 DAI</div>
-              <div class="card-sub">축삭 파괴·찢어짐 · 혼수 44% · 뇌량·상부 소뇌각</div>
+            <div class="accordion-children">
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','primary-cortical')">
+                <div class="card-body">
+                  <div class="card-title">일차 (1) 대뇌피질 좌상·열상</div>
+                  <div class="card-sub">국소 뇌손상 · 전두엽·측두엽 · 이차 부종 유발</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','primary-cortical')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="primary-cortical"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','primary-dai')">
+                <div class="card-body">
+                  <div class="card-title">일차 (2) 미만성 축삭손상 DAI</div>
+                  <div class="card-sub">축삭 파괴·찢어짐 · 혼수 44% · 뇌량·상부 소뇌각</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','primary-dai')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="primary-dai"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','primary-polar')">
+                <div class="card-body">
+                  <div class="card-title">일차 (3) 극성 뇌손상</div>
+                  <div class="card-sub">가속·감속 흔들림 · 측두·전두 극단 · mass effect</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','primary-polar')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="primary-polar"></div>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','primary-dai')">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="primary-dai"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','primary-polar')">
-            <div class="card-body">
-              <div class="card-title">일차 (3) 극성 뇌손상</div>
-              <div class="card-sub">가속·감속 흔들림 · 측두·전두 극단 · mass effect</div>
+          <div class="accordion-parent" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)">
+            <div class="ap-head">
+              <span class="ap-icon">🟣</span>
+              <div class="ap-body">
+                <div class="ap-title">이차 손상 6종 — 혈종 · 팽윤 · 탈출 · 허혈 · 감염 · 기타</div>
+                <div class="ap-sub">핵심 연쇄: 혈종 → 편위 → 탈출 → 허혈 (수분~수일 내)</div>
+              </div>
+              <span class="chev">▶</span>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','primary-polar')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="primary-polar"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','secondary-hematoma')">
-            <div class="card-body">
-              <div class="card-title">이차 1) 두개내 혈종</div>
-              <div class="card-sub">EDH · SDH · ICH → 편위 → 탈출</div>
+            <div class="accordion-children">
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','secondary-hematoma')">
+                <div class="card-body">
+                  <div class="card-title">이차 1) 두개내 혈종</div>
+                  <div class="card-sub">EDH · SDH · ICH → 편위 → 탈출</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','secondary-hematoma')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="secondary-hematoma"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','secondary-swelling')">
+                <div class="card-body">
+                  <div class="card-title">이차 2) 뇌 팽윤</div>
+                  <div class="card-sub">swelling vs edema · 혈관확장·세포부종</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','secondary-swelling')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="secondary-swelling"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','secondary-herniation')">
+                <div class="card-body">
+                  <div class="card-title">이차 3) 천막·편도 탈출</div>
+                  <div class="card-sub">Subfalcial · Uncal · Central · External · Tonsillar</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','secondary-herniation')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="secondary-herniation"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','secondary-ischemia')">
+                <div class="card-body">
+                  <div class="card-title">이차 4) 뇌허혈</div>
+                  <div class="card-sub">저산소증 · CPP ↓ · ICP ↑</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','secondary-ischemia')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="secondary-ischemia"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','secondary-infection')">
+                <div class="card-body">
+                  <div class="card-title">이차 5) 뇌 감염</div>
+                  <div class="card-sub">개방성 골절 · 경막 손상 후 세균감염</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','secondary-infection')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="secondary-infection"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','secondary-others')">
+                <div class="card-body">
+                  <div class="card-title">이차 6) 기타</div>
+                  <div class="card-sub">외상 후 간질 · 혈관 경련 · 폐쇄성 수두증</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','secondary-others')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="secondary-others"></div>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','secondary-hematoma')">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="secondary-hematoma"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','secondary-swelling')">
-            <div class="card-body">
-              <div class="card-title">이차 2) 뇌 팽윤</div>
-              <div class="card-sub">swelling vs edema · 혈관확장·세포부종</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','secondary-swelling')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="secondary-swelling"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','secondary-herniation')">
-            <div class="card-body">
-              <div class="card-title">이차 3) 천막·편도 탈출</div>
-              <div class="card-sub">Subfalcial · Uncal · Central · External · Tonsillar</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','secondary-herniation')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="secondary-herniation"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','secondary-ischemia')">
-            <div class="card-body">
-              <div class="card-title">이차 4) 뇌허혈</div>
-              <div class="card-sub">저산소증 · CPP ↓ · ICP ↑</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','secondary-ischemia')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="secondary-ischemia"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','secondary-infection')">
-            <div class="card-body">
-              <div class="card-title">이차 5) 뇌 감염</div>
-              <div class="card-sub">개방성 골절 · 경막 손상 후 세균감염</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','secondary-infection')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="secondary-infection"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','secondary-others')">
-            <div class="card-body">
-              <div class="card-title">이차 6) 기타</div>
-              <div class="card-sub">외상 후 간질 · 혈관 경련 · 폐쇄성 수두증</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','secondary-others')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="secondary-others"></div>
         </div>
 
         <div class="tab-content" id="ch1-tab-severity">
@@ -354,74 +392,98 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
             <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','gcs-overview')">↗</button>
           </div>
           <div class="card-expand-wrap" data-key="gcs-overview"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','severity-mild')">
-            <div class="card-body">
-              <div class="card-title">(1) 경도 Mild</div>
-              <div class="card-sub">GCS 13~15 · 뇌진탕 · 가장 흔함</div>
+          <div class="accordion-parent" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)">
+            <div class="ap-head">
+              <span class="ap-icon">📏</span>
+              <div class="ap-body">
+                <div class="ap-title">GCS 중증도 4단계 — 경도 · 중등도 · 중증 · 식물인간</div>
+                <div class="ap-sub">분기점 GCS 13 / 9 / 5 · 기억할 숫자 = 15·13·12·9·8·5</div>
+              </div>
+              <span class="chev">▶</span>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','severity-mild')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="severity-mild"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','severity-moderate')">
-            <div class="card-body">
-              <div class="card-title">(2) 중등도 Moderate</div>
-              <div class="card-sub">GCS 9~12 · 기억상실 1~24h · ADL 독립</div>
+            <div class="accordion-children">
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','severity-mild')">
+                <div class="card-body">
+                  <div class="card-title">(1) 경도 Mild</div>
+                  <div class="card-sub">GCS 13~15 · 뇌진탕 · 가장 흔함</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','severity-mild')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="severity-mild"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','severity-moderate')">
+                <div class="card-body">
+                  <div class="card-title">(2) 중등도 Moderate</div>
+                  <div class="card-sub">GCS 9~12 · 기억상실 1~24h · ADL 독립</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','severity-moderate')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="severity-moderate"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','severity-severe')">
+                <div class="card-body">
+                  <div class="card-title">(3) 중증 Severe</div>
+                  <div class="card-sub">GCS ≤8 · 의식소실 ≥6h · 전체 10%</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','severity-severe')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="severity-severe"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','severity-vegetative')">
+                <div class="card-body">
+                  <div class="card-title">(4) 식물인간 Vegetative</div>
+                  <div class="card-sub">GCS ≤5 · 각성만 · 97% 사망</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','severity-vegetative')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="severity-vegetative"></div>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','severity-moderate')">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="severity-moderate"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','severity-severe')">
-            <div class="card-body">
-              <div class="card-title">(3) 중증 Severe</div>
-              <div class="card-sub">GCS ≤8 · 의식소실 ≥6h · 전체 10%</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','severity-severe')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="severity-severe"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','severity-vegetative')">
-            <div class="card-body">
-              <div class="card-title">(4) 식물인간 Vegetative</div>
-              <div class="card-sub">GCS ≤5 · 각성만 · 97% 사망</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','severity-vegetative')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="severity-vegetative"></div>
         </div>
 
         <div class="tab-content" id="ch1-tab-pathology">
           <div class="section-title">병리 (손상 기전)</div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','pathology-accel')">
-            <div class="card-body">
-              <div class="card-title">1. 가속과 감속</div>
-              <div class="card-sub">coup(같은쪽) vs countercoup(반대쪽)</div>
+          <div class="accordion-parent" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)">
+            <div class="ap-head">
+              <span class="ap-icon">🔬</span>
+              <div class="ap-body">
+                <div class="ap-title">손상 기전 4종 — 가속·감속 · 공동화 · 뇌신경 단절 · 뇌경막 충격</div>
+                <div class="ap-sub">coup·countercoup · 음압 공동화 · 후/시신경 · uncus 압박</div>
+              </div>
+              <span class="chev">▶</span>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','pathology-accel')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="pathology-accel"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','pathology-cavity')">
-            <div class="card-body">
-              <div class="card-title">2. 공동화설</div>
-              <div class="card-sub">음압 → 반대편 기포화·공동화</div>
+            <div class="accordion-children">
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','pathology-accel')">
+                <div class="card-body">
+                  <div class="card-title">1. 가속과 감속</div>
+                  <div class="card-sub">coup(같은쪽) vs countercoup(반대쪽)</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','pathology-accel')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="pathology-accel"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','pathology-cavity')">
+                <div class="card-body">
+                  <div class="card-title">2. 공동화설</div>
+                  <div class="card-sub">음압 → 반대편 기포화·공동화</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','pathology-cavity')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="pathology-cavity"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','pathology-nerve')">
+                <div class="card-body">
+                  <div class="card-title">3. 뇌신경의 단절</div>
+                  <div class="card-sub">후신경·시신경 · 시신경공 골절</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','pathology-nerve')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="pathology-nerve"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','pathology-dural')">
+                <div class="card-body">
+                  <div class="card-title">4. 뇌경막 충격</div>
+                  <div class="card-sub">구(uncus) · 천막 절흔 · 뇌간 손상</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','pathology-dural')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="pathology-dural"></div>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','pathology-cavity')">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="pathology-cavity"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','pathology-nerve')">
-            <div class="card-body">
-              <div class="card-title">3. 뇌신경의 단절</div>
-              <div class="card-sub">후신경·시신경 · 시신경공 골절</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','pathology-nerve')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="pathology-nerve"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','pathology-dural')">
-            <div class="card-body">
-              <div class="card-title">4. 뇌경막 충격</div>
-              <div class="card-sub">구(uncus) · 천막 절흔 · 뇌간 손상</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','pathology-dural')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="pathology-dural"></div>
         </div>
 
         <div class="tab-content" id="ch1-tab-clinical">
@@ -458,54 +520,66 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
             <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','clinical-skull')">↗</button>
           </div>
           <div class="card-expand-wrap" data-key="clinical-skull"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','clinical-neuro')">
-            <div class="card-body">
-              <div class="card-title">1) 신경계</div>
-              <div class="card-sub">강직 · 의식변화 3 · 기타 5</div>
+          <div class="accordion-parent" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)">
+            <div class="ap-head">
+              <span class="ap-icon">⚕️</span>
+              <div class="ap-body">
+                <div class="ap-title">6계통 합병증 — 신경 · 호흡 · 소화 · 심혈관 · 근골격 · 비뇨</div>
+                <div class="ap-sub">급성기 상위 3: 편도 탈출 · 폐색전 · 흡인성 폐렴</div>
+              </div>
+              <span class="chev">▶</span>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','clinical-neuro')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="clinical-neuro"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','clinical-resp')">
-            <div class="card-body">
-              <div class="card-title">2) 호흡계</div>
-              <div class="card-sub">기흉 · 폐렴 7일내 80% · 위험군 4</div>
+            <div class="accordion-children">
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','clinical-neuro')">
+                <div class="card-body">
+                  <div class="card-title">1) 신경계</div>
+                  <div class="card-sub">강직 · 의식변화 3 · 기타 5</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','clinical-neuro')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="clinical-neuro"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','clinical-resp')">
+                <div class="card-body">
+                  <div class="card-title">2) 호흡계</div>
+                  <div class="card-sub">기흉 · 폐렴 7일내 80% · 위험군 4</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','clinical-resp')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="clinical-resp"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','clinical-gi')">
+                <div class="card-body">
+                  <div class="card-title">3) 소화기·영양</div>
+                  <div class="card-sub">삼킴곤란 · 과혈당 · 배변 · 위장출혈</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','clinical-gi')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="clinical-gi"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','clinical-cardio')">
+                <div class="card-body">
+                  <div class="card-title">4) 심혈관계</div>
+                  <div class="card-sub">DVT 40~54% · PE 1%</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','clinical-cardio')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="clinical-cardio"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','clinical-msk')">
+                <div class="card-body">
+                  <div class="card-title">5) 근육뼈대계</div>
+                  <div class="card-sub">딴곳뼈되기 HO · 엉덩관절 호발</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','clinical-msk')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="clinical-msk"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','clinical-gu')">
+                <div class="card-body">
+                  <div class="card-title">6) 비뇨생식계</div>
+                  <div class="card-sub">요실금 · UTI · 성 행동 변화</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','clinical-gu')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="clinical-gu"></div>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','clinical-resp')">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="clinical-resp"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','clinical-gi')">
-            <div class="card-body">
-              <div class="card-title">3) 소화기·영양</div>
-              <div class="card-sub">삼킴곤란 · 과혈당 · 배변 · 위장출혈</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','clinical-gi')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="clinical-gi"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','clinical-cardio')">
-            <div class="card-body">
-              <div class="card-title">4) 심혈관계</div>
-              <div class="card-sub">DVT 40~54% · PE 1%</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','clinical-cardio')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="clinical-cardio"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','clinical-msk')">
-            <div class="card-body">
-              <div class="card-title">5) 근육뼈대계</div>
-              <div class="card-sub">딴곳뼈되기 HO · 엉덩관절 호발</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','clinical-msk')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="clinical-msk"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','clinical-gu')">
-            <div class="card-body">
-              <div class="card-title">6) 비뇨생식계</div>
-              <div class="card-sub">요실금 · UTI · 성 행동 변화</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','clinical-gu')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="clinical-gu"></div>
         </div>
 
         <div class="tab-content" id="ch1-tab-eval">
@@ -534,54 +608,66 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
             </div>
           </div>
           <div class="section-title">평가 및 검사 도구</div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','eval-loc')">
-            <div class="card-body">
-              <div class="card-title">(1) LOC 의식수준</div>
-              <div class="card-sub">출발점 평가</div>
+          <div class="accordion-parent" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)">
+            <div class="ap-head">
+              <span class="ap-icon">📋</span>
+              <div class="ap-body">
+                <div class="ap-title">평가도구 6종 — LOC · GOS · LOCF · GCS · GOAT · DRS</div>
+                <div class="ap-sub">급성기(GCS·LOC) → 각성기(LOCF·GOAT) → 회복기(GOS·DRS)</div>
+              </div>
+              <span class="chev">▶</span>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','eval-loc')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="eval-loc"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','eval-gos')">
-            <div class="card-body">
-              <div class="card-title">(2) GOS</div>
-              <div class="card-sub">예후 수치화 · 손상/퇴원/6m/1y</div>
+            <div class="accordion-children">
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','eval-loc')">
+                <div class="card-body">
+                  <div class="card-title">(1) LOC 의식수준</div>
+                  <div class="card-sub">출발점 평가</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','eval-loc')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="eval-loc"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','eval-gos')">
+                <div class="card-body">
+                  <div class="card-title">(2) GOS</div>
+                  <div class="card-sub">예후 수치화 · 손상/퇴원/6m/1y</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','eval-gos')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="eval-gos"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','eval-locf')">
+                <div class="card-body">
+                  <div class="card-title">(3) LOCF Rancho</div>
+                  <div class="card-sub">10단계 · 중재 계획 기초</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','eval-locf')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="eval-locf"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','eval-gcs')">
+                <div class="card-body">
+                  <div class="card-title">(4) GCS</div>
+                  <div class="card-sub">E4·V5·M6 · 가장 널리 사용</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','eval-gcs')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="eval-gcs"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','eval-goat')">
+                <div class="card-body">
+                  <div class="card-title">(5) GOAT</div>
+                  <div class="card-sub">지남력 · 외상 후 기억상실</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','eval-goat')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="eval-goat"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','eval-drs')">
+                <div class="card-body">
+                  <div class="card-title">(6) Rappaport DRS</div>
+                  <div class="card-sub">기능적 회복 · 광범위</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','eval-drs')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="eval-drs"></div>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','eval-gos')">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="eval-gos"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','eval-locf')">
-            <div class="card-body">
-              <div class="card-title">(3) LOCF Rancho</div>
-              <div class="card-sub">10단계 · 중재 계획 기초</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','eval-locf')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="eval-locf"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','eval-gcs')">
-            <div class="card-body">
-              <div class="card-title">(4) GCS</div>
-              <div class="card-sub">E4·V5·M6 · 가장 널리 사용</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','eval-gcs')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="eval-gcs"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','eval-goat')">
-            <div class="card-body">
-              <div class="card-title">(5) GOAT</div>
-              <div class="card-sub">지남력 · 외상 후 기억상실</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','eval-goat')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="eval-goat"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','eval-drs')">
-            <div class="card-body">
-              <div class="card-title">(6) Rappaport DRS</div>
-              <div class="card-sub">기능적 회복 · 광범위</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','eval-drs')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="eval-drs"></div>
           <div class="card" onclick="toggleCardExpand(this,'ch1','eval-medical')">
             <div class="card-body">
               <div class="card-title">2) 의학적 검사</div>
@@ -622,78 +708,114 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
             </div>
           </div>
           <div class="section-title">중재 및 치료</div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','tx-nmes')">
-            <div class="card-body">
-              <div class="card-title">물리적 인자 (1) NMES</div>
-              <div class="card-sub">근활성·근수축력·근재교육</div>
+          <div class="accordion-parent" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)">
+            <div class="ap-head">
+              <span class="ap-icon">🔵</span>
+              <div class="ap-body">
+                <div class="ap-title">물리적 인자치료 3종 — NMES · Vital stim · 보조기</div>
+                <div class="ap-sub">근수축·삼킴자극·아래팔·AFO</div>
+              </div>
+              <span class="chev">▶</span>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-nmes')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="tx-nmes"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','tx-vitalstim')">
-            <div class="card-body">
-              <div class="card-title">(2) Vital stim</div>
-              <div class="card-sub">목 전극 → 삼킴 근육 수축</div>
+            <div class="accordion-children">
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','tx-nmes')">
+                <div class="card-body">
+                  <div class="card-title">물리적 인자 (1) NMES</div>
+                  <div class="card-sub">근활성·근수축력·근재교육</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-nmes')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="tx-nmes"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','tx-vitalstim')">
+                <div class="card-body">
+                  <div class="card-title">(2) Vital stim</div>
+                  <div class="card-sub">목 전극 → 삼킴 근육 수축</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-vitalstim')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="tx-vitalstim"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','tx-orthosis')">
+                <div class="card-body">
+                  <div class="card-title">(3) 보조기</div>
+                  <div class="card-sub">아래팔보조기 · AFO</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-orthosis')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="tx-orthosis"></div>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-vitalstim')">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="tx-vitalstim"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','tx-orthosis')">
-            <div class="card-body">
-              <div class="card-title">(3) 보조기</div>
-              <div class="card-sub">아래팔보조기 · AFO</div>
+          <div class="accordion-parent" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)">
+            <div class="ap-head">
+              <span class="ap-icon">🟢</span>
+              <div class="ap-body">
+                <div class="ap-title">LOCF 단계별 운동치료 3단계 — Lower · Middle · High</div>
+                <div class="ap-sub">자극(Ⅰ~Ⅲ) · 과제(Ⅳ~Ⅵ) · 통합(Ⅶ~Ⅹ)</div>
+              </div>
+              <span class="chev">▶</span>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-orthosis')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="tx-orthosis"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','tx-lower')">
-            <div class="card-body">
-              <div class="card-title">운동치료 Lower (Ⅰ~Ⅲ)</div>
-              <div class="card-sub">감각자극 6 + Positioning</div>
+            <div class="accordion-children">
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','tx-lower')">
+                <div class="card-body">
+                  <div class="card-title">운동치료 Lower (Ⅰ~Ⅲ)</div>
+                  <div class="card-sub">감각자극 6 + Positioning</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-lower')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="tx-lower"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','tx-middle')">
+                <div class="card-body">
+                  <div class="card-title">운동치료 Middle (Ⅳ~Ⅵ)</div>
+                  <div class="card-sub">기능적 운동성 + 인지 훈련</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-middle')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="tx-middle"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','tx-high')">
+                <div class="card-body">
+                  <div class="card-title">운동치료 High (Ⅶ~Ⅹ)</div>
+                  <div class="card-sub">판단·해결·계획·자기인식·사회</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-high')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="tx-high"></div>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-lower')">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="tx-lower"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','tx-middle')">
-            <div class="card-body">
-              <div class="card-title">운동치료 Middle (Ⅳ~Ⅵ)</div>
-              <div class="card-sub">기능적 운동성 + 인지 훈련</div>
+          <div class="accordion-parent" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)">
+            <div class="ap-head">
+              <span class="ap-icon">🟣</span>
+              <div class="ap-body">
+                <div class="ap-title">의학적 관리 3종 — 물뇌증 수술 · 기관절개 · 영양관</div>
+                <div class="ap-sub">VP shunt · Tracheostomy · NG/L-Tube</div>
+              </div>
+              <span class="chev">▶</span>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-middle')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="tx-middle"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','tx-high')">
-            <div class="card-body">
-              <div class="card-title">운동치료 High (Ⅶ~Ⅹ)</div>
-              <div class="card-sub">판단·해결·계획·자기인식·사회</div>
+            <div class="accordion-children">
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','tx-hydro')">
+                <div class="card-body">
+                  <div class="card-title">의학 (1) 물뇌증 수술</div>
+                  <div class="card-sub">VP shunt · CSF 배출</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-hydro')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="tx-hydro"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','tx-trach')">
+                <div class="card-body">
+                  <div class="card-title">의학 (2) 기관절개술</div>
+                  <div class="card-sub">후각 자극 불가 · 발성 제한</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-trach')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="tx-trach"></div>
+              <div class="card" onclick="event.stopPropagation();toggleCardExpand(this,'ch1','tx-ngtube')">
+                <div class="card-body">
+                  <div class="card-title">의학 (3) 영양관</div>
+                  <div class="card-sub">NG-Tube · L-Tube · 위 흡인/영양</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-ngtube')">↗</button>
+              </div>
+              <div class="card-expand-wrap" data-key="tx-ngtube"></div>
             </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-high')">↗</button>
           </div>
-          <div class="card-expand-wrap" data-key="tx-high"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','tx-hydro')">
-            <div class="card-body">
-              <div class="card-title">의학 (1) 물뇌증 수술</div>
-              <div class="card-sub">VP shunt · CSF 배출</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-hydro')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="tx-hydro"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','tx-trach')">
-            <div class="card-body">
-              <div class="card-title">의학 (2) 기관절개술</div>
-              <div class="card-sub">후각 자극 불가 · 발성 제한</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-trach')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="tx-trach"></div>
-          <div class="card" onclick="toggleCardExpand(this,'ch1','tx-ngtube')">
-            <div class="card-body">
-              <div class="card-title">의학 (3) 영양관</div>
-              <div class="card-sub">NG-Tube · L-Tube · 위 흡인/영양</div>
-            </div>
-            <button class="expand-btn" onclick="event.stopPropagation();moveToSidebar(this.parentElement,'ch1','tx-ngtube')">↗</button>
-          </div>
-          <div class="card-expand-wrap" data-key="tx-ngtube"></div>
           <div class="card" onclick="toggleCardExpand(this,'ch1','tx-prevent')">
             <div class="card-body">
               <div class="card-title">4) 예방 및 관리</div>
@@ -939,6 +1061,18 @@ function switchChapter(chid) {
   document.getElementById(chid).classList.add('active');
   document.querySelector(`.ch-btn[data-ch="${chid}"]`).classList.add('active');
   document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+}
+
+function toggleAccordion(el) {
+  var expanded = el.classList.contains('expanded');
+  var parent = el.parentElement;
+  if (parent) {
+    parent.querySelectorAll(':scope > .accordion-parent.expanded').forEach(function(sib){
+      if (sib !== el) { sib.classList.remove('expanded'); sib.setAttribute('aria-expanded','false'); }
+    });
+  }
+  if (expanded) { el.classList.remove('expanded'); el.setAttribute('aria-expanded','false'); }
+  else { el.classList.add('expanded'); el.setAttribute('aria-expanded','true'); }
 }
 
 function switchTab(chid, tabId, btn) {
