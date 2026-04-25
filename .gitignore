@@ -34,3 +34,9 @@ pdf_text.txt
 *.master-backup
 *.before-restore
 .vercel
+*.html.beforeredo*
+*.html.hkaredesign
+
+# Claude 환경 (개인 설정)
+.claude/settings.json
+.claude/settings.local.json
