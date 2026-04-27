@@ -1,0 +1,30 @@
+name: Validate HTML
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - '**/*.html'
+      - 'lib/**'
+      - 'tools/**'
+      - '.github/workflows/validate.yml'
+  pull_request:
+    branches: [master]
+    paths:
+      - '**/*.html'
+      - 'lib/**'
+      - 'tools/**'
+
+jobs:
+  validate:
+    name: Div balance + JS syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate all HTML files
+        run: node tools/ci-validate.js
