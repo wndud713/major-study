@@ -155,7 +155,7 @@ function rmrf(p) {
     if (fs.statSync(fp).isDirectory()) rmrf(fp);
     else fs.unlinkSync(fp);
   }
-  fs.rmdirSync(p);
+  try { fs.rmdirSync(p); } catch(e) { if (e.code !== 'EBUSY') throw e; }
 }
 
 function ensureDir(p) {
