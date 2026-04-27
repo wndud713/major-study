@@ -63,24 +63,14 @@ POPPLER="$LOCALAPPDATA/Microsoft/WinGet/Packages/oschwartz10612.Poppler_Microsof
 
 ## 2026-04-24 업데이트
 
-### 슬라이드 이미지 = pdfimages 우선 (pdftoppm 절대 금지)
-**2026-04-24 신경계 3파일 사건**: `pdftoppm` 으로 전 페이지 래스터화 → 텍스트·배경·제목 전부 이미지화 (108 KB 거대 파일). 뇌졸중1 같은 정상 파일은 pdfimages 임베디드 14.9 KB 도식만.
+### 슬라이드 이미지 = pdfimages 우선 (pdftoppm 전체 래스터 금지)
+1. `pdfimages -png` (≥150×150 필터)
+2. 벡터 다이어그램 보강 = `pdftoppm -r 50` + Vision 스팟 체크
+3. 상세 메모리 `feedback_slide_image_filtering.md`
 
-표준 절차:
-1. `pdfimages -list` 로 임베디드 이미지 목록 (width≥150 AND height≥150 필터)
-2. `pdfimages -png` 추출
-3. **벡터 다이어그램 (SmartArt·PPT 화살표·박스) 은 pdfimages 가 놓침** → `pdftoppm -r 50 -png` 저해상도 렌더 + Read(Vision) 스팟 체크
-4. 경계 케이스 (pdfimages 0 or 작은 아이콘만 + Vision 이 다이어그램 확인) = KEEP 보수적 판정
-
-참조: `feedback_slide_image_filtering.md` · `tools/filter-slides.js` · `tools/rebuild-neuro-slides.js`
-
-### 표준 레이아웃 (사용자 승인 2026-04-24)
-**4 계층 구조** (memory: `feedback_neuro_layout_standard.md`):
-
-1. **탭 최상단 종합표 마스터 카드** — `📊 X 종합표` IIFE toggle (openDetail 아님)
-2. **부모 아코디언** — 3 개 이상 유사 카드 그룹화 (`accordion-parent` + `toggleAccordion`)
-3. **자식 카드** — 부모 안, `event.stopPropagation()` 필수
-4. **단독 카드** — 고유 개념
+### 표준 레이아웃 4 계층
+종합표 마스터 → 부모 아코디언 → 자식 (`stopPropagation`) → 단독 카드.  
+상세 메모리 `feedback_neuro_layout_standard.md`.
 
 ### 템플릿 변경
 - v2 (`shell_template_v2.html`) = legacy 참조용

@@ -83,13 +83,8 @@ sed -i 's|</body>|<script>setTimeout(()=>{var c=document.querySelector(".card[on
 # Read /tmp/out.png 시각 확인
 ```
 
-## 보바스 사건 교훈 (절대 잊지 X)
-2026-04-19 보바스 챕터 "사이드바가 카드 영역에 표시" 디버깅 = 8 시도 / 30분 / 토큰 대량 낭비.
-원인 = 11→4 탭 통합 시 cards-area `</div>` 1개 누락. 
-1~7 시도 = 캐시·md5·service worker 등 가설 (전부 실패).
-8 시도 = nesting depth tracer → 1분 내 발견.
-
-→ **layout 깨짐 = nesting 먼저, 캐시는 마지막.**
+## 보바스 사건 교훈
+**layout 깨짐 = nesting 먼저, 캐시는 마지막.** 상세 메모리 `feedback_html_structure_debug.md` 참조.
 
 ## 2026-04-24 업데이트
 

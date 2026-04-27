@@ -40,3 +40,4 @@ pdf_text.txt
 # Claude 환경 (개인 설정)
 .claude/settings.json
 .claude/settings.local.json
+_huashu_test/
