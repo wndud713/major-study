@@ -382,6 +382,25 @@ function buildVercelConfig() {
   const dest = path.join(PUBLIC, 'vercel.json');
   fs.writeFileSync(dest, JSON.stringify(vercelJson, null, 2), 'utf8');
   console.log(`  ✓ vercel.json`);
+
+  // Basic Auth middleware (env: SITE_USER, SITE_PASS)
+  const middleware = `export const config = { matcher: '/((?!_next|favicon).*)' };
+
+export default function middleware(req) {
+  const USER = process.env.SITE_USER || 'admin';
+  const PASS = process.env.SITE_PASS || 'changeme';
+  const auth = req.headers.get('authorization');
+  const expected = 'Basic ' + btoa(USER + ':' + PASS);
+  if (auth !== expected) {
+    return new Response('Authentication required', {
+      status: 401,
+      headers: { 'WWW-Authenticate': 'Basic realm="major-study"' }
+    });
+  }
+}
+`;
+  fs.writeFileSync(path.join(PUBLIC, 'middleware.js'), middleware, 'utf8');
+  console.log(`  ✓ middleware.js (Basic Auth)`);
 }
 
 function main() {
