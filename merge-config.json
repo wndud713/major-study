@@ -26,6 +26,10 @@
         {
           "file": "신경계운동치료학/htmlstudy/보행1.html",
           "shortTitle": "보행1"
+        },
+        {
+          "file": "신경계운동치료학/htmlstudy/발.html",
+          "shortTitle": "발"
         }
       ]
     },
@@ -61,6 +65,14 @@
         {
           "file": "신경계질환별물리치료(이제혁)/SOAP_note_TBI.html",
           "shortTitle": "SOAP(TBI)"
+        },
+        {
+          "file": "신경계질환별물리치료(이제혁)/뇌성마비.html",
+          "shortTitle": "뇌성마비"
+        },
+        {
+          "file": "신경계질환별물리치료(이제혁)/SOAP_note_Parkinson.html",
+          "shortTitle": "SOAP(파킨슨)"
         }
       ]
     },

@@ -25,6 +25,7 @@ Thumbs.db
 _scratch/
 _archive/
 **/.v1-archive/
+.trash/
 
 # 임시 텍스트 추출
 pdf_text.txt
