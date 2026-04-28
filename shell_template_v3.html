@@ -496,11 +496,13 @@ function switchTab(chid, tabId, btn) {
 function openDetail(chid, key) {
   const content = (allDetailData[chid] || {})[key] || '<p style="color:var(--text-dim)">내용 준비 중</p>';
   document.getElementById(chid + '-detail-content').innerHTML = content;
-  document.getElementById(chid + '-detail-panel').classList.add('open');
+  const panel = document.getElementById(chid + '-detail-panel');
+  panel.classList.add('open');
+  panel.dataset.currentKey = key;
 }
 function closeDetail(chid) {
   const p = document.getElementById(chid + '-detail-panel');
-  if (p) p.classList.remove('open');
+  if (p) { p.classList.remove('open'); p.dataset.currentKey = ''; }
 }
 
 // ════════════════════════════════════════
@@ -527,30 +529,36 @@ function toggleAccordion(el) {
 function toggleCardExpand(cardEl, chid, key) {
   const wrap = cardEl.nextElementSibling;
   if (!wrap || !wrap.classList.contains('card-expand-wrap')) return;
-  const isOpen = wrap.classList.contains('open');
+  const panel = document.getElementById(chid + '-detail-panel');
+  const inlineOpen = wrap.classList.contains('open');
+  const sidebarOpen = panel && panel.classList.contains('open') && panel.dataset.currentKey === key;
 
-  // 같은 cards-area 내 다른 열린 wrap 닫기
-  const area = cardEl.closest('.cards-area');
-  if (area) {
-    area.querySelectorAll('.card-expand-wrap.open').forEach(w => {
-      if (w !== wrap) {
-        w.classList.remove('open');
-        const prev = w.previousElementSibling;
-        if (prev && prev.classList.contains('card')) prev.classList.remove('expanded');
-      }
-    });
-  }
-
-  if (isOpen) {
-    wrap.classList.remove('open');
-    cardEl.classList.remove('expanded');
-  } else {
+  if (!inlineOpen && !sidebarOpen) {
+    // Step 1: collapsed → inline (single-expansion: 다른 wrap 닫기)
+    const area = cardEl.closest('.cards-area');
+    if (area) {
+      area.querySelectorAll('.card-expand-wrap.open').forEach(w => {
+        if (w !== wrap) {
+          w.classList.remove('open');
+          const prev = w.previousElementSibling;
+          if (prev && prev.classList.contains('card')) prev.classList.remove('expanded');
+        }
+      });
+    }
     if (!wrap.innerHTML.trim()) {
       const content = (allDetailData[chid] || {})[key] || '<p style="color:var(--text-dim)">내용 준비 중</p>';
       wrap.innerHTML = content;
     }
     wrap.classList.add('open');
     cardEl.classList.add('expanded');
+  } else if (inlineOpen && !sidebarOpen) {
+    // Step 2: inline → detail-panel
+    wrap.classList.remove('open');
+    cardEl.classList.remove('expanded');
+    openDetail(chid, key);
+  } else if (sidebarOpen) {
+    // Step 3: detail-panel → collapsed
+    closeDetail(chid);
   }
 }
 
