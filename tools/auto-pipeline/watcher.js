@@ -72,30 +72,48 @@ async function waitForStability(filePath) {
 }
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
-// ───── 파일명 → subject 매핑 ─────
-function parseSubject(filename) {
+// ───── 폴더/파일명 → subject 매핑 ─────
+//   1순위: 부모 폴더명 (folderMap 매핑) — 권장
+//   2순위: 파일명 prefix (subjectMap key + _ 시작) — 호환성
+function parseSubject(filePath) {
+  const filename = path.basename(filePath);
   const base = path.basename(filename, path.extname(filename));
   const dotIdx = base.indexOf('.pptx');
   const cleanBase = dotIdx > -1 ? base.slice(0, dotIdx) : base;
 
-  for (const key of Object.keys(CONFIG.subjectMap)) {
-    if (cleanBase.startsWith(key + '_')) {
-      const chapterName = cleanBase.slice(key.length + 1).replace(/[^\w가-힣]+/g, '_');
-      return { subject: CONFIG.subjectMap[key], chapterName };
+  // 1순위: 부모 폴더명 매핑
+  const parentDir = path.basename(path.dirname(filePath));
+  if (CONFIG.folderMap && CONFIG.folderMap[parentDir]) {
+    const subjectId = CONFIG.folderMap[parentDir];
+    const subject = CONFIG.subjectMap[subjectId];
+    if (subject) {
+      const chapterName = cleanBase.replace(/[^\w가-힣]+/g, '_').replace(/^_+|_+$/g, '');
+      return { subject, chapterName, source: 'folder' };
     }
   }
+
+  // 2순위: 파일명 prefix (legacy)
+  for (const key of Object.keys(CONFIG.subjectMap)) {
+    if (cleanBase.startsWith(key + '_')) {
+      const chapterName = cleanBase.slice(key.length + 1).replace(/[^\w가-힣]+/g, '_').replace(/^_+|_+$/g, '');
+      return { subject: CONFIG.subjectMap[key], chapterName, source: 'prefix' };
+    }
+  }
+
   return null;
 }
 
 // ───── claude CLI 헤드리스 호출 ─────
+//   prompt 는 stdin 으로 전달 (Windows shell escaping 회피).
+//   prompt argv 로 전달 시 한글·백틱·줄바꿈 깨짐 → claude 가 stdin 대기 → 빈 응답 출력.
 function runClaudeCLI(prompt, jobId) {
   return new Promise((resolve, reject) => {
-    const args = [...CONFIG.claudeArgs, prompt];
     log('INFO', `[${jobId}] claude CLI 호출 (args: ${CONFIG.claudeArgs.join(' ')})`);
-    const proc = spawn('claude', args, {
+    const proc = spawn('claude', CONFIG.claudeArgs, {
       cwd: CONFIG.projectRoot,
       shell: true,
       env: process.env,
+      stdio: ['pipe', 'pipe', 'pipe'],
     });
     let stdout = '', stderr = '';
     proc.stdout.on('data', d => { stdout += d; process.stdout.write(d); });
@@ -105,7 +123,21 @@ function runClaudeCLI(prompt, jobId) {
       if (code === 0) resolve({ stdout, stderr });
       else reject(new Error(`claude exited code=${code}\nstderr=${stderr.slice(-2000)}`));
     });
+    proc.stdin.write(prompt, 'utf8');
+    proc.stdin.end();
   });
+}
+
+// ───── 변환 결과 검증 (HTML 존재 + 최소 크기) ─────
+function verifyOutput(outputHtmlPath, jobId) {
+  if (!fs.existsSync(outputHtmlPath)) {
+    throw new Error(`HTML 미생성: ${outputHtmlPath}`);
+  }
+  const size = fs.statSync(outputHtmlPath).size;
+  if (size < 50000) {
+    throw new Error(`HTML 크기 비정상 (${size} bytes < 50KB) — 변환 실패 가능성`);
+  }
+  log('INFO', `[${jobId}] 검증 통과: ${outputHtmlPath} (${(size/1024).toFixed(1)} KB)`);
 }
 
 // ───── 단일 PDF 처리 ─────
@@ -125,14 +157,16 @@ async function processPdf(pdfPath) {
   if (!stable) return moveToFail(pdfPath, 'unstable');
 
   // subject 매핑
-  const mapping = parseSubject(filename);
+  const mapping = parseSubject(pdfPath);
   if (!mapping) {
-    log('ERROR', `[${jobId}] 파일명 prefix 매핑 실패: ${filename}`);
-    log('ERROR', `  유효 prefix: ${Object.keys(CONFIG.subjectMap).join(', ')}`);
+    log('ERROR', `[${jobId}] subject 매핑 실패: ${filename}`);
+    log('ERROR', `  유효 폴더: ${Object.keys(CONFIG.folderMap || {}).join(', ')}`);
+    log('ERROR', `  유효 파일명 prefix: ${Object.keys(CONFIG.subjectMap).join(', ')}`);
     return moveToFail(pdfPath, 'no-mapping');
   }
 
-  const { subject, chapterName } = mapping;
+  const { subject, chapterName, source } = mapping;
+  log('INFO', `[${jobId}] 매핑 source=${source} (폴더 또는 prefix)`);
   const outputHtmlName = `${chapterName}.html`;
   const outputHtmlPath = path.join(CONFIG.projectRoot, subject.outputDir, outputHtmlName).replace(/\\/g, '/');
 
@@ -149,6 +183,7 @@ async function processPdf(pdfPath) {
 
   try {
     await runClaudeCLI(prompt, jobId);
+    verifyOutput(outputHtmlPath, jobId);
     log('INFO', `[${jobId}] 변환 + 배포 + 커밋 완료`);
 
     // 처리완료 mark
@@ -189,7 +224,11 @@ function buildClaudePrompt(pdfPath, subject, chapterName, outputHtmlPath, jobId)
    - shell_template_v3.html 기반
    - 표준 4 계층 (종합표 마스터 + 부모 아코디언 + 자식 카드 + 단독 카드)
    - 3-state cycle (toggleCardExpand)
-   - pdfimages ≥150 우선, 텍스트 다이어그램 혼재 시 pdftoppm 페이지 래스터
+   - **슬라이드 이미지 = pdfimages 단독 사용**. width≥150 AND height≥150 필터 (장식 아이콘 제외).
+     - 명령: \`"$POPPLER/pdfimages.exe" -png -p "PDF" "/tmp/img"\`
+     - **pdftoppm 페이지 래스터 단독 사용 절대 금지** — 텍스트·배경까지 이미지화 됨 (2026-04-24 신경계 3파일 사건, 2026-04-30 Ch8 사건).
+     - SmartArt·벡터 다이어그램 보강 필요 시 pdftoppm + Vision OCR 교차 검증 (단독 사용 X).
+     - **검증: SLIDES_DATA 평균 base64 길이 ≥ 200,000 bytes** (이하 시 재추출). 전형적 pdfimages 추출 = 250~400KB.
    - 국시문제 있으면 details.q-reveal + 색상 수평선
    - chapter ID = ch1, accent = ${subject.accent}
    - 출력 파일명: ${chapterName}.html
@@ -264,21 +303,28 @@ async function main() {
     process.exit(1);
   }
 
-  // 부팅 시 기존 PDF 스캔 (놓친 파일 catchup)
-  log('INFO', '기존 PDF 스캔 (catchup)');
-  const existing = fs.readdirSync(CONFIG.watchFolder).filter(f => f.toLowerCase().endsWith('.pdf'));
-  for (const f of existing) {
-    const fullPath = path.join(CONFIG.watchFolder, f);
-    log('INFO', `  catchup: ${f}`);
-    processPdf(fullPath).catch(err => log('ERROR', 'catchup 실패:', err.message));
+  // 부팅 시 기존 PDF 스캔 (놓친 파일 catchup) — root + 서브폴더 모두
+  log('INFO', '기존 PDF 스캔 (catchup) — root + 서브폴더');
+  function scanCatchup(dir, depth = 0) {
+    if (depth > 1) return;
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const e of entries) {
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) { scanCatchup(full, depth + 1); }
+      else if (e.isFile() && e.name.toLowerCase().endsWith('.pdf')) {
+        log('INFO', `  catchup: ${path.relative(CONFIG.watchFolder, full)}`);
+        processPdf(full).catch(err => log('ERROR', 'catchup 실패:', err.message));
+      }
+    }
   }
+  scanCatchup(CONFIG.watchFolder);
 
-  // chokidar 실시간 감시
+  // chokidar 실시간 감시 (서브폴더 포함, depth=1)
   const watcher = chokidar.watch(CONFIG.watchFolder, {
     persistent: true,
     ignoreInitial: true,
     awaitWriteFinish: false,  // 자체 stabilityCheck 사용
-    depth: 0,
+    depth: 1,
   });
 
   watcher.on('add', filePath => {

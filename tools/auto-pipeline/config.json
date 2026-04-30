@@ -9,6 +9,15 @@
   "stabilityCheckMs": 30000,
   "stabilityPollMs": 3000,
 
+  "folderMap": {
+    "임상의사결정": "clinical",
+    "신경계운동치료학": "neuro-motor",
+    "신경계질환별물리치료": "neuro-disease",
+    "ADL": "adl",
+    "스포츠물리치료학": "sports",
+    "임상세미나": "clinical-seminar"
+  },
+
   "subjectMap": {
     "clinical": {
       "id": "clinical",
