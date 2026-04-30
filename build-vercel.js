@@ -355,10 +355,12 @@ function buildMainIndex() {
 
 function buildVercelConfig() {
   console.log('\n=== Phase D: vercel.json 생성 ===');
+  // buildCommand "" = no-op (Vercel 가 root 에서 build 시도하지 않음).
+  // framework 명시 제거 → Vercel auto-detect → middleware.js 함수 등록 가능.
+  // outputDirectory 도 제거 (전체 디렉토리 = static + middleware 동시 인식).
+  // 이전 (framework:null + outputDirectory:'.') = static-only 강제 → middleware 무시 (2026-04-30 사건).
   const vercelJson = {
-    buildCommand: null,
-    outputDirectory: '.',
-    framework: null,
+    buildCommand: '',
     cleanUrls: false,
     trailingSlash: false,
     headers: [
