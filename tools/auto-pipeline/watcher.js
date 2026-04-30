@@ -223,18 +223,31 @@ function buildClaudePrompt(pdfPath, subject, chapterName, outputHtmlPath, jobId)
 1. **pdf-converter agent 호출** — PDF → 인터랙티브 HTML 변환.
    - shell_template_v3.html 기반
    - 표준 4 계층 (종합표 마스터 + 부모 아코디언 + 자식 카드 + 단독 카드)
-   - 3-state cycle (toggleCardExpand)
-   - **슬라이드 이미지 = pdfimages 단독 사용**. width≥150 AND height≥150 필터 (장식 아이콘 제외).
+   - **3-state cycle 모든 단독 카드 필수** (\`toggleCardExpand(this,'ch1','KEY')\`).
+     - **\`onclick="openDetail(...)"\` 직접 사용 절대 금지** (2026-04-30 Ch8 사건: 6개 카드 inline 안 됨).
+     - 단독 카드 패턴: \`<div class="card" onclick="toggleCardExpand(this,'ch1','KEY')">...<button class="expand-btn">↙</button></div>\` 직후 \`<div class="card-expand-wrap" data-key="KEY"></div>\`.
+     - openDetail 함수는 toggleCardExpand 내부에서만 호출 (3-state 의 detail 단계).
+     - 예외: 종합표 마스터(IIFE inline) / 아코디언 부모(toggleAccordion).
+   - **HTML escape 필수**: 텍스트 콘텐츠 안 \`<\` \`>\` \`&\` 는 반드시 \`&lt;\` \`&gt;\` \`&amp;\` (2026-04-30 Ch8 사건: \`정적<PNF\` → 브라우저가 \`<pnf>\` custom tag 인식 → DOM 트리 시프트 → detail panel 왼쪽 표시).
+   - **슬라이드 이미지 = pdfimages 단독 사용**. 다음 필터 모두 적용:
      - 명령: \`"$POPPLER/pdfimages.exe" -png -p "PDF" "/tmp/img"\`
+     - 필터1: width≥150 AND height≥150 (장식 아이콘 제외)
+     - 필터2: \`pdfimages -list\` 의 type=smask 페어 (page,num) 제외 (alpha 마스크 = grayscale 단색 노이즈)
+     - 필터3: PNG color type byte (offset 25) = 0 또는 4 (grayscale±alpha) 제외
+     - 필터4: sha256 dedupe (헤더 반복 제거)
      - **pdftoppm 페이지 래스터 단독 사용 절대 금지** — 텍스트·배경까지 이미지화 됨 (2026-04-24 신경계 3파일 사건, 2026-04-30 Ch8 사건).
      - SmartArt·벡터 다이어그램 보강 필요 시 pdftoppm + Vision OCR 교차 검증 (단독 사용 X).
      - **검증: SLIDES_DATA 평균 base64 길이 ≥ 200,000 bytes** (이하 시 재추출). 전형적 pdfimages 추출 = 250~400KB.
+     - **한글 경로 한계**: pdfimages.exe 가 cmd.exe 한글 출력 경로 못 읽음. PDF/출력 ASCII 경로 (\`C:/Windows/Temp/\`) 로 복사 후 추출.
    - 국시문제 있으면 details.q-reveal + 색상 수평선
    - chapter ID = ch1, accent = ${subject.accent}
    - 출력 파일명: ${chapterName}.html
 
 2. **검증** — div nesting balance + JS syntax (\`node --check\`) + 카드:wrap:detail 1:1 매칭
    - allDetailData 이중 선언 (placeholder block 잔존) 절대 금지 (commit a1b5ae5 사례 학습)
+   - **onclick="openDetail" 갯수 0 검증** (모든 단독 카드 = toggleCardExpand)
+   - **\`<[a-zA-Z]\` 텍스트 콘텐츠 안 등장 grep — escape 누락 색출**
+   - **Edge headless 시각 검증**: detail panel 위치 = 우측 (DOM 구조 + 화면 좌표 확인)
 
 3. **merge-config.json 자동 등록** — \`${subject.id}\` 과목 chapters 배열에 추가:
    \`\`\`json
