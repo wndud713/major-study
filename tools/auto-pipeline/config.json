@@ -1,0 +1,67 @@
+{
+  "watchFolder": "G:/내 드라이브/전공공부/입력대기",
+  "doneFolder": "G:/내 드라이브/전공공부/처리완료",
+  "failFolder": "G:/내 드라이브/전공공부/처리실패",
+  "projectRoot": "C:/Users/wndud/Desktop/전공공부",
+  "stateFile": "tools/auto-pipeline/state.json",
+  "logFile": "tools/auto-pipeline/logs/pipeline.log",
+
+  "stabilityCheckMs": 30000,
+  "stabilityPollMs": 3000,
+
+  "subjectMap": {
+    "clinical": {
+      "id": "clinical",
+      "name": "임상의사결정",
+      "outputDir": "임상의사결정/htmlstudy",
+      "accent": "#a78bfa"
+    },
+    "neuro-motor": {
+      "id": "neuro-motor",
+      "name": "신경계운동치료학",
+      "outputDir": "신경계운동치료학/htmlstudy",
+      "accent": "#38bdf8"
+    },
+    "neuro-disease": {
+      "id": "neuro-disease",
+      "name": "신경계질환별물리치료",
+      "outputDir": "신경계질환별물리치료(이제혁)",
+      "accent": "#a78bfa"
+    },
+    "adl": {
+      "id": "adl",
+      "name": "기능훈련(ADL)",
+      "outputDir": "ADL/htmlstudy",
+      "accent": "#fb923c"
+    },
+    "sports": {
+      "id": "sports",
+      "name": "스포츠물리치료학",
+      "outputDir": "스포츠물리치료학/htmlstudy",
+      "accent": "#34d399"
+    },
+    "clinical-seminar": {
+      "id": "clinical-seminar",
+      "name": "임상세미나",
+      "outputDir": "임상세미나/htmlstudy",
+      "accent": "#4fd1c5"
+    }
+  },
+
+  "claudeArgs": [
+    "--print",
+    "--dangerously-skip-permissions",
+    "--model", "claude-opus-4-7"
+  ],
+
+  "deploy": {
+    "enabled": true,
+    "skipDeploy": false,
+    "skipCommit": false
+  },
+
+  "notify": {
+    "enabled": false,
+    "webhookUrl": ""
+  }
+}

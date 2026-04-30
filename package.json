@@ -1,0 +1,14 @@
+{
+  "name": "major-study-pipeline",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PDF → HTML 인터랙티브 스터디 파일 변환 + 자동 배포 파이프라인",
+  "scripts": {
+    "watch": "node tools/auto-pipeline/watcher.js",
+    "build": "node build-vercel.js",
+    "deploy": "cd public && vercel --prod"
+  },
+  "dependencies": {
+    "chokidar": "^4.0.3"
+  }
+}

@@ -42,3 +42,14 @@ pdf_text.txt
 .claude/settings.json
 .claude/settings.local.json
 _huashu_test/
+
+# 자동 파이프라인 상태·로그·node_modules
+tools/auto-pipeline/state.json
+tools/auto-pipeline/logs/
+node_modules/
+
+# 환경·시크릿 (Vercel env pull 등)
+.env
+.env.*
+!.env.example
+.env.check.tmp*
