@@ -152,8 +152,24 @@
           "shortTitle": "엉덩관절 근력"
         },
         {
+          "file": "임상의사결정/htmlstudy/몸통골반바닥근력검사.html",
+          "shortTitle": "몸통·골반근력"
+        },
+        {
           "file": "임상의사결정/htmlstudy/손목굴증후군.html",
           "shortTitle": "손목굴증후군"
+        },
+        {
+          "file": "임상의사결정/htmlstudy/듀센근이영양증.html",
+          "shortTitle": "DMD"
+        },
+        {
+          "file": "임상의사결정/htmlstudy/골절.html",
+          "shortTitle": "골절"
+        },
+        {
+          "file": "임상의사결정/htmlstudy/요통.html",
+          "shortTitle": "요통"
         },
         {
           "file": "임상의사결정/htmlstudy/절단.html",
