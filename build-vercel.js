@@ -354,55 +354,28 @@ function buildMainIndex() {
 }
 
 function buildVercelConfig() {
-  console.log('\n=== Phase D: vercel.json 생성 ===');
-  // buildCommand "" = no-op (Vercel 가 root 에서 build 시도하지 않음).
-  // framework 명시 제거 → Vercel auto-detect → middleware.js 함수 등록 가능.
-  // outputDirectory 도 제거 (전체 디렉토리 = static + middleware 동시 인식).
-  // 이전 (framework:null + outputDirectory:'.') = static-only 강제 → middleware 무시 (2026-04-30 사건).
-  const vercelJson = {
-    buildCommand: '',
-    cleanUrls: false,
-    trailingSlash: false,
-    headers: [
-      {
-        source: '/chapters/(.*)',
-        headers: [
-          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, max-age=0' },
-          { key: 'Pragma', value: 'no-cache' },
-          { key: 'Expires', value: '0' },
-          { key: 'Content-Type', value: 'text/html; charset=utf-8' }
-        ]
-      },
-      {
-        source: '/(index|subjects/.*)\\.html',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=300, must-revalidate' }
-        ]
-      }
-    ]
-  };
-  const dest = path.join(PUBLIC, 'vercel.json');
-  fs.writeFileSync(dest, JSON.stringify(vercelJson, null, 2), 'utf8');
-  console.log(`  ✓ vercel.json`);
-
-  // Basic Auth middleware (env: SITE_USER, SITE_PASS)
-  const middleware = `export const config = { matcher: '/((?!_next|favicon).*)' };
-
-export default function middleware(req) {
-  const USER = process.env.SITE_USER || 'admin';
-  const PASS = process.env.SITE_PASS || 'changeme';
-  const auth = req.headers.get('authorization');
-  const expected = 'Basic ' + btoa(USER + ':' + PASS);
-  if (auth !== expected) {
-    return new Response('Authentication required', {
-      status: 401,
-      headers: { 'WWW-Authenticate': 'Basic realm="major-study"' }
-    });
+  console.log('\n=== Phase D: vercel.json + middleware.js 동기화 ===');
+  // Source-of-truth = ROOT (git tracked: vercel.json, middleware.js).
+  // public/ 는 outputDirectory — 정적 자산만 들어감.
+  // middleware.js 가 outputDirectory 내부에 있으면 Vercel 가 정적 파일로 처리 → 함수 등록 X (2026-04-30 사건).
+  // GitHub auto-deploy 도 root vercel.json 사용 → 일관성 확보.
+  // 다만 manual `cd public && vercel --prod` 패턴 호환 위해 root → public/ 로 동기화 copy 만 수행.
+  const rootVercel = path.join(ROOT, 'vercel.json');
+  const rootMiddleware = path.join(ROOT, 'middleware.js');
+  if (!fs.existsSync(rootVercel)) {
+    throw new Error('root/vercel.json 없음 — git tracked source 가 source-of-truth. 복원 후 재실행.');
   }
-}
-`;
-  fs.writeFileSync(path.join(PUBLIC, 'middleware.js'), middleware, 'utf8');
-  console.log(`  ✓ middleware.js (Basic Auth)`);
+  if (!fs.existsSync(rootMiddleware)) {
+    throw new Error('root/middleware.js 없음 — git tracked source 가 source-of-truth. 복원 후 재실행.');
+  }
+  // root vercel.json 는 buildCommand + outputDirectory 명시 (root 기준 deploy 용).
+  // public/vercel.json 은 두 키 제거 (cd public && vercel --prod 호환 — 그땐 그 dir 가 root).
+  const rootCfg = JSON.parse(fs.readFileSync(rootVercel, 'utf8'));
+  const { buildCommand, outputDirectory, ...publicCfg } = rootCfg;
+  fs.writeFileSync(path.join(PUBLIC, 'vercel.json'), JSON.stringify(publicCfg, null, 2), 'utf8');
+  console.log(`  ✓ vercel.json (buildCommand/outputDirectory 제외 → public/)`);
+  fs.copyFileSync(rootMiddleware, path.join(PUBLIC, 'middleware.js'));
+  console.log(`  ✓ middleware.js (root → public/)`);
 }
 
 function main() {
